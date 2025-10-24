@@ -1,0 +1,38 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+    content: [
+      './app/**/*.{js,ts,jsx,tsx,mdx}', 
+      './components/**/*.{js,ts,jsx,tsx,mdx}', 
+      './src/**/*.{js,ts,jsx,tsx,mdx}', 
+      './node_modules/flowbite-react/dist/**/*.{js,ts,jsx,tsx}', 
+    ],
+    theme: {
+      extend: {
+        fontFamily: {
+          urbanist: ['var(--font-urbanist)', 'sans-serif'],
+          inter: ['var(--font-inter)', 'sans-serif'],
+          raleway: ['var(--font-raleway)', 'sans-serif'],
+          vesper: ['var(--font-vesper)', 'sans-serif'],
+          ramaraja: ['var(--font-ramaraja)', 'sans-serif'],
+          montserrat: ['var(--font-montserrat)', 'sans-serif'],
+          lateef: ['var(--font-lateef)', 'sans-serif'],
+          istokWeb: ['var(--font-istokWeb)', 'sans-serif'],
+          lalezar: ['var(--font-lalezar)', 'sans-serif'],
+          lancelot: ['var(--font-lancelot)', 'sans-serif'],
+          next: ['"The Next Font"', 'sans-serif'],
+        },
+        screens: {
+          xs: '250px',
+          sm: '640px',
+          md: '769px',
+          lg: '1024px',
+          xl: '1280px',
+          '2xl': '1536px',
+        },
+      },
+    },
+    plugins: [
+      require('flowbite-react/tailwind'), 
+    ],
+  }

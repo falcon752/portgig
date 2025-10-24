@@ -1,0 +1,341 @@
+'use client'
+import {
+  recruiterSignInSchema,
+  recruiterSignUpSchema,
+  signInSchema,
+  signUpSchema,
+} from '@/src/app/(auth)/zodSchemas'
+import {
+  creatorSignin,
+  creatorSignUp,
+  recruiterSignin,
+  recruiterSignUp,
+} from '@/src/lib/requests/auth'
+import { AuthFormType, FormData } from '@/types/auth'
+import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
+import { toast } from 'react-hot-toast'
+import AuthButtons from './AuthButtons'
+import AuthFormHeader from './AuthFormHeader'
+import BasicInfoFields from './BasicInfoFields'
+import CompanyField from './CompanyField'
+import EmailPhoneFields from './EmailPhoneFields'
+import ExperienceFields from './ExperienceFields'
+import Industry from './Industry'
+import KeepLoggedInCheckbox from './KeepLoggedInCheckbox'
+import LocationFields from './LocationFields'
+import PasswordFields from './PasswordFields'
+import ProfessionalInfoFields from './ProfessionalInfoFields'
+import TermsCheckbox from './TermsCheckbox'
+
+interface AuthFormProps {
+  type: AuthFormType
+}
+
+const AuthForm = ({ type }: AuthFormProps) => {
+  const router = useRouter()
+  const [formData, setFormData] = useState<FormData>({
+    full_name: '',
+    company_name: '',
+    email: '',
+    phoneNumber: '',
+    user_name: '',
+    password: '',
+    field: '',
+    industry: '',
+    years_of_experience: '',
+    state: '',
+    lga: '',
+    bio: '',
+    confirmPassword: '',
+    acceptedTerms: false,
+  })
+
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
+    {}
+  )
+
+  const isSignIn = type === 'sign-in'
+  const isSignUp = type === 'sign-up'
+  const isRecruiterSignIn = type === 'recruiter-sign-in'
+  const isRecruiterSignUp = type === 'recruiter-sign-up'
+
+  const creatorSignUpMutation = useMutation({
+    mutationFn: creatorSignUp,
+    onSuccess: () => {
+      toast.success('Sign up successful!')
+      router.push('/creative-email')
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to sign up')
+    },
+  })
+
+  const creatorSignInMutation = useMutation({
+    mutationFn: creatorSignin,
+    onSuccess: () => {
+      toast.success('Sign in successful!')
+      router.push('/creative-homepage')
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to sign in')
+    },
+  })
+
+  const recruiterSignUpMutation = useMutation({
+    mutationFn: recruiterSignUp,
+    onSuccess: () => {
+      toast.success('Sign up successful!')
+      router.push('/recruiter-email')
+    },
+    onError: (error: Error) => {
+      console.error('Recruiter sign up error:', error)
+      toast.error(error.message || 'Failed to sign up')
+    },
+  })
+
+  const recruiterSignInMutation = useMutation({
+    mutationFn: recruiterSignin,
+    onSuccess: () => {
+      toast.success('Sign in successful!')
+      router.push('/recruiter-homepage')
+    },
+    onError: (error: Error) => {
+      console.error('Recruiter sign in error:', error)
+      toast.error(error.message || 'Failed to sign in')
+    },
+  })
+
+  const isLoading =
+    creatorSignUpMutation.isPending ||
+    creatorSignInMutation.isPending ||
+    recruiterSignUpMutation.isPending ||
+    recruiterSignInMutation.isPending
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value, type } = e.target as HTMLInputElement
+    const fieldMapping: Record<string, string> = {
+      fullName: 'full_name',
+      username: 'user_name',
+      yearOfExperience: 'years_of_experience',
+      location: 'state',
+      localGov: 'lga',
+      companyName: 'company_name',
+      companySize: 'company_size',
+      companyWebsite: 'company_website',
+      companyAddress: 'company_address',
+      phoneNumber: 'phone_number',
+    }
+
+    const fieldName = fieldMapping[name] || name
+
+    if (type === 'checkbox') {
+      const checked = (e.target as HTMLInputElement).checked
+      setFormData((prev) => ({ ...prev, [fieldName]: checked }))
+    } else {
+      setFormData((prev) => ({ ...prev, [fieldName]: value }))
+    }
+
+    setErrors((prev) => ({
+      ...prev,
+      [fieldName]: undefined,
+      [name]: undefined,
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    // Debug logging
+    console.log('Form submission started for type:', type)
+    console.log('Form data:', formData)
+    console.log('Errors before validation:', errors)
+
+    const schema =
+      type === 'sign-in'
+        ? signInSchema
+        : type === 'sign-up'
+        ? signUpSchema
+        : type === 'recruiter-sign-in'
+        ? recruiterSignInSchema
+        : recruiterSignUpSchema
+
+    console.log('Using schema for:', type)
+
+    const result = schema.safeParse(formData)
+
+    if (!result.success) {
+      console.log('Validation failed:', result.error.issues)
+      const fieldErrors: Partial<Record<keyof FormData, string>> = {}
+      result.error.issues.forEach((issue) => {
+        const field = issue.path[0] as keyof FormData
+        fieldErrors[field] = issue.message
+        console.log(`Validation error for ${field}: ${issue.message}`)
+      })
+      setErrors(fieldErrors)
+
+      // Show a toast for validation errors to help debug
+      toast.error('Please fill in all required fields correctly')
+      return
+    }
+
+    console.log('Validation passed, proceeding with submission')
+
+    try {
+      if (isSignIn) {
+        const signInData = {
+          email: formData.email,
+          password: formData.password,
+        }
+        console.log('Sending creator sign-in request with:', {
+          email: formData.email,
+          passwordLength: formData.password?.length || 0,
+        })
+        creatorSignInMutation.mutate(signInData)
+      } else if (isSignUp) {
+        console.log('Sending creator sign-up request')
+        creatorSignUpMutation.mutate(formData)
+      } else if (isRecruiterSignIn) {
+        const signInData = {
+          email: formData.email,
+          password: formData.password,
+        }
+        console.log('Sending recruiter sign-in request with:', {
+          email: formData.email,
+          passwordLength: formData.password?.length || 0,
+        })
+        recruiterSignInMutation.mutate(signInData)
+      } else if (isRecruiterSignUp) {
+        console.log('Sending recruiter sign-up request with data:', formData)
+        const dataToSend = {
+          full_name: formData.full_name,
+          user_name: formData.user_name,
+          email: formData.email,
+          password: formData.password,
+          company_name: formData.company_name || '',
+          phone_number: formData.phone_number || '',
+          company_address: formData.company_address,
+          company_website: formData.company_website,
+          company_size: formData.company_size,
+          about_us: formData.bio || '',
+          acceptedTerms: formData.acceptedTerms,
+        }
+
+        console.log('Final data being sent:', dataToSend)
+        recruiterSignUpMutation.mutate(dataToSend)
+      }
+    } catch (err) {
+      console.error('Authentication error:', err)
+      toast.error('An unexpected error occurred')
+    }
+  }
+
+  // Debug logging for render
+  console.log('Rendering AuthForm with:', {
+    type,
+    isRecruiterSignUp,
+    formData: {
+      company_name: formData.company_name,
+      industry: formData.industry,
+      email: formData.email,
+      acceptedTerms: formData.acceptedTerms,
+    },
+    errors,
+    isLoading,
+  })
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className='px-5 md:px-30 lg:px-10 xl:px-20 2xl:px-30 space-y-7 flex flex-col font-raleway'
+    >
+      <AuthFormHeader type={type} />
+
+      {isSignUp && (
+        <BasicInfoFields
+          formData={formData}
+          handleChange={handleChange}
+          errors={errors}
+        />
+      )}
+
+      {isRecruiterSignUp && (
+        <CompanyField
+          formData={formData}
+          handleChange={handleChange}
+          errors={errors}
+        />
+      )}
+
+      <EmailPhoneFields
+        formData={formData}
+        handleChange={handleChange}
+        errors={errors}
+        showPhone={isSignUp || isRecruiterSignUp}
+      />
+
+      {isSignUp && (
+        <ProfessionalInfoFields
+          formData={formData}
+          setFormData={setFormData}
+          handleChange={handleChange}
+          errors={errors}
+        />
+      )}
+
+      {isSignUp && (
+        <ExperienceFields
+          formData={formData}
+          handleChange={handleChange}
+          errors={errors}
+        />
+      )}
+
+      {isSignUp && (
+        <LocationFields
+          formData={formData}
+          handleChange={handleChange}
+          errors={errors}
+        />
+      )}
+
+      {isRecruiterSignUp && (
+        <Industry
+          formData={formData}
+          handleChange={handleChange}
+          errors={errors}
+        />
+      )}
+
+      <PasswordFields
+        formData={formData}
+        handleChange={handleChange}
+        errors={errors}
+        showConfirmPassword={isSignUp || isRecruiterSignUp}
+      />
+
+      {(isSignIn || isRecruiterSignIn) && <KeepLoggedInCheckbox />}
+
+      {(isSignIn || isRecruiterSignIn) && (
+        <AuthButtons isLoading={isLoading} type={type} />
+      )}
+
+      {(isSignUp || isRecruiterSignUp) && (
+        <TermsCheckbox
+          formData={formData}
+          setFormData={setFormData}
+          errors={errors}
+          setErrors={setErrors}
+          isLoading={isLoading}
+        />
+      )}
+    </form>
+  )
+}
+
+export default AuthForm

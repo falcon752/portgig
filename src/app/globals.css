@@ -1,0 +1,281 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Ramaraja&family=Vesper+Libre:wght@400;500;700;900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
+@import url('https://fonts.cdnfonts.com/css/the-next-font');
+@import url('https://fonts.googleapis.com/css2?family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Lancelot&family=Lateef:wght@200;300;400;500;600;700;800&display=swap');
+@import 'tailwindcss';
+
+@plugin "flowbite-react/plugin/tailwindcss";
+
+@source "../../.flowbite-react/class-list.json";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-urbanist);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Custom breakpoints for Tailwind v4 */
+  --breakpoint-xs: 250px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 769px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+@theme {
+  --color-primary: #0a1754;
+  --color-secondary: #00489a;
+  --color-textColor: #00489a;
+  --color-gray50: #f9fafb;
+  --color-gray100: #f3f4f6;
+  --color-gray200: #e5e7eb;
+  --color-red500: #fb2c36;
+  --color-purpleLight: #58337f;
+  --color-gold: #f17500;
+  --color-grayBg: #d9d9d9;
+  --color-purpleBg: #2c0358;
+  --color-semiBlack: #121212;
+  --color-lightBrown: #292929;
+  --color-brownLight: #231e1a;
+  --color-yellowGold: #ff7f00;
+  --color-yellow: #fcc92f;
+  --color-bb: #1e2234c7;
+  --color-darkBlue: #0a1754;
+
+  /* Font families for Tailwind v4 */
+  --font-family-urbanist: var(--font-urbanist), sans-serif;
+  --font-family-inter: var(--font-inter), sans-serif;
+  --font-family-raleway: var(--font-raleway), sans-serif;
+  --font-family-vesper: var(--font-vesper), sans-serif;
+  --font-family-ramaraja: var(--font-ramaraja), sans-serif;
+  --font-family-montserrat: var(--font-montserrat), sans-serif;
+  --font-family-lateef: var(--font-lateef), sans-serif;
+  --font-family-istokWeb: var(--font-istokWeb), sans-serif;
+  --font-family-lalezar: var(--font-lalezar), sans-serif;
+  --font-family-lancelot: var(--font-lancelot), sans-serif;
+  --font-family-next: 'The Next Font', sans-serif;
+}
+
+body {
+  font-family: Urbanist, sans-serif;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 12px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #0a1754;
+    border-radius: 1rem;
+    width: 0px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+@layer base {
+  h1 {
+    @apply font-bold  text-4xl sm:text-5xl lg:text-6xl text-white;
+  }
+}
+@layer utilities {
+  .bodyMargin {
+    @apply mx-3 2xl:mx-auto 2xl:w-[1300px];
+  }
+  .bg-linear-gradient {
+    @apply bg-linear-to-r from-primary to-secondary;
+  }
+  .shadow-card {
+    @apply shadow-[0px_4px_20px_rgba(0,0,0,0.05)];
+  }
+
+  .shadow {
+    @apply shadow-[0px_5px_5px_3px_rgba(0,0,0,0.1)];
+  }
+  .heading {
+    @apply text-2xl md:text-3xl lg:text-5xl font-bold text-white;
+  }
+  .subHeading {
+    @apply text-2xl md:text-3xl lg:text-4xl font-black text-white;
+  }
+  .smallHeading {
+    @apply text-sm  md:text-lg lg:text-xl 2xl:text-2xl font-black;
+  }
+  .authStyles {
+    @apply flex flex-col justify-center;
+  }
+  .center {
+    @apply flex justify-center items-center;
+  }
+  .center-flexCol {
+    @apply flex flex-col justify-center items-center;
+  }
+
+  .font-inter {
+    font-family: var(--font-inter);
+  }
+  .font-raleway {
+    font-family: var(--font-raleway);
+  }
+  .font-vesper {
+    font-family: var(--font-vesper);
+  }
+  .font-ramaraja {
+    font-family: var(--font-ramaraja);
+  }
+  .font-urbanist {
+    font-family: var(--font-urbanist);
+  }
+  .font-montserrat {
+    font-family: var(--font-montserrat);
+  }
+  .font-lalezar {
+    font-family: var(--font-lalezar);
+  }
+  .font-lancelot {
+    font-family: var(--font-lancelot);
+  }
+  .font-lateef {
+    font-family: var(--font-lateef);
+  }
+  .font-istokWeb {
+    font-family: var(--font-istokWeb);
+  }
+  .font-next {
+    font-family: "The Next Font", sans-serif;
+  }
+}
+
+/* Hide arrows in number input for Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide arrows in Firefox browsers */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
