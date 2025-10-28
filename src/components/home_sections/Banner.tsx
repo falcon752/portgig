@@ -23,10 +23,20 @@ const Banner = ({ label }: BannerPropType) => {
 
   return (
     <>
-      <section className="hidden md:block bodyMargin my-8 px-5">
-        <div className="px-4 md:px-6 lg:px-8 py-6 md:py-4 lg:py-4 bg-primary rounded-2xl flex items-center justify-between gap-2 md:gap-4 lg:gap-0 shadow">
+      <section className="hidden md:flex justify-center my-8 px-5">
+        <main
+          className="
+            w-full max-w-[1200px]
+            bg-primary rounded-2xl
+            flex items-center justify-between
+            gap-2 md:gap-4 lg:gap-0
+            py-6 md:py-4 lg:py-4
+            px-4 md:px-6 lg:px-8
+            text-white shadow
+          "
+        >
           <div className="flex items-center gap-3 md:gap-4 lg:gap-5 shrink-0 whitespace-nowrap">
-            <h2 className="text-white font-semibold text-[10px] md:text-sm lg:text-base">
+            <h2 className="font-semibold text-[10px] md:text-sm lg:text-base">
               Create your portfolio
             </h2>
             <Buttons
@@ -45,7 +55,7 @@ const Banner = ({ label }: BannerPropType) => {
           </div>
 
           <div className="flex items-center gap-3 md:gap-4 lg:gap-5 shrink-0 whitespace-nowrap">
-            <h2 className="text-white font-semibold text-[10px] md:text-sm lg:text-base">
+            <h2 className="font-semibold text-[10px] md:text-sm lg:text-base">
               Hire Creatives
             </h2>
             <Buttons
@@ -62,7 +72,7 @@ const Banner = ({ label }: BannerPropType) => {
               }
             />
           </div>
-        </div>
+        </main>
       </section>
     </>
   );
