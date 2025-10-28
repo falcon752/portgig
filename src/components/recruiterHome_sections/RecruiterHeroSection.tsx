@@ -8,7 +8,7 @@ const RecruiterHeroSection = () => {
 
   return (
     <section className="bodyMargin h-fit bg-primary my-5 rounded-2xl gap-5">
-      {/* H1 shown only on mobile — full width above */}
+      {/* H1 shown only on mobile, full width above */}
       <div className="block md:hidden px-4 pt-4">
         <h1 className="text-xl font-bold text-white font-urbanist text-center">
           Find Top Talent for Your Next Big Project

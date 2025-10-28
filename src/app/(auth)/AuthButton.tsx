@@ -7,7 +7,7 @@ interface AuthButtoProbs {
 	onClick?: () => void;
 	disabled?: boolean
 }
-const AuthButton = ({ children, className, type, onClick , disabled}: AuthButtoProbs) => {
+const AuthButton = ({ children, className, type, onClick, disabled}: AuthButtoProbs) => {
   return (
     <button type={type} disabled={disabled} onClick={onClick} className={`${className}`}>
       {children}

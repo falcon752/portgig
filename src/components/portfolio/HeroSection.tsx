@@ -37,7 +37,7 @@ const HeroSection = () => {
       {/* Highlight Banner */}
       <div className="max-w-5xl mx-auto bg-[#0A1F63] text-white text-base md:text-lg lg:text-xl rounded-2xl px-5 py-5 sm:p-6 md:py-7 md:px-10 lg:px-14 my-10 shadow-xl text-center font-raleway md:mx-6 lg:mx-auto">
         We currently have 6 unique portfolio templates tailored for different
-        creative industries — from graphic designers to editors and more. This
+        creative industries, from graphic designers to editors and more. This
         is just the beginning.
       </div>
 
@@ -45,16 +45,16 @@ const HeroSection = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 lg:px-0 text-base md:text-lg lg:text-xl text-[#0A1754] space-y-5 font-raleway leading-relaxed md:leading-loose">
         <p>
           As we grow, we’ll keep expanding this library with fresh, inspiring
-          layouts made by top-notch UI/UX designers — and you’ll get to pick the
+          layouts made by top-notch UI/UX designers, and you’ll get to pick the
           one that fits you best.
         </p>
         <p>
           Whether you’re showing off your logos, reels, edits, or product shots
-          — preview, edit, and launch your work the way you want it seen.
+         , preview, edit, and launch your work the way you want it seen.
         </p>
         <p>
           This space will soon feature community-made templates too. We’ll open
-          submissions so that designers can drop their best — and you get even
+          submissions so that designers can drop their best, and you get even
           more ways to stand out.
         </p>
       </div>
