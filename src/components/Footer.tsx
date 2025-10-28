@@ -1,3 +1,4 @@
+"use client";
 import { footerInfo, socialMedia, footerSupport } from "@/src/constants";
 import React from "react";
 import { FaFacebook, FaLinkedin, FaInstagram, FaYoutube } from "react-icons/fa";
@@ -8,10 +9,9 @@ import { Buttons } from "@/src/components/export_components";
 const Footer = () => {
   return (
     <div className="bg-primary text-white font-inter">
-      <div className="bodyMargin py-10 max-md:px-5">
+      <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-10">
         {/* Mobile Layout */}
         <div className="lg:hidden">
-          {/* Mobile Grid - 3 columns */}
           <div className="grid grid-cols-3 gap-8 mb-12 text-center">
             {/* Information Column */}
             <div className="flex flex-col gap-4">
