@@ -30,7 +30,7 @@ const JobHub = () => {
   const handleFilterChange = useCallback((filters: FilterData) => {
     setCurrentFilters(filters);
     setIsSearching(true);
-    
+
     setTimeout(() => {
       setIsSearching(false);
     }, 200);
@@ -39,8 +39,7 @@ const JobHub = () => {
   const handleSearch = useCallback((filters: FilterData) => {
     setCurrentFilters(filters);
     setIsSearching(true);
-  
-    
+
     setTimeout(() => {
       setIsSearching(false);
     }, 500);
@@ -54,7 +53,10 @@ const JobHub = () => {
     <main className="font-raleway">
       <JobHero />
       <SearchSection onSearch={handleSearch} />
-      <div className="flex gap-5 bodyMargin">
+
+      {/* JOBS + FILTERS SECTION */}
+      <div className="max-w-[1200px] mx-auto w-full flex gap-5 px-4 md:px-6 lg:px-0">
+        {/* LEFT FILTERS */}
         <div className="flex-2/7 max-lg:hidden">
           <JobFilters
             onFilterChange={handleFilterChange}
@@ -63,13 +65,16 @@ const JobHub = () => {
             totalJobs={totalJobsCount}
           />
         </div>
+
+        {/* RIGHT JOB LISTING */}
         <div className="flex-5/7">
-          <Jobs 
+          <Jobs
             filters={currentFilters}
             onTotalJobsChange={handleTotalJobsChange}
           />
         </div>
       </div>
+
       <JobCategories />
     </main>
   );

@@ -87,172 +87,171 @@ const SearchSection: React.FC<SearchSectionProps> = ({ onSearch }) => {
   const locationSuggestions = getLocationSuggestions();
 
   return (
-    <section className="bodyMargin border border-gray100 flex flex-col lg:flex-row bg-white font-raleway gap-2 lg:gap-0 p-2 lg:p-0 relative">
-      {/* Role Search */}
-      <div className="relative flex gap-3 lg:gap-5 pl-3 lg:pl-5 text-textColor items-center w-full border border-gray100 font-raleway py-3 lg:py-0">
-        <AiOutlineSearch className="h-4 w-4 lg:h-5 lg:w-5 shrink-0" />
-        <input
-          type="text"
-          name="title"
-          value={searchData.title}
-          onChange={handleInputChange}
-          placeholder="Search jobs by role"
-          className="w-full h-full border-none outline-none focus:outline-none focus:border-none focus:ring-0 text-sm lg:text-base"
-        />
+    <section className="border border-gray100 bg-white font-raleway relative">
+      <div className="max-w-[1200px] mx-auto w-full flex flex-col lg:flex-row gap-2 lg:gap-0 p-2 lg:p-0 px-4 md:px-6">
+        {/* Role Search */}
+        <div className="relative flex gap-3 lg:gap-5 pl-3 lg:pl-5 text-textColor items-center w-full border border-gray100 font-raleway py-3 lg:py-0">
+          <AiOutlineSearch className="h-4 w-4 lg:h-5 lg:w-5 shrink-0" />
+          <input
+            type="text"
+            name="title"
+            value={searchData.title}
+            onChange={handleInputChange}
+            placeholder="Search jobs by role"
+            className="w-full h-full border-none outline-none focus:outline-none focus:border-none focus:ring-0 text-sm lg:text-base"
+          />
 
-        {/* Role Suggestions Dropdown */}
-        {roleSuggestions.length > 0 && searchData.title && (
-          <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md shadow-lg z-10 max-h-40 overflow-y-auto">
-            {roleSuggestions.map((role) => (
-              <div
-                key={role}
-                className="p-2 hover:bg-gray-100 cursor-pointer text-sm"
-                onClick={() =>
-                  setSearchData((prev) => ({ ...prev, title: role }))
-                }
-              >
-                {role}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+          {roleSuggestions.length > 0 && searchData.title && (
+            <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md shadow-lg z-10 max-h-40 overflow-y-auto">
+              {roleSuggestions.map((role) => (
+                <div
+                  key={role}
+                  className="p-2 hover:bg-gray-100 cursor-pointer text-sm"
+                  onClick={() =>
+                    setSearchData((prev) => ({ ...prev, title: role }))
+                  }
+                >
+                  {role}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
 
-      {/* Industry Search */}
-      <div className="relative flex gap-3 lg:gap-5 pl-3 lg:pl-5 text-textColor items-center w-full border border-gray100 py-3 lg:py-0">
-        <AiOutlineSearch className="h-4 w-4 lg:h-5 lg:w-5 shrink-0" />
-        <input
-          type="text"
-          name="category"
-          value={searchData.category}
-          onChange={handleInputChange}
-          placeholder="Search jobs by industry"
-          className="w-full h-full border-none outline-none focus:outline-none focus:border-none focus:ring-0 text-sm lg:text-base"
-        />
+        {/* Industry Search */}
+        <div className="relative flex gap-3 lg:gap-5 pl-3 lg:pl-5 text-textColor items-center w-full border border-gray100 py-3 lg:py-0">
+          <AiOutlineSearch className="h-4 w-4 lg:h-5 lg:w-5 shrink-0" />
+          <input
+            type="text"
+            name="category"
+            value={searchData.category}
+            onChange={handleInputChange}
+            placeholder="Search jobs by industry"
+            className="w-full h-full border-none outline-none focus:outline-none focus:border-none focus:ring-0 text-sm lg:text-base"
+          />
 
-        {/* Industry Suggestions Dropdown */}
-        {industrySuggestions.length > 0 && searchData.category && (
-          <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md shadow-lg z-10">
-            {industrySuggestions.map((industry) => (
-              <div
-                key={industry}
-                className="p-2 hover:bg-gray-100 cursor-pointer text-sm"
-                onClick={() =>
-                  setSearchData((prev) => ({ ...prev, category: industry }))
-                }
-              >
-                {industry}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+          {industrySuggestions.length > 0 && searchData.category && (
+            <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+              {industrySuggestions.map((industry) => (
+                <div
+                  key={industry}
+                  className="p-2 hover:bg-gray-100 cursor-pointer text-sm"
+                  onClick={() =>
+                    setSearchData((prev) => ({ ...prev, category: industry }))
+                  }
+                >
+                  {industry}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
 
-      {/* Desktop Location Search */}
-      <div className="hidden lg:flex relative gap-3 lg:gap-5 pl-3 lg:pl-5 text-textColor items-center w-full border border-gray100 py-3">
-        <AiOutlineSearch className="h-4 w-4 lg:h-5 lg:w-5 shrink-0" />
-        <input
-          type="text"
-          name="location"
-          value={searchData.location}
-          onChange={handleInputChange}
-          placeholder="Search jobs by location"
-          className="w-full h-full border-none outline-none focus:outline-none focus:border-none focus:ring-0 text-sm lg:text-base"
-        />
+        {/* Desktop Location Search */}
+        <div className="hidden lg:flex relative gap-3 lg:gap-5 pl-3 lg:pl-5 text-textColor items-center w-full border border-gray100 py-3">
+          <AiOutlineSearch className="h-4 w-4 lg:h-5 lg:w-5 shrink-0" />
+          <input
+            type="text"
+            name="location"
+            value={searchData.location}
+            onChange={handleInputChange}
+            placeholder="Search jobs by location"
+            className="w-full h-full border-none outline-none focus:outline-none focus:border-none focus:ring-0 text-sm lg:text-base"
+          />
 
-        {/* Location Suggestions Dropdown */}
-        {locationSuggestions.length > 0 && searchData.location && (
-          <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md shadow-lg z-10 max-h-40 overflow-y-auto">
-            {locationSuggestions.map((state) => (
-              <div
-                key={state}
-                className="p-2 hover:bg-gray-100 cursor-pointer text-sm"
-                onClick={() =>
-                  setSearchData((prev) => ({ ...prev, location: state }))
-                }
-              >
-                {state}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Mobile State Search */}
-      <div className="flex lg:hidden relative gap-3 pl-3 text-textColor items-center w-full border border-gray100 py-3">
-        <AiOutlineSearch className="h-4 w-4 shrink-0" />
-        <input
-          type="text"
-          name="state"
-          value={searchData.state}
-          onChange={handleInputChange}
-          placeholder="Search jobs by state"
-          className="w-full h-full border-none outline-none focus:outline-none focus:border-none focus:ring-0 text-sm"
-        />
-
-        {/* State Suggestions Dropdown for Mobile */}
-        {searchData.state && (
-          <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md shadow-lg z-10 max-h-40 overflow-y-auto">
-            {availableStates
-              .filter((state) =>
-                state.toLowerCase().includes(searchData.state.toLowerCase())
-              )
-              .slice(0, 5)
-              .map((state) => (
+          {locationSuggestions.length > 0 && searchData.location && (
+            <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md shadow-lg z-10 max-h-40 overflow-y-auto">
+              {locationSuggestions.map((state) => (
                 <div
                   key={state}
                   className="p-2 hover:bg-gray-100 cursor-pointer text-sm"
-                  onClick={() => setSearchData((prev) => ({ ...prev, state }))}
+                  onClick={() =>
+                    setSearchData((prev) => ({ ...prev, location: state }))
+                  }
                 >
                   {state}
                 </div>
               ))}
-          </div>
+            </div>
+          )}
+        </div>
+
+        {/* Mobile State Search */}
+        <div className="flex lg:hidden relative gap-3 pl-3 text-textColor items-center w-full border border-gray100 py-3">
+          <AiOutlineSearch className="h-4 w-4 shrink-0" />
+          <input
+            type="text"
+            name="state"
+            value={searchData.state}
+            onChange={handleInputChange}
+            placeholder="Search jobs by state"
+            className="w-full h-full border-none outline-none focus:outline-none focus:border-none focus:ring-0 text-sm"
+          />
+
+          {searchData.state && (
+            <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md shadow-lg z-10 max-h-40 overflow-y-auto">
+              {availableStates
+                .filter((state) =>
+                  state.toLowerCase().includes(searchData.state.toLowerCase())
+                )
+                .slice(0, 5)
+                .map((state) => (
+                  <div
+                    key={state}
+                    className="p-2 hover:bg-gray-100 cursor-pointer text-sm"
+                    onClick={() =>
+                      setSearchData((prev) => ({ ...prev, state }))
+                    }
+                  >
+                    {state}
+                  </div>
+                ))}
+            </div>
+          )}
+        </div>
+
+        {/* Mobile LGA Search */}
+        <div className="flex lg:hidden gap-3 pl-3 text-textColor items-center w-full border border-gray100 py-3">
+          <AiOutlineSearch className="h-4 w-4 shrink-0" />
+          <input
+            type="text"
+            name="lga"
+            value={searchData.lga}
+            onChange={handleInputChange}
+            placeholder="Search jobs by local government"
+            className="w-full h-full border-none outline-none focus:outline-none focus:border-none focus:ring-0 text-sm"
+          />
+        </div>
+
+        {/* Search Button */}
+        <div className="w-full flex items-center justify-center py-3 lg:py-0">
+          <Buttons
+            label="Search Jobs"
+            className="bg-primary! text-base lg:text-xl h-12 font-semibold px-6 lg:px-8 py-2! lg:py-0 w-full lg:w-fit text-white rounded-xl hover:bg-primary/90 transition-colors"
+            onClick={handleSearch}
+          />
+        </div>
+
+        {(searchData.title ||
+          searchData.category ||
+          searchData.location ||
+          searchData.state) && (
+          <button
+            onClick={() =>
+              setSearchData({
+                title: "",
+                category: "",
+                location: "",
+                state: "",
+                lga: "",
+              })
+            }
+            className="absolute top-2 right-2 text-xs text-gray-500 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded"
+          >
+            Clear
+          </button>
         )}
       </div>
-
-      {/* Mobile LGA Search */}
-      <div className="flex lg:hidden gap-3 pl-3 text-textColor items-center w-full border border-gray100 py-3">
-        <AiOutlineSearch className="h-4 w-4 shrink-0" />
-        <input
-          type="text"
-          name="lga"
-          value={searchData.lga}
-          onChange={handleInputChange}
-          placeholder="Search jobs by local government"
-          className="w-full h-full border-none outline-none focus:outline-none focus:border-none focus:ring-0 text-sm"
-        />
-      </div>
-
-      {/* Search Button */}
-      <div className="w-full flex items-center justify-center py-3 lg:py-0">
-        <Buttons
-          label="Search Jobs"
-          className="bg-primary! text-base lg:text-xl h-12 font-semibold px-6 lg:px-8 py-2! lg:py-0 w-full lg:w-fit text-white rounded-xl hover:bg-primary/90 transition-colors"
-          onClick={handleSearch}
-        />
-      </div>
-
-      {/* Quick Clear Option */}
-      {(searchData.title ||
-        searchData.category ||
-        searchData.location ||
-        searchData.state) && (
-        <button
-          onClick={() =>
-            setSearchData({
-              title: "",
-              category: "",
-              location: "",
-              state: "",
-              lga: "",
-            })
-          }
-          className="absolute top-2 right-2 text-xs text-gray-500 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded"
-        >
-          Clear
-        </button>
-      )}
     </section>
   );
 };
