@@ -19,7 +19,8 @@ const AvailableJobsComp = () => {
   });
 
   const jobsListingData = jobsResponse?.data?.page_data || [];
-  const pageCount = jobsResponse?.data?.page_count || 0;
+  const limitedJobs = jobsListingData.slice(0, 9); // limit to 9
+  const hasJobs = limitedJobs.length > 0;
 
   return (
     <section className="flex justify-center font-raleway">
@@ -28,15 +29,16 @@ const AvailableJobsComp = () => {
           w-full max-w-[1200px]
           flex flex-col gap-6
           mx-auto
+          px-3 sm:px-6 lg:px-0
         "
       >
         <div className="flex items-center">
-          <h2 className="text-lg sm:text-xl lg:text-2xl font-extrabold pl-4 sm:pl-10 text-[#00489A]">
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-extrabold pl-2 sm:pl-6 lg:pl-10 text-[#00489A]">
             Explore jobs
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {isLoading ? (
             <div className="col-span-full flex justify-center items-center h-64">
               <LooadingSpinner className="border-primary w-16 h-16" />
@@ -55,17 +57,17 @@ const AvailableJobsComp = () => {
                 </button>
               </div>
             </div>
-          ) : pageCount === 0 ? (
+          ) : !hasJobs ? (
             <div className="col-span-full flex items-center justify-center min-h-[300px]">
               <div className="text-center text-secondary text-lg sm:text-2xl font-semibold bg-gray-100 p-6 rounded-lg shadow-md">
                 No jobs available
               </div>
             </div>
           ) : (
-            jobsListingData.map((item) => (
+            limitedJobs.map((item) => (
               <Link
                 key={item._id}
-                className="flex flex-col gap-4 px-4 py-3 rounded-xl border-2 border-secondary text-secondary hover:shadow-lg transition-shadow duration-300"
+                className="flex flex-col gap-4 px-3 py-3 sm:px-4 sm:py-3 rounded-xl border-2 border-secondary text-secondary hover:shadow-lg transition-shadow duration-300"
                 href={`/job-hub/${item._id}`}
               >
                 <div className="flex items-start gap-3">
@@ -85,6 +87,7 @@ const AvailableJobsComp = () => {
                     </p>
                   </div>
                 </div>
+
                 <div className="flex flex-col gap-2">
                   <div className="flex justify-between items-center text-xs font-bold text-gray-700">
                     <p className="ml-2 text-[#00489A] font-raleway">
@@ -102,6 +105,7 @@ const AvailableJobsComp = () => {
                         );
                       })()}
                   </div>
+
                   <div className="flex justify-between text-white text-[10px] font-bold gap-2">
                     <div className="bg-[#587DBD] rounded-lg py-1 px-3 text-[11px]">
                       {item.work_mode}

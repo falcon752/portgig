@@ -5,14 +5,13 @@ import Link from "next/link";
 
 const Community = () => {
   return (
-    <section className="my-0 lg:my-10 flex flex-col gap-2 lg:gap-5 bodyMargin">
+    <section className="my-0 lg:my-10 flex flex-col gap-2 lg:gap-5 mx-auto max-w-[1200px] px-4">
       {/* Banner */}
       <div className="h-auto w-full max-w-xl bg-secondary flex items-center mt-5 px-4 py-6 rounded-md sm:p-8">
         <p className="text-white font-bold text-lg subHeading">
           Feeling overwhelmed?
         </p>
       </div>
-
 
       <div className="flex flex-row gap-4 lg:gap-10 bg-white lg:bg-primary my-0 lg:my-5 p-4 sm:p-8 rounded-2xl text-white font-raleway">
         <div className="flex flex-col gap-2 lg:gap-10 w-full lg:w-2/3">
@@ -69,23 +68,24 @@ const Community = () => {
           />
         </div>
       </div>
+
       <div className="w-full">
-      <Link
-        href="https://phythealth.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block"
-      >
-        <Image
-          src="/assets/creative-homepage.png"
-          alt="Community Illustration"
-          width={1200}
-          height={600}
-          className="w-full h-auto object-cover cursor-pointer"
-          priority
-        />
-      </Link>
-    </div>
+        <Link
+          href="https://phythealth.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block"
+        >
+          <Image
+            src="/assets/creative-homepage.png"
+            alt="Community Illustration"
+            width={1200}
+            height={600}
+            className="w-full h-auto object-cover cursor-pointer"
+            priority
+          />
+        </Link>
+      </div>
     </section>
   );
 };

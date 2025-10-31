@@ -15,7 +15,7 @@ const CommunitySection = () => {
             {/* 1. Feeling overwhelmed */}
             <div className="h-15 w-full bg-secondary flex items-center mt-5 p-6 md:p-7 lg:p-8">
               <p className="text-xl md:text-2xl lg:text-4xl font-black text-white">
-                Feeling overwhelmed?
+                Feeling overwhelmeddddddd?
               </p>
             </div>
 
