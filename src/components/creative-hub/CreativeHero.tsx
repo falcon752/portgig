@@ -2,7 +2,7 @@ import Image from "next/image"
 
 const CreativeHero = () => {
   return (
-    <section className="bodyMargin h-fit bg-primary my-5 gap-5">
+    <section className="mx-auto max-w-[1200px] h-fit bg-primary my-5 gap-5 px-4">
       <div className="h-full flex flex-row">
         <div className="flex flex-col justify-center w-1/2 p-4 md:p-15">
           <h2 className="text-xs font-medium lg:text-xl text-white font-urbanist -ml-2 md:-ml-4">Discover Creatives</h2>

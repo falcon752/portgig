@@ -30,8 +30,8 @@ const Form = () => {
   };
 
   return (
-    <div className="pt-10 lg:pt-24 px-4 pb-10 bg-white bodyMargin">
-      <div className="w-full max-w-6xl">
+    <section className="pt-10 lg:pt-24 px-4 pb-10 bg-white mx-auto max-w-[1200px]">
+      <div className="w-full">
         <h4 className="text-[#0A1754] text-2xl lg:text-4xl font-extrabold font-urbanist mb-6 text-left">
           Send us a message, we will work on it soonest
         </h4>
@@ -93,7 +93,7 @@ const Form = () => {
           </div>
         </form>
       </div>
-    </div>
+    </section>
   );
 };
 
