@@ -75,7 +75,6 @@ const SearchCreatives: React.FC<SearchCreativesProps> = ({ onSearchChange }) => 
       dispatch(setLgas([]));
 
       try {
-        // Use naija-state-local-government library to get LGAs
         const lgaResult = NaijaStates.lgas(selectedState);
         if (lgaResult && Array.isArray(lgaResult.lgas) && lgaResult.lgas.length > 0) {
           dispatch(setLgas(lgaResult.lgas));
@@ -143,7 +142,6 @@ const SearchCreatives: React.FC<SearchCreativesProps> = ({ onSearchChange }) => 
     console.log("Search inputs:", searchInputs);
     setShowMobileFilter(false);
     
-    // Convert filters and search inputs to SearchData format
     const searchData: SearchData = {
       role: searchInputs.role,
       industry: searchInputs.industry || filters.industry,
@@ -170,9 +168,8 @@ const SearchCreatives: React.FC<SearchCreativesProps> = ({ onSearchChange }) => 
   };
 
   return (
-    <div className="bodyMargin">
-      {/* Search Section */}
-      <section className="border border-gray100 flex flex-col lg:flex-row bg-white font-raleway gap-2 lg:gap-0 p-2 lg:p-0">
+    <section className="border border-gray100 bg-white font-raleway relative">
+      <div className="max-w-[1200px] mx-auto w-full flex flex-col lg:flex-row gap-2 lg:gap-0 p-2 lg:p-0 px-4 md:px-6">
         {/* Mobile: Role and Industry in a row */}
         <div className="flex lg:hidden gap-2 w-full">
           <div className="flex gap-3 pl-3 text-textColor items-center w-full border border-gray100 font-raleway py-3">
@@ -244,7 +241,7 @@ const SearchCreatives: React.FC<SearchCreativesProps> = ({ onSearchChange }) => 
             onClick={handleSearch}
           />
         </div>
-      </section>
+      </div>
 
       {/* Mobile Filter Button - Full Width like Input */}
       <button
@@ -383,7 +380,7 @@ const SearchCreatives: React.FC<SearchCreativesProps> = ({ onSearchChange }) => 
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 
