@@ -1,45 +1,51 @@
-export const PORTGIG_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
-
+export const PORTGIG_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const experienceOptions = [
-  { label: 'Beginner (0-1 years)', value: '1 years' },
-  { label: 'Intermediate (2 years)', value: '2 years' },
-  { label: 'Mid-level (3 years)', value: '3 years' },
-  { label: 'Professional (4-6 years)', value: '4 years' },
-  { label: 'Expert (7-15 years)', value: '7 years' },
-]
-
+  { label: "Beginner (0-1 years)", value: "1 years" },
+  { label: "Intermediate (2 years)", value: "2 years" },
+  { label: "Mid-level (3 years)", value: "3 years" },
+  { label: "Professional (4-6 years)", value: "4 years" },
+  { label: "Expert (7-15 years)", value: "7 years" },
+];
 
 export const navigationItems = [
+  {
+    label: "Home",
+    link: "/",
+  },
+  {
+    label: "About",
+    link: "/about-us",
+  },
+  {
+    label: "Creatives",
+    link: "/creatives-hub",
+  },
+  {
+    label: "Jobs",
+    link: "/job-hub",
+  },
+  {
+    label: "My Portfolio",
+    link: "/portfolio",
+  },
+  {
+    label: "Messages",
+    link: "/chats",
+  },
+  {
+    label: "Shops",
+    link: "https://shop.portgig.com.ng/",
+  },
     {
-      label: "Home",
-      link: "/",
-    },
-    {
-      label: "About",
-      link: "/about-us",
-    },
-    {
-      label: "Jobs",
-      link: "/job-hub",
-    },
-    {
-      label: "My Portfolio",
-      link: "/portfolio",
-    },
-    {
-      label: "Messages",
-      link: "/chats",
-    },
-    {
-      label: "Shops",
-      link: "https://shop.portgig.com.ng/",
-    },
-    {
-      label: "Academy",
-      link: "https://portgig.com.ng",
-    },
-  ];
+    label: "Blogs",
+    link: "https://blog.portgig.com.ng/",
+  },
+  {
+    label: "Academy",
+    link: "https://portgig.com.ng",
+  },
+];
 
 export const navigationItemsMobile = [
   {
@@ -49,6 +55,10 @@ export const navigationItemsMobile = [
   {
     label: "About",
     link: "/about-us",
+  },
+  {
+    label: "Creatives",
+    link: "/creatives-hub",
   },
   {
     label: "Jobs",
