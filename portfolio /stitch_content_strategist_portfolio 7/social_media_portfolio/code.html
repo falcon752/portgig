@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Social Media Manager Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13a4ec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101c22",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Simple scrollbar styling for the tools section */
+        .tools-scroller::-webkit-scrollbar {
+            height: 4px;
+        }
+        .tools-scroller::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .tools-scroller::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+        .dark .tools-scroller::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-10 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm p-4 justify-between border-b border-slate-200 dark:border-slate-800">
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1">Jane Doe</h2>
+<a class="flex items-center justify-end" href="#contact">
+<p class="text-primary text-base font-bold leading-normal tracking-[0.015em] shrink-0">Contact Me</p>
+</a>
+</header>
+<main>
+<!-- Profile Header -->
+<section class="flex p-4 pt-8 @container bg-background-light dark:bg-background-dark">
+<div class="flex w-full flex-col gap-4 items-center">
+<div class="flex gap-4 flex-col items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32 shadow-md" data-alt="Professional headshot of Jane Doe" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCJ_3r_IneY1gQCOaMXhoGj2AoXM96AZ4SBzW6kEDoJvB7vmSnGWAfvh3LoPMqWsYQl56ygsdZUfvcKKz8C-Z7qHR8jDXS538_9SfyUr_2w0SqF0nIpAGGAmHNfZKToR3UPiUVvcY9bGPlOTX68bJwhWznOxB0-0j1arNCrFtK2VWfnXNGQYBrVNon-yLA7nVeHD0WPzzl9KsCjFg954MgbKygbx4hEYt-U38BLkQ2M3rRaiqutXatAdw_bNXrlXcQfAecjt0xvPkvh");'></div>
+<div class="flex flex-col items-center justify-center">
+<h1 class="text-slate-900 dark:text-slate-100 text-[22px] font-bold leading-tight tracking-[-0.015em] text-center">Jane Doe</h1>
+<p class="text-slate-500 dark:text-slate-400 text-base font-normal leading-normal text-center">Social Media Strategist &amp; Full-Stack Creator</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Body Text -->
+<section class="bg-background-light dark:bg-background-dark">
+<p class="text-slate-800 dark:text-slate-300 text-base font-normal leading-normal pb-6 pt-1 px-4 text-center max-w-xl mx-auto">
+                    Focused on driving audience growth, maximizing engagement, and translating social activity into tangible business goals.
+                </p>
+</section>
+<!-- Integrated Offerings Section -->
+<section class="bg-background-light dark:bg-background-dark py-6">
+<h3 class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase leading-normal tracking-widest px-4 py-2 text-center">Our Integrated Offerings</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+<div class="flex flex-1 gap-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-4 flex-col text-center items-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-3xl">pie_chart</span>
+<div class="flex flex-col gap-1">
+<h4 class="text-slate-900 dark:text-slate-100 text-base font-bold leading-tight">Strategy &amp; Management</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Audience Growth, Content Calendar, Paid Social</p>
+</div>
+</div>
+<div class="flex flex-1 gap-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-4 flex-col text-center items-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-3xl">videocam</span>
+<div class="flex flex-col gap-1">
+<h4 class="text-slate-900 dark:text-slate-100 text-base font-bold leading-tight">Video Content</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Reels/TikTok, YouTube Shorts, Brand Video Editing</p>
+</div>
+</div>
+<div class="flex flex-1 gap-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-4 flex-col text-center items-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-3xl">design_services</span>
+<div class="flex flex-col gap-1">
+<h4 class="text-slate-900 dark:text-slate-100 text-base font-bold leading-tight">Graphic Design</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Branded Templates, Carousel Graphics, Static Ads</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Client Success Stories -->
+<section class="bg-slate-100 dark:bg-slate-900/70 py-10">
+<h3 class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase leading-normal tracking-widest px-4 py-2 text-center">Client Success Stories</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
+<div class="flex flex-col gap-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark p-6 shadow-sm">
+<p class="text-slate-700 dark:text-slate-300 font-bold text-lg">Aura Wellness</p>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-semibold">Challenge:</p>
+<p class="text-slate-800 dark:text-slate-300 text-sm">Low brand awareness in a crowded market.</p>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-semibold">Solution:</p>
+<p class="text-slate-800 dark:text-slate-300 text-sm">Launched an influencer-led video campaign on TikTok.</p>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-semibold">Result:</p>
+<p class="text-slate-800 dark:text-slate-300 text-sm"><strong class="text-primary font-bold text-base">+120%</strong> Follower Growth in 3 months.</p>
+</div>
+</div>
+<div class="flex flex-col gap-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark p-6 shadow-sm">
+<p class="text-slate-700 dark:text-slate-300 font-bold text-lg">TechNova Solutions</p>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-semibold">Challenge:</p>
+<p class="text-slate-800 dark:text-slate-300 text-sm">Poor engagement on existing social platforms.</p>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-semibold">Solution:</p>
+<p class="text-slate-800 dark:text-slate-300 text-sm">Developed interactive polls and carousels for Instagram.</p>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-semibold">Result:</p>
+<p class="text-slate-800 dark:text-slate-300 text-sm"><strong class="text-primary font-bold text-base">+85%</strong> Increase in engagement rate.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Campaign Visuals -->
+<section class="bg-background-light dark:bg-background-dark py-10">
+<h3 class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase leading-normal tracking-widest px-4 py-2 text-center">Featured Campaign Visuals</h3>
+<div class="grid grid-cols-2 gap-4 p-4">
+<div class="flex flex-col gap-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="Vibrant graphic for a summer product launch" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBtxG8JY7QTcTY_ftSWVjh8TiI6B7waokx7brSqQwQMP1ihC7XF31aIj6L7Xoek2Cgo9vc1HgejzBZeMwSDOtjHr4vVp40Bw77qDVfbKduGnil_pJdc1U_Qm6UDeKR6JtjUudXKxCmTIsqMlS2zT829_8-Blg58E73kPpXuLAPxkL-2HYYsXlUhhfrcBekyWVGOx-w4AnBiip5DlnUR-QWmNyazVMKQygCawX1RkkFMJ_-uFZBPQt7oHAQac7kBmQiRAs7gStkU15Xt");'></div>
+<p class="text-slate-700 dark:text-slate-300 text-xs text-center">Aura Wellness Summer '24 Launch</p>
+<button class="w-full text-white bg-primary hover:bg-primary/90 rounded-md py-2 px-3 text-sm font-semibold">View Post</button>
+</div>
+<div class="flex flex-col gap-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="Clean corporate design for a tech webinar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB754nWriglkDlQcgOQLBDZ3uGFN6n-3QrFH1lLpS1Za7v93bRMyOsWKRTIkBBGTPq9xQggta_ivAK4nXLaTu3hocQzIJztsqy8xSRvPknUr-EhJUVv-eSzm_qh3_OuSERAMzIErKHWrVFgKDTptGdtQmzccpD4jH9YeQeZkMGhZqhkAf73xgtINjFXrAu4dbKDXL-RDMxPSDyj10fkMRq3vJ6UkE1eodeM7aQTEopqFjDRRZFX249hQIiL7QSxmwui9fcvj0uPzeTW");'></div>
+<p class="text-slate-700 dark:text-slate-300 text-xs text-center">TechNova Webinar Series Promotion</p>
+<button class="w-full text-white bg-primary hover:bg-primary/90 rounded-md py-2 px-3 text-sm font-semibold">View Post</button>
+</div>
+<div class="flex flex-col gap-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="Lifestyle shot for a fashion brand's Instagram" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB_xkEnmik7Xd55m19wkJ2PrJKJ6pSqJdY8mYc1ObYcU6GivPWZjBVF14mT2hN-Mf9ojjATXTgWBQ2PUvpowX_nmAC-rp-CVBKITQcpaJBgWOrmAKusTe_zU9LIKPKod0mNKBbWGDmxU849k2OOIK-5yXL3LcRWDSKE-Lp8lBMVlEaulBXKpCPikUD_yWLMjNhFsrjyQ7KDdMyvIsHSZ0MBF-1dLZroGnMtrQLNq9cY6P62PJOjM8DWwZy-nLFFAoe0uNOle918niax");'></div>
+<p class="text-slate-700 dark:text-slate-300 text-xs text-center">Urban Threads Fall Collection</p>
+<button class="w-full text-white bg-primary hover:bg-primary/90 rounded-md py-2 px-3 text-sm font-semibold">See Live Example</button>
+</div>
+<div class="flex flex-col gap-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="Short-form video thumbnail for a food blog" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC_tCXe_pMdHuWbNHu9bPgNoOkdHbcvjyd3HVq0fd-TEP3jOXj-nScta1SaChdnz1xt7CUyhfErO1YiA8pBG_t9F_rX730SWULfJwGzclihEKglsiHpzOCKaFiPkiX6UHzmdNxFBIEerLRzwPIQh6oAQz6FbgNIdrzcVERGmIcqqiZPmkA1BR63zWqnREo4t88IktFlEvivSXkGKFjwOPhumnADMovy_9M7bRrCpFWGRl16_oPkS45DreaALiryUCmHwMKC2tQEPeHj");'></div>
+<p class="text-slate-700 dark:text-slate-300 text-xs text-center">Fresh Bites "Quick Recipes" Reel</p>
+<button class="w-full text-white bg-primary hover:bg-primary/90 rounded-md py-2 px-3 text-sm font-semibold">See Live Example</button>
+</div>
+</div>
+</section>
+<!-- Tools I Use -->
+<section class="bg-background-light dark:bg-background-dark py-6">
+<h3 class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase leading-normal tracking-widest px-4 py-2 text-center">Tools I Use</h3>
+<div class="tools-scroller relative w-full overflow-x-auto pb-2">
+<div class="flex gap-3 px-4 pt-2 whitespace-nowrap">
+<div class="text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-lg py-2 px-4 text-sm">Sprout Social</div>
+<div class="text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-lg py-2 px-4 text-sm">Google Analytics</div>
+<div class="text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-lg py-2 px-4 text-sm">Canva</div>
+<div class="text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-lg py-2 px-4 text-sm">Meta Business Suite</div>
+<div class="text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-lg py-2 px-4 text-sm">CapCut</div>
+<div class="text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-lg py-2 px-4 text-sm">Hootsuite</div>
+</div>
+</div>
+</section>
+<!-- What You Get -->
+<section class="bg-slate-100 dark:bg-slate-900/70 py-10">
+<h3 class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase leading-normal tracking-widest px-4 py-2 text-center">What You Get Working With Me</h3>
+<div class="flex flex-col gap-4 p-4 max-w-md mx-auto">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<div class="flex flex-col">
+<p class="text-slate-900 dark:text-slate-100 font-semibold">Data-Driven Decisions</p>
+<p class="text-slate-600 dark:text-slate-400 text-sm">Every strategy is backed by analytics to ensure optimal performance.</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<div class="flex flex-col">
+<p class="text-slate-900 dark:text-slate-100 font-semibold">Clear Monthly Reporting</p>
+<p class="text-slate-600 dark:text-slate-400 text-sm">Transparent reports that show what’s working and what’s next.</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<div class="flex flex-col">
+<p class="text-slate-900 dark:text-slate-100 font-semibold">Authentic, On-Brand Voice</p>
+<p class="text-slate-600 dark:text-slate-400 text-sm">Content that resonates with your audience and reflects your values.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer / CTA -->
+<footer class="bg-background-light dark:bg-background-dark text-center py-10 px-4" id="contact">
+<div class="flex flex-col items-center gap-4">
+<p class="text-slate-800 dark:text-slate-200 text-xl font-bold max-w-xs">Ready to translate your vision into growth?</p>
+<button class="w-full max-w-xs text-white bg-primary hover:bg-primary/90 rounded-lg py-3 px-6 text-base font-bold shadow-lg">Drive Your Brand's Growth</button>
+</div>
+</footer>
+</div>
+</body></html>

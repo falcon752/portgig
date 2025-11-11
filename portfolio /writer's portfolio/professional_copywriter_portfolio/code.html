@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Writer's Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#da5e0b",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221710",
+                        "text-light": "#1c130d",
+                        "text-dark": "#f8f7f5",
+                        "subtle-light": "#9c6a49",
+                        "subtle-dark": "#a39992",
+                        "border-light": "#e8d9ce",
+                        "border-dark": "#4a3c30",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-sans text-text-light dark:text-text-dark">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col w-full max-w-[960px] flex-1">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-4 sm:px-6 md:px-10 py-3 font-display">
+<div class="flex items-center gap-4">
+<div class="size-4 text-text-light dark:text-text-dark">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_330)">
+<path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+<defs>
+<clipPath id="clip0_6_330">
+<rect fill="white" height="48" width="48"></rect>
+</clipPath>
+</defs>
+</svg>
+</div>
+<h2 class="text-lg font-bold tracking-[-0.015em]">Eleanor Vance</h2>
+</div>
+<nav class="hidden md:flex flex-1 justify-end gap-8">
+<div class="flex items-center gap-9">
+<a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="#services">Services</a>
+<a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="#projects">Projects</a>
+<a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="#contact">Contact</a>
+</div>
+</nav>
+</header>
+<main class="flex flex-col gap-16 md:gap-24 py-16 md:py-24">
+<section class="@container">
+<div class="flex flex-col gap-8 px-4 py-10 @[864px]:flex-row @[864px]:items-center">
+<div class="w-full @[864px]:w-2/5 flex-shrink-0">
+<div class="aspect-square bg-center bg-no-repeat bg-cover rounded-xl" data-alt="Professional headshot of Eleanor Vance, a content strategist." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA0oqW1Xjlvh7cmXr_ObWYbXq7cOGHbSTZyoc2JKKm35tniUhPy4IpWgNSDIuqc6_0iIScTYJIWYXsdoOAyRFfxM6itbMAQifniRubh_oBYmd-ee1G3PauyhuhI2SZtiuGeNWSr31m5I5kM_S-HPJrtbnnvEtfq4Dyxy3HqE5mS-uMfSNo2VV70uE8EDyLnZKH5TqAYC8A8uwotxXgb8AP2RTNrDM1GJhKObcSCS1x3pHCB-Zv02vq1qCJ_fcwi5cX-FefqmP-YDZXo");'></div>
+</div>
+<div class="flex flex-col gap-6 @[864px]:gap-8 @[864px]:justify-center">
+<div class="flex flex-col gap-2 text-left font-display">
+<h1 class="text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl">Eleanor Vance</h1>
+<p class="text-lg font-medium text-subtle-light dark:text-subtle-dark">Content Strategist &amp; Copywriter</p>
+<p class="font-sans text-sm font-normal leading-normal @[480px]:text-base pt-2">Based in San Francisco, CA. I craft compelling narratives that drive measurable revenue and build lasting brand authority. My work is rooted in storytelling that connects, persuades, and converts.</p>
+</div>
+<a class="flex max-w-[280px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base hover:opacity-90 transition-opacity" href="#contact">Let's Discuss Your Project</a>
+</div>
+</div>
+</section>
+<section id="services">
+<h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-4 pt-5 font-display">Services I Offer</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+<div class="flex flex-1 flex-col gap-3 rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark p-4">
+<div class="flex flex-col gap-1">
+<h3 class="text-base font-bold leading-tight font-display">SEO Content Strategy</h3>
+<p class="text-subtle-light dark:text-subtle-dark text-sm font-normal leading-normal">Driving organic traffic with data-informed content that ranks and resonates.</p>
+</div>
+</div>
+<div class="flex flex-1 flex-col gap-3 rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark p-4">
+<div class="flex flex-col gap-1">
+<h3 class="text-base font-bold leading-tight font-display">High-Conversion Copywriting</h3>
+<p class="text-subtle-light dark:text-subtle-dark text-sm font-normal leading-normal">Crafting persuasive copy for websites, landing pages, and ads that converts visitors.</p>
+</div>
+</div>
+<div class="flex flex-1 flex-col gap-3 rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark p-4">
+<div class="flex flex-col gap-1">
+<h3 class="text-base font-bold leading-tight font-display">Ghostwriting</h3>
+<p class="text-subtle-light dark:text-subtle-dark text-sm font-normal leading-normal">Capturing your unique voice for thought leadership articles and executive communications.</p>
+</div>
+</div>
+<div class="flex flex-1 flex-col gap-3 rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark p-4">
+<div class="flex flex-col gap-1">
+<h3 class="text-base font-bold leading-tight font-display">Email Sequences</h3>
+<p class="text-subtle-light dark:text-subtle-dark text-sm font-normal leading-normal">Developing engaging email campaigns that nurture leads and drive sales.</p>
+</div>
+</div>
+<div class="flex flex-1 flex-col gap-3 rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark p-4">
+<div class="flex flex-col gap-1">
+<h3 class="text-base font-bold leading-tight font-display">Editorial Management</h3>
+<p class="text-subtle-light dark:text-subtle-dark text-sm font-normal leading-normal">Overseeing your content calendar from ideation to publication with precision.</p>
+</div>
+</div>
+<div class="flex flex-1 flex-col gap-3 rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark p-4">
+<div class="flex flex-col gap-1">
+<h3 class="text-base font-bold leading-tight font-display">Brand Messaging</h3>
+<p class="text-subtle-light dark:text-subtle-dark text-sm font-normal leading-normal">Defining a clear and compelling brand voice that connects with your audience.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="projects">
+<h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-4 pt-5 font-display">Project Showcase</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+<div class="flex flex-col justify-between gap-4 rounded-lg border border-border-light dark:border-border-dark p-6">
+<div class="flex flex-col gap-1">
+<h3 class="text-lg font-bold font-display">Fintech App Launch</h3>
+<p class="text-sm text-subtle-light dark:text-subtle-dark">Website &amp; Ad Copy</p>
+</div>
+<button class="w-full rounded-full bg-primary py-2 px-4 text-sm font-bold text-white transition-opacity hover:opacity-90">View Case Study</button>
+</div>
+<div class="flex flex-col justify-between gap-4 rounded-lg border border-border-light dark:border-border-dark p-6">
+<div class="flex flex-col gap-1">
+<h3 class="text-lg font-bold font-display">B2B SaaS Blog</h3>
+<p class="text-sm text-subtle-light dark:text-subtle-dark">SEO Content Strategy</p>
+</div>
+<button class="w-full rounded-full bg-primary py-2 px-4 text-sm font-bold text-white transition-opacity hover:opacity-90">Read Full Sample</button>
+</div>
+<div class="flex flex-col justify-between gap-4 rounded-lg border border-border-light dark:border-border-dark p-6">
+<div class="flex flex-col gap-1">
+<h3 class="text-lg font-bold font-display">E-commerce Brand Voice</h3>
+<p class="text-sm text-subtle-light dark:text-subtle-dark">Brand Messaging</p>
+</div>
+<button class="w-full rounded-full bg-primary py-2 px-4 text-sm font-bold text-white transition-opacity hover:opacity-90">View Case Study</button>
+</div>
+<div class="flex flex-col justify-between gap-4 rounded-lg border border-border-light dark:border-border-dark p-6">
+<div class="flex flex-col gap-1">
+<h3 class="text-lg font-bold font-display">CEO Thought Leadership</h3>
+<p class="text-sm text-subtle-light dark:text-subtle-dark">Ghostwriting</p>
+</div>
+<button class="w-full rounded-full bg-primary py-2 px-4 text-sm font-bold text-white transition-opacity hover:opacity-90">Read Full Sample</button>
+</div>
+<div class="flex flex-col justify-between gap-4 rounded-lg border border-border-light dark:border-border-dark p-6">
+<div class="flex flex-col gap-1">
+<h3 class="text-lg font-bold font-display">Health &amp; Wellness Newsletter</h3>
+<p class="text-sm text-subtle-light dark:text-subtle-dark">Email Sequences</p>
+</div>
+<button class="w-full rounded-full bg-primary py-2 px-4 text-sm font-bold text-white transition-opacity hover:opacity-90">View Case Study</button>
+</div>
+<div class="flex flex-col justify-between gap-4 rounded-lg border border-border-light dark:border-border-dark p-6">
+<div class="flex flex-col gap-1">
+<h3 class="text-lg font-bold font-display">Product Launch Campaign</h3>
+<p class="text-sm text-subtle-light dark:text-subtle-dark">High-Conversion Copywriting</p>
+</div>
+<button class="w-full rounded-full bg-primary py-2 px-4 text-sm font-bold text-white transition-opacity hover:opacity-90">Read Full Sample</button>
+</div>
+</div>
+</section>
+<section>
+<h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-4 pt-5 font-display">Client Success Snapshots</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-4">
+<div class="flex flex-col gap-4 rounded-lg border border-border-light dark:border-border-dark p-6">
+<h3 class="text-lg font-bold font-display">The Challenge &amp; Solution</h3>
+<ul class="space-y-3 text-subtle-light dark:text-subtle-dark text-sm">
+<li class="flex items-start gap-2"><span>•</span><span>A B2B tech client struggled with low organic traffic and poor lead quality from their blog.</span></li>
+<li class="flex items-start gap-2"><span>•</span><span>We executed a full-funnel content strategy, targeting high-intent keywords and creating valuable, long-form articles.</span></li>
+<li class="flex items-start gap-2"><span>•</span><span>Introduced lead magnets and optimized CTAs within each post to capture qualified leads.</span></li>
+</ul>
+</div>
+<div class="flex flex-col justify-center gap-6 rounded-lg border border-border-light dark:border-border-dark p-6 text-center">
+<h3 class="text-lg font-bold font-display">The Results</h3>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="text-4xl lg:text-5xl font-bold font-display text-primary">+45%</p>
+<p class="text-sm text-subtle-light dark:text-subtle-dark mt-2">Organic Traffic</p>
+</div>
+<div>
+<p class="text-4xl lg:text-5xl font-bold font-display text-primary">3x</p>
+<p class="text-sm text-subtle-light dark:text-subtle-dark mt-2">Conversion Rate</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section>
+<h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-4 pt-5 font-display text-center">Tools I Use</h2>
+<div class="overflow-x-auto whitespace-nowrap py-4 px-4">
+<div class="flex justify-center items-center gap-8 sm:gap-12 md:gap-16 text-subtle-light dark:text-subtle-dark">
+<span>Grammarly</span>
+<span>Ahrefs / SEMrush</span>
+<span>Google Docs</span>
+<span>Asana</span>
+<span>Slack</span>
+</div>
+</div>
+</section>
+<section class="px-4 py-5">
+<div class="max-w-2xl mx-auto border border-border-light dark:border-border-dark rounded-xl p-8">
+<h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6 text-center font-display">What You Get Working With Me</h2>
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<div>
+<h4 class="font-bold">Strategic Thinking</h4>
+<p class="text-sm text-subtle-light dark:text-subtle-dark">Content that aligns with your business goals and delivers measurable results.</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<div>
+<h4 class="font-bold">Timely Delivery</h4>
+<p class="text-sm text-subtle-light dark:text-subtle-dark">Reliable and professional service that respects your deadlines.</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<div>
+<h4 class="font-bold">A Collaborative Partner</h4>
+<p class="text-sm text-subtle-light dark:text-subtle-dark">Clear communication and a commitment to understanding your brand's voice.</p>
+</div>
+</li>
+</ul>
+</div>
+</section>
+<footer class="text-center py-16 px-4 flex flex-col items-center gap-6" id="contact">
+<h2 class="text-3xl font-bold font-display max-w-lg">Ready to start your project?</h2>
+<a class="flex max-w-sm w-full cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity" href="mailto:hello@eleanorvance.com">Let's Connect</a>
+<p class="text-sm">
+                                View more work on <a class="font-bold text-primary hover:underline" href="#">LinkedIn</a>.
+                            </p>
+<p class="text-sm text-subtle-light dark:text-subtle-dark pt-8">Looking forward to working with you.</p>
+</footer>
+</main>
+</div>
+</div>
+</div>
+</div>
+</body></html>

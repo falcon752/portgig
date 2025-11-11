@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Developer Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#E11D8F","secondary": "#ff8c00","background-light": "#f5f8f8",
+                        "background-dark": "#121212",
+                        "surface-dark": "#1a1a1a",
+                        "text-light": "#121212",
+                        "text-dark": "#E0E0E0",
+                        "text-muted-dark": "#9bb8bb"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>.material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }.no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;scrollbar-width: none;}
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark font-display antialiased">
+<div class="relative w-full flex flex-col overflow-x-hidden">
+<header class="sticky top-0 z-50 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm p-4 justify-between border-b border-white/10">
+<h1 class="text-lg font-bold leading-tight tracking-[-0.015em] flex-1">Alex Greene</h1>
+<span class="material-symbols-outlined text-text-light dark:text-text-dark">menu</span>
+</header>
+<main class="flex flex-col">
+<section class="p-4 py-10 @container">
+<div class="flex flex-col-reverse gap-8 @[480px]:flex-row @[480px]:items-center">
+<div class="flex flex-col gap-6 @[480px]:gap-8 flex-1">
+<div class="flex flex-col gap-2 text-left">
+<h2 class="text-4xl font-bold leading-tight tracking-[-0.033em] @[480px]:text-5xl">
+                                Full-Stack Engineer &amp; UX Architect
+                            </h2>
+<p class="text-sm font-normal leading-normal text-text-light dark:text-text-muted-dark @[480px]:text-base">
+                                Focused on building scalable applications with clean architecture and performance optimization.
+                            </p>
+</div>
+<a class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity" href="#">
+<span class="truncate">Let's Build Something Great</span>
+</a>
+</div>
+<div class="w-full max-w-[200px] mx-auto bg-center bg-no-repeat aspect-square bg-cover rounded-full @[480px]:max-w-[240px]" data-alt="A modern, professional headshot of the developer" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDNAyDqSQIyHp2WaUCpv793mMYtWRln-NVrWqSbaq6geMo871g60V_jP4AYgeffKEBkD78f3J0rhtlKqYDIkLDvOujWvFi-sRLg3Boug9nEaiM6UeP8ChYglgLqEoz0McWZrupyXSfzzWeTlir67c6iUyRXVTgNegnB2q9Ito84JpwmerxTDHp1cLdHNyR748hCd_5p-J3h7rlVVOCeWWrwoG19q5Nh6T1wRE5TI66bWWHNJPgpWb1eI49ewqPdY_3rBjWLsA30e0kT");'></div>
+</div>
+</section>
+<section class="p-4 pt-10">
+<h3 class="text-[22px] font-bold leading-tight tracking-[-0.015em] pb-4">Technical Offerings</h3>
+<div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3">
+<div class="flex flex-col gap-3 p-4 bg-background-light dark:bg-surface-dark rounded-xl border border-transparent dark:border-white/10">
+<span class="material-symbols-outlined text-primary">terminal</span>
+<div>
+<p class="text-base font-medium leading-normal">Front-End Development</p>
+<p class="text-sm font-normal leading-normal text-text-light dark:text-text-muted-dark">Responsive and modern user interfaces.</p>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-4 bg-background-light dark:bg-surface-dark rounded-xl border border-transparent dark:border-white/10">
+<span class="material-symbols-outlined text-primary">dns</span>
+<div>
+<p class="text-base font-medium leading-normal">Back-End API Creation</p>
+<p class="text-sm font-normal leading-normal text-text-light dark:text-text-muted-dark">Robust and scalable server-side logic.</p>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-4 bg-background-light dark:bg-surface-dark rounded-xl border border-transparent dark:border-white/10">
+<span class="material-symbols-outlined text-primary">database</span>
+<div>
+<p class="text-base font-medium leading-normal">Database Management</p>
+<p class="text-sm font-normal leading-normal text-text-light dark:text-text-muted-dark">Efficient and secure data solutions.</p>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-4 bg-background-light dark:bg-surface-dark rounded-xl border border-transparent dark:border-white/10">
+<span class="material-symbols-outlined text-primary">cloud_upload</span>
+<div>
+<p class="text-base font-medium leading-normal">Cloud Deployment</p>
+<p class="text-sm font-normal leading-normal text-text-light dark:text-text-muted-dark">Deploying on AWS and Azure.</p>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-4 bg-background-light dark:bg-surface-dark rounded-xl border border-transparent dark:border-white/10">
+<span class="material-symbols-outlined text-primary">speed</span>
+<div>
+<p class="text-base font-medium leading-normal">Performance Auditing</p>
+<p class="text-sm font-normal leading-normal text-text-light dark:text-text-muted-dark">Analyzing and improving app speed.</p>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-4 bg-background-light dark:bg-surface-dark rounded-xl border border-transparent dark:border-white/10">
+<span class="material-symbols-outlined text-primary">support_agent</span>
+<div>
+<p class="text-base font-medium leading-normal">Technical Consulting</p>
+<p class="text-sm font-normal leading-normal text-text-light dark:text-text-muted-dark">Expert guidance on tech stacks.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="p-4 pt-10">
+<h3 class="text-[22px] font-bold leading-tight tracking-[-0.015em] pb-4">Key Projects</h3>
+<div class="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+<div class="flex flex-col gap-4 bg-background-light dark:bg-surface-dark rounded-xl border border-transparent dark:border-white/10 overflow-hidden">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="Device mockup showing an e-commerce platform dashboard" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD9kCWnhBJs_FFckIsT4-egR_MztCLA1xITgsIKb-JOQv3bKpWOarwp7TROI8KrliOG6eLdNniWy0CHryVDFqWfGZS-24UoJ4PFO-YE-TF8tA4gvYJgGkzwsclY8Gk_IMkx_UUMJtO-BEwbqsHOjuDEKkynFsmnDs4u8HECpB8ThgsSwAXxTz_PrDqJRIkfN7rFrbSkyza6GvlOFTEktbgf2qKkP-blUqsgQrXEfLNGY73KOi5Cv3stKPG0zR9VSCCXxF4wRg5ZVMEo");'></div>
+<div class="p-4 pt-0 flex flex-col gap-4">
+<div>
+<p class="text-base font-medium leading-normal">Project Alpha</p>
+<p class="text-sm font-normal leading-normal text-text-light dark:text-text-muted-dark">E-commerce Platform</p>
+</div>
+<a class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity" href="#">
+<span class="truncate">View Live Website</span>
+</a>
+</div>
+</div>
+<div class="flex flex-col gap-4 bg-background-light dark:bg-surface-dark rounded-xl border border-transparent dark:border-white/10 overflow-hidden">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="Device mockup of a data visualization dashboard" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCbcsHxGc8efU-lbXGj-MNsl_26vcZZDrdyRp7M3IoHAKAu20E7C43JsbxE9eGRisFNBg_EwgLTx6J6EWxHZUM7lwOLFqttdVq4LzyQcyKDOePILMI3YbNi2RVO83KPYIKzCMSC81GVKViPvHujEnrR0kxYYfEWwgvo9-7_jKzhlwv0VMFoaDEpKpYPwaUZEksQ2RLeRB5CoLj_0U3XJT3YagYRVb0psS_Xglpd26UKuCzlEI9q3XK9_m8DPXpxFqPiLydAA-mj0cl6");'></div>
+<div class="p-4 pt-0 flex flex-col gap-4">
+<div>
+<p class="text-base font-medium leading-normal">Project Beta</p>
+<p class="text-sm font-normal leading-normal text-text-light dark:text-text-muted-dark">SaaS Dashboard</p>
+</div>
+<a class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity" href="#">
+<span class="truncate">View Live Website</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<section class="p-4 pt-10">
+<h3 class="text-[22px] font-bold leading-tight tracking-[-0.015em] pb-4">Technical Deep Dive</h3>
+<div class="flex flex-col gap-4 @[480px]:flex-row">
+<div class="flex-1 p-4 bg-background-light dark:bg-surface-dark rounded-xl border border-transparent dark:border-white/10">
+<h4 class="font-bold text-primary mb-2">The Challenge</h4>
+<p class="text-sm font-normal leading-normal text-text-light dark:text-text-muted-dark">The client required a real-time data processing engine to handle millions of concurrent user events without latency, ensuring high availability and data consistency across distributed systems.</p>
+</div>
+<div class="flex-1 p-4 bg-background-light dark:bg-surface-dark rounded-xl border border-transparent dark:border-white/10">
+<h4 class="font-bold text-primary mb-2">The Solution</h4>
+<p class="text-sm font-normal leading-normal text-text-light dark:text-text-muted-dark">Implemented a serverless architecture on AWS using Lambda and Kinesis, achieving sub-50ms latency. This resulted in a 40% reduction in operational costs and a 99.99% uptime.</p>
+</div>
+</div>
+</section>
+<section class="py-10">
+<h3 class="text-[22px] font-bold leading-tight tracking-[-0.015em] pb-4 px-4">Tools I Use</h3>
+<div class="relative w-full">
+<div class="flex items-center gap-4 overflow-x-auto no-scrollbar px-4">
+<div class="flex-none py-2 px-4 rounded-lg bg-background-light dark:bg-surface-dark border border-transparent dark:border-white/10"><p class="text-sm font-medium whitespace-nowrap">React</p></div>
+<div class="flex-none py-2 px-4 rounded-lg bg-background-light dark:bg-surface-dark border border-transparent dark:border-white/10"><p class="text-sm font-medium whitespace-nowrap">Node.js</p></div>
+<div class="flex-none py-2 px-4 rounded-lg bg-background-light dark:bg-surface-dark border border-transparent dark:border-white/10"><p class="text-sm font-medium whitespace-nowrap">Python/Django</p></div>
+<div class="flex-none py-2 px-4 rounded-lg bg-background-light dark:bg-surface-dark border border-transparent dark:border-white/10"><p class="text-sm font-medium whitespace-nowrap">PostgreSQL</p></div>
+<div class="flex-none py-2 px-4 rounded-lg bg-background-light dark:bg-surface-dark border border-transparent dark:border-white/10"><p class="text-sm font-medium whitespace-nowrap">AWS</p></div>
+<div class="flex-none py-2 px-4 rounded-lg bg-background-light dark:bg-surface-dark border border-transparent dark:border-white/10"><p class="text-sm font-medium whitespace-nowrap">Docker</p></div>
+<div class="flex-none py-2 px-4 rounded-lg bg-background-light dark:bg-surface-dark border border-transparent dark:border-white/10"><p class="text-sm font-medium whitespace-nowrap">Figma</p></div>
+<div class="flex-none py-2 px-4 rounded-lg bg-background-light dark:bg-surface-dark border border-transparent dark:border-white/10"><p class="text-sm font-medium whitespace-nowrap">VS Code</p></div>
+<div class="flex-none py-2 px-4 rounded-lg bg-background-light dark:bg-surface-dark border border-transparent dark:border-white/10"><p class="text-sm font-medium whitespace-nowrap">GitHub</p></div>
+</div>
+</div>
+</section>
+<section class="p-4 pt-5">
+<h3 class="text-[22px] font-bold leading-tight tracking-[-0.015em] pb-4">What You Get Working With Me</h3>
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-0.5">verified</span>
+<div>
+<p class="font-medium">Scalable Code</p>
+<p class="text-sm text-text-light dark:text-text-muted-dark">Future-proof architecture that grows with your business.</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-0.5">description</span>
+<div>
+<p class="font-medium">Clean Documentation</p>
+<p class="text-sm text-text-light dark:text-text-muted-dark">Clear, concise documentation for easy maintenance.</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-0.5">security</span>
+<div>
+<p class="font-medium">Robust Security</p>
+<p class="text-sm text-text-light dark:text-text-muted-dark">Implementing best practices to protect your data.</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-0.5">support</span>
+<div>
+<p class="font-medium">Ongoing Technical Support</p>
+<p class="text-sm text-text-light dark:text-text-muted-dark">Reliable support to ensure smooth operation.</p>
+</div>
+</li>
+</ul>
+</section>
+</main>
+<footer class="p-4 py-10 mt-10 text-center flex flex-col items-center gap-6 bg-background-light dark:bg-surface-dark">
+<h4 class="text-2xl font-bold">Ready to build your next application?</h4>
+<div class="flex flex-col gap-4 w-full max-w-sm">
+<a class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity" href="#">
+<span class="truncate">Let's Build Something Great</span>
+</a>
+<a class="flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-5 text-secondary text-base font-bold leading-normal tracking-[0.015em] hover:bg-secondary/10 transition-colors" href="#">
+<span class="truncate">View full code repository on GitHub</span>
+</a>
+</div>
+<p class="text-sm text-text-light dark:text-text-muted-dark mt-4">© 2024 Alex Greene. All rights reserved.</p>
+</footer>
+</div>
+</body></html>
