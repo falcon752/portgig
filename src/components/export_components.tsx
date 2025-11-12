@@ -65,13 +65,13 @@ export { default as TemplateThreeHero } from "./template-3/TemplateThreeHero";
 export { default as TemplateThreeAboutMe } from "./template-3/TemplateThreeAboutMe";
 export { default as TemplateThreePortfolio } from "./template-3/TemplateThreePortfolio";
 export { default as TemplateThreeAvailabilty } from "./template-3/TemplateThreeAvailabilty";
-//template
+
+//template4
 export { default as TemplateFourHero } from "./template-4/TemplateFourHero";
 export { default as TemplateFourAboutMe } from "./template-4/TemplateFourAboutMe";
 export { default as TemplateFourPortfolio } from "./template-4/TemplateFourPortfolio";
 
 // template 5
-
 export { default as TemplateFiveHero } from "./template-5/TemplateHero";
 export { default as TemplateFiveAboutMe } from "./template-5/TemplateFiveAboutme";
 export { default as TemplateFiveStrategyContent } from "./template-5/StrategyContent";

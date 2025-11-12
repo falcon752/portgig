@@ -7,8 +7,8 @@ const page = () => {
   return (
     <main className="bodyMargin font-montserrat">
       <PortfolioTemplateFourHero />
-      <PortfolioTemplateFourAboutMe />
-      <PortfolioTemplateFourPortfolio />
+      {/* <PortfolioTemplateFourAboutMe />
+      <PortfolioTemplateFourPortfolio /> */}
       <footer className={`center px-10 py-20 bg-white`}>
         <Image
           src={"/assets/madeByPortgig2.svg"}
