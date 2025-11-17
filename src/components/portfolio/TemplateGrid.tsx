@@ -47,6 +47,13 @@ const templates = [
     previewLink: "/portfolio-1",
     editFields: ["bio", "portfolio", "services", "process", "testimonials", "contact", "social-media"],
   },
+  {
+    id: "data-analyst",
+    title: "Data Analyst Template",
+    image: "/assets/templates/template1.png",
+    previewLink: "/portfolio-7",
+    editFields: ["bio", "portfolio", "services", "process", "testimonials", "contact", "social-media"],
+  },
 ]
 
 const TemplatesGrid = () => {
@@ -86,9 +93,6 @@ const TemplatesGrid = () => {
         "
       >
         {templates.map((template, index) => {
-          const isEditingCurrent = editingTemplateId === template.id
-          const isDisabled = editingTemplateId !== null && !isEditingCurrent
-
           return (
             <div
               key={index}
@@ -120,22 +124,13 @@ const TemplatesGrid = () => {
                       Preview
                     </button>
                   </Link>
+
                   <Link
                     href={`/edit-template/${template.id}`}
-                    className={isDisabled ? "pointer-events-none" : ""}
-                    onClick={(e) => {
-                      if (isDisabled) {
-                        e.preventDefault()
-                      } else {
-                        handleEditClick(template.id)
-                      }
-                    }}
+                    onClick={() => handleEditClick(template.id)}
                   >
                     <button
-                      className={`cursor-pointer bg-white text-black rounded px-6 py-2 text-sm font-semibold shadow-md transition ${
-                        isDisabled ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-100"
-                      }`}
-                      disabled={isDisabled}
+                      className="cursor-pointer bg-white text-black rounded px-6 py-2 text-sm font-semibold shadow-md transition hover:bg-gray-100"
                     >
                       Edit
                     </button>
