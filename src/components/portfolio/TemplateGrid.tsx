@@ -47,13 +47,6 @@ const templates = [
     previewLink: "/portfolio-1",
     editFields: ["bio", "portfolio", "services", "process", "testimonials", "contact", "social-media"],
   },
-  {
-    id: "data-analyst",
-    title: "Data Analyst Template",
-    image: "/assets/templates/template1.png",
-    previewLink: "/portfolio-7",
-    editFields: ["bio", "portfolio", "services", "process", "testimonials", "contact", "social-media"],
-  },
 ]
 
 const TemplatesGrid = () => {
