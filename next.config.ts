@@ -8,7 +8,8 @@ const nextConfig: NextConfig = {
       // Production API
       {
         protocol: 'https',
-        hostname: 'portgig-api.onrender.com',
+        // hostname: 'portgig-api.onrender.com',
+        hostname: 'api.portgig.com',
         port: '',
         pathname: '/uploads/portfolio/**',
       },
