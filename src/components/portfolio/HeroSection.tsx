@@ -35,7 +35,7 @@ const HeroSection = () => {
       </section>
 
       {/* Highlight Banner */}
-      <div className="max-w-5xl mx-auto bg-[#0A1F63] text-white text-base md:text-lg lg:text-xl rounded-2xl px-5 py-5 sm:p-6 md:py-7 md:px-10 lg:px-14 my-10 shadow-xl text-center font-raleway md:mx-6 lg:mx-auto">
+      <div className="bg-[#0A1F63] text-white text-base md:text-lg lg:text-xl rounded-3xl px-4 sm:px-6 md:px-10 lg:px-20 py-10 md:py-14 lg:py-16 text-center font-raleway shadow-2xl max-w-7xl mx-auto w-full">
         We currently have 6 unique portfolio templates tailored for different
         creative industries, from graphic designers to editors and more. This
         is just the beginning.

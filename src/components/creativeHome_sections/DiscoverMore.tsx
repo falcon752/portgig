@@ -10,7 +10,7 @@ const DiscoverMore = () => {
       <div className="hidden md:flex gap-10 w-full">
         <div className="w-full flex flex-col gap-5 font-raleway">
           <div className="flex flex-col gap-3 md:gap-5">
-            <h2 className="text-sm sm:text-3xl md:text-4xl font-black">
+            <h2 className="text-[16px] md:text-2xl lg:text-5xl font-bold">
               Discover and Connect with Creatives in your Industry.
             </h2>
             <h2 className="text-xs md:text-xl font-bold">
