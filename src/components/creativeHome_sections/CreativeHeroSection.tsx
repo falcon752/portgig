@@ -6,11 +6,13 @@ const CreativeHeroSection = () => {
       {/* Removed bodyMargin from inner div to avoid double margins */}
       <div className="h-full flex flex-row items-stretch">
               <div className="w-1/2 flex flex-col justify-center gap-2 md:gap-8 py-5 px-3 md:px-6 lg:px-10">
-              <p className="text-sm font-urbanist lg:text-xl text-white bold lg:pt-20">
+              <p className="text-sm sm:text-xl font-bold text-white">
+
             Welcome to Portgig
           </p>
           <h1 className="text-[16px] md:text-2xl lg:text-5xl font-bold">Your Creative Hub for Work & Talent</h1>
-          <p className="text-[10px] md:text-sm lg:text-xl font-extralight text-white">
+          <p className="text-sm sm:text-lg text-white">
+
             Connect, collaborate, and create. Whether you&apos;re looking for jobs or hiring top creatives, start
             exploring today.
           </p>

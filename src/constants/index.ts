@@ -281,7 +281,7 @@ export const creatives = [
     location: "Lagos State",
     level: "Expert",
     introduction:
-      "Hi, I'm Adeoluwa. Happy to be here—let’s connect! How are you doing today?",
+      "Hi, I'm Adeoluwa. Happy to be here, let’s connect! How are you doing today?",
     email: "ademaxgraph@portgig.com",
   },
   {
@@ -305,7 +305,7 @@ export const creatives = [
     location: "Lagos State",
     level: "Advanced",
     introduction:
-      "Design is more than art—it's strategy. Let’s collaborate on your next project!",
+      "Design is more than art, it's strategy. Let’s collaborate on your next project!",
     email: "tobidesigns@portgig.com",
   },
   {
@@ -353,7 +353,7 @@ export const creatives = [
     location: "Ibadan",
     level: "Expert",
     introduction:
-      "3D is the future—let me help you visualize it. Happy to collaborate!",
+      "3D is the future, let me help you visualize it. Happy to collaborate!",
     email: "davinci@portgig.com",
   },
   {
@@ -389,7 +389,7 @@ export const creatives = [
     location: "Awka",
     level: "Advanced",
     introduction:
-      "From flyers to books—I design for print that speaks. Glad to be here!",
+      "From flyers to books, I design for print that speaks. Glad to be here!",
     email: "ngozigraphix@portgig.com",
   },
   {
@@ -445,7 +445,7 @@ export const activeJobs = [
 // about us
 
 export const forCreativeText = [
-  "We’re building more than just a portfolio platform — we’re building a space where creatives can be seen, heard, and hired. In a world where talent often gets overlooked without the “right” packaging, we’re here to change the story. We believe a strong portfolio shouldn’t be complicated, and that getting the right job shouldn’t feel like a miracle.",
+  "We’re building more than just a portfolio platform, we’re building a space where creatives can be seen, heard, and hired. In a world where talent often gets overlooked without the “right” packaging, we’re here to change the story. We believe a strong portfolio shouldn’t be complicated, and that getting the right job shouldn’t feel like a miracle.",
 ];
 
 export const spaceWhere = [
@@ -462,11 +462,11 @@ export const webuiltThisFor = [
 ];
 
 export const extraText = [
-  "Whether you’re a designer, photographer, writer, editor, or a creative soul figuring it out — you belong here. We’re creatives ourselves. We know what it’s like to hustle without structure, pitch yourself over and over again, and doubt your own voice. That’s why we’re creating the tools we wish we had and the support that still carries us today.",
+  "Whether you’re a designer, photographer, writer, editor, or a creative soul figuring it out, you belong here. We’re creatives ourselves. We know what it’s like to hustle without structure, pitch yourself over and over again, and doubt your own voice. That’s why we’re creating the tools we wish we had and the support that still carries us today.",
 ];
 
 export const ourStory = [
-  "This platform was born out of a conversation — a longing to see more Nigerian (and African) creatives represented and respected. \n It started small: a few Google Docs, some Figma files, voice notes.Then it became a movement — because too many of us were tired of being unseen.",
+  "This platform was born out of a conversation, a longing to see more Nigerian (and African) creatives represented and respected. \n It started small: a few Google Docs, some Figma files, voice notes.Then it became a movement, because too many of us were tired of being unseen.",
 ];
 
 /// private policy

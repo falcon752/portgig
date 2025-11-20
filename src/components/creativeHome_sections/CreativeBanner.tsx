@@ -7,10 +7,11 @@ const CreativeBanner = () => {
       <section className="bodyMargin bg-primary h-fit mt-20 mb-5 max-md:hidden">
         <div className="bodyMargin flex gap-5">
           <div className="flex-3/5 w-full flex flex-col justify-center items-start gap-5 py-5 px-10 font-raleway">
-            <h2 className="text-xl lg:text-3xl font-extrabold text-white">
+            <p className="font-urbanist font-extrabold text-[36px] leading-[43px] tracking-normal text-white">
+
               Take the Next Step – Find Opportunities, Build Your Network, Get Hired!
-            </h2>
-            <p className="text-sm font-bold text-white">
+            </p>
+            <p className="text-sm sm:text-lg text-white">
               Explore top jobs, showcase your portfolio, and connect with different people in your field.
             </p>
           </div>

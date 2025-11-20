@@ -62,7 +62,7 @@ import {
               {extraText}
             </p>
             <p className="text-sm lg:text-2xl font-raleway font-medium text-[#0A1754]">
-              So welcome — you’re not just here to fill a profile. <br /> You’re
+              So welcome, you’re not just here to fill a profile. <br /> You’re
               here to take up space, to be found, to rise.
             </p>
           </div>

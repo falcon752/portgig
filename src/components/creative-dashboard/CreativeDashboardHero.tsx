@@ -151,7 +151,7 @@ const CreativeDashboardHero = () => {
               <p className="text-sm sm:text-base lg:text-lg font-inter mt-2">
                 Your creativity is your superpower! 🚀 Keep building, keep
                 innovating, and let your work speak for itself. The right
-                opportunity is just around the corner—go grab it!
+                opportunity is just around the corner, go grab it!
               </p>
             </div>
 

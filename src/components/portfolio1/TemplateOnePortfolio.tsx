@@ -57,7 +57,7 @@ export default function PortfolioTemplateOnePortfolio() {
             <div className="bg-white flex items-center justify-center px-6 sm:px-10 md:px-16 lg:px-20 py-6 sm:py-8 md:py-10 text-center">
                 <h2 className="font-bold text-primary text-base sm:text-lg md:text-xl lg:text-2xl max-w-3xl">
                     Available for all kinds of gigs, projects, jobs, and collaborations.
-                    Kindly reach out to me — looking forward to working with you.
+                    Kindly reach out to me, looking forward to working with you.
                 </h2>
             </div>
         </>
