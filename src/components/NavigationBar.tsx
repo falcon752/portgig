@@ -82,12 +82,38 @@ const getRecruiterNavigationItems = (
   ];
 };
 
-const NavigationBar = () => {
+interface NavigationBarProps {
+  isAuthenticated: boolean;
+  guestNavItems: { label: string; link: string }[];
+  userType?: "creator" | "recruiter" | "admin" | null; // <-- add this
+
+}
+
+const NavigationBar: React.FC<NavigationBarProps> = ({
+  isAuthenticated,
+  guestNavItems,
+}) => {
+  // EARLY RETURN FOR GUESTS
+  if (!isAuthenticated) {
+    return (
+      <nav>
+        <ul className="flex gap-4">
+          {guestNavItems.map((item) => (
+            <li key={item.label}>
+              <Link href={item.link}>{item.label}</Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    );
+  }
+
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { profile } = useAppSelector((state) => state.user);
   const { recruiterProfile } = useAppSelector((state) => state.recruiter);
+
   const [profileModal, setProfileModal] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
