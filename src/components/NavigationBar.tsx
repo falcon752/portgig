@@ -34,6 +34,12 @@ interface MessageState {
   lastViewedCount: number;
 }
 
+// Helper to get user profile image with fallback
+const getUserProfileImage = (user: any) =>
+  user?.profile?.profile_picture ||
+  user?.bio_data?.profile_picture ||
+  "/assets/creative.svg";
+
 const getRecruiterNavigationItems = (
   dashboardData: RecruiterDashboardData | null
 ) => {
@@ -113,6 +119,8 @@ const NavigationBar = () => {
 
   const currentUser = profile || recruiterProfile;
   const currentUserId = getUserId(currentUser);
+
+  const profilePicture = getUserProfileImage(currentUser); // IMAGE
 
   const unreadMessageCount = useMemo(() => {
     return Math.max(0, messageState.totalUnread - messageState.lastViewedCount);
@@ -395,16 +403,32 @@ const NavigationBar = () => {
               </div>
             ) : (
               <div className="relative">
-                <button
-                  type="button"
-                  onClick={handleProfileContextmenu}
-                  className="bg-primary! text-white rounded-full text-center text-xs capitalize cursor-pointer px-3 py-1.5 flex items-center justify-center"
-                >
-                  <span className="truncate max-w-[80px]">
+                <div className="flex items-center">
+                  {/* Profile Image */}
+                  <div className="relative h-10 w-10 rounded-full overflow-hidden">
+                    <Image
+                      src={profilePicture}
+                      alt="Profile picture"
+                      fill
+                      className="object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = "/assets/creative.svg";
+                      }}
+                    />
+                  </div>
+
+                  {/* Button with name */}
+                  <button
+                    type="button"
+                    onClick={handleProfileContextmenu}
+                    className="bg-primary! text-white rounded-md text-center text-xs capitalize cursor-pointer px-3 py-1.5 -ml-1"
+                  >
                     {profile?.bio_data?.user_name ||
                       recruiterProfile?.bio_data.full_name}
-                  </span>
-                </button>
+                  </button>
+                </div>
+
                 {profileModal && (
                   <div className="absolute top-12 right-0 bg-white rounded-lg px-2 py-1 w-[120px] z-50 flex flex-col justify-start items-start gap-2 shadow-lg border">
                     <button
@@ -495,17 +519,34 @@ const NavigationBar = () => {
             </div>
           ) : (
             <div className="relative">
-              <button
-                type="button"
-                onClick={handleProfileContextmenu}
-                className="bg-primary! text-white rounded-full text-center text-sm capitalize cursor-pointer px-4 py-2 flex items-center justify-center gap-2"
-              >
-                <span>
+              <div className="flex items-center">
+                {" "}
+                {/* smaller gap */}
+                {/* Profile Image */}
+                <div className="relative h-12 w-12 rounded-full overflow-hidden">
+                  <Image
+                    src={profilePicture}
+                    alt="Profile picture"
+                    fill
+                    className="object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "/assets/creative.svg";
+                    }}
+                  />
+                </div>
+                {/* Button with name */}
+                <button
+                  type="button"
+                  onClick={handleProfileContextmenu}
+                  className="bg-primary! text-white rounded-md text-center text-sm capitalize cursor-pointer px-4 py-2 -ml-1"
+                >
                   Hey,{" "}
                   {profile?.bio_data?.user_name ||
                     recruiterProfile?.bio_data.full_name}
-                </span>
-              </button>
+                </button>
+              </div>
+
               {profileModal && (
                 <div className="absolute top-14 left-0 bg-white rounded-lg px-2 py-1 w-[150px] z-50 flex flex-col justify-start items-start gap-3 shadow-lg border">
                   <button
