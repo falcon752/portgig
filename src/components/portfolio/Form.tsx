@@ -31,23 +31,24 @@ const Form = () => {
 
   return (
     <div className="pt-10 lg:pt-24 px-4 pb-10 bg-white bodyMargin">
-      <div className="w-full max-w-6xl">
-        <h4 className="text-[#0A1754] text-2xl lg:text-4xl font-extrabold font-urbanist mb-6 text-left">
+      <div className="w-full max-w-6xl mx-auto">
+        <h4 className="text-[#0A1754] text-2xl md:text-3xl lg:text-4xl font-extrabold font-urbanist mb-6 text-left">
           Send us a message, we will work on it soonest
         </h4>
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full flex flex-col gap-4"
+          className="w-full flex flex-col gap-6"
         >
+          {/* Name */}
           <div className="flex flex-col gap-2">
-            <label className="text-xl lg:text-2xl font-semibold text-[#0A1754] font-raleway">
+            <label className="text-base md:text-lg font-semibold text-[#0A1754] font-raleway">
               Name
             </label>
             <input
               {...register("fullName")}
               type="text"
-              className="text-sm bg-gray100 p-2 border border-gray200 rounded-lg focus:outline-none focus:border-secondary font-raleway placeholder-raleway"
+              className="text-sm bg-gray100 p-3 border border-gray200 rounded-lg focus:outline-none focus:border-secondary font-raleway placeholder-raleway"
               placeholder="yourname"
             />
             {errors.fullName && (
@@ -55,14 +56,15 @@ const Form = () => {
             )}
           </div>
 
+          {/* Email */}
           <div className="flex flex-col gap-2">
-            <label className="text-xl lg:text-2xl font-semibold text-[#0A1754] font-raleway">
+            <label className="text-base md:text-lg font-semibold text-[#0A1754] font-raleway">
               Email
             </label>
             <input
               {...register("email")}
               type="text"
-              className="text-sm bg-gray100 p-2 border border-gray200 rounded-lg focus:outline-none focus:border-secondary font-raleway placeholder-raleway"
+              className="text-sm bg-gray100 p-3 border border-gray200 rounded-lg focus:outline-none focus:border-secondary font-raleway placeholder-raleway"
               placeholder="youremail@email.com"
             />
             {errors.email && (
@@ -70,13 +72,14 @@ const Form = () => {
             )}
           </div>
 
+          {/* Message */}
           <div className="flex flex-col gap-2">
-            <label className="text-xl lg:text-2xl font-semibold text-[#0A1754] font-raleway">
+            <label className="text-base md:text-lg font-semibold text-[#0A1754] font-raleway">
               Message
             </label>
             <textarea
               {...register("messages")}
-              className="text-sm bg-gray100 p-2 border border-gray200 rounded-lg focus:outline-none focus:border-secondary min-h-40 font-raleway placeholder-raleway"
+              className="text-sm bg-gray100 p-3 border border-gray200 rounded-lg focus:outline-none focus:border-secondary min-h-40 font-raleway placeholder-raleway"
               placeholder="Write your message here"
             />
             {errors.messages && (
@@ -84,11 +87,12 @@ const Form = () => {
             )}
           </div>
 
+          {/* Button */}
           <div className="flex justify-end">
             <Buttons
               type="submit"
               label="Send"
-              className="bg-secondary! text-white rounded-md font-semibold text-sm px-20 py-4 mt-3"
+              className="bg-secondary! text-white rounded-md font-semibold text-sm px-6 md:px-12 lg:px-20 py-3 mt-3"
             />
           </div>
         </form>
