@@ -62,7 +62,7 @@ const AboutUs = () => {
       <div className="bodyMargin px-2 md:px-10 py-10 flex flex-col gap-10">
         <div className="flex flex-col gap-3 md:gap-5">
           <h2 className="text-lg md:text-3xl font-raleway font-extrabold text-[#0A1754]">
-            Forrrrrr Creatives, By Creatives
+            For Creatives, By Creatives
           </h2>
           <p className="font-raleway font-medium text-sm md:text-base lg:text-lg leading-relaxed text-[#0A1754]">
             {forCreativeText}

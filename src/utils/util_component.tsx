@@ -1,4 +1,4 @@
-export const LooadingSpinner = ({ className }: { className: string }) => {
+export const LoadingSpinner = ({ className }: { className: string }) => {
   return (
     <div className="center h-full">
       <div
