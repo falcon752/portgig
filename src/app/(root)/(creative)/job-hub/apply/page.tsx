@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { fetchJobsApi, type JobsApiResponse } from "@/src/lib/requests/jobs";
-import { LooadingSpinner } from "@/src/utils/util_component";
+import { LoadingSpinner } from "@/src/utils/util_component";
 import toast from "react-hot-toast";
 
 const formSchema = z.object({
@@ -164,7 +164,7 @@ const ApplyContent = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <LooadingSpinner className="border-primary w-12 h-12 sm:w-16 sm:h-16" />
+        <LoadingSpinner className="border-primary w-12 h-12 sm:w-16 sm:h-16" />
       </div>
     );
   }
@@ -275,7 +275,7 @@ const ApplyContent = () => {
 // Loading component for Suspense fallback
 const ApplyLoading = () => (
   <div className="flex justify-center items-center h-screen">
-    <LooadingSpinner className="border-primary w-12 h-12 sm:w-16 sm:h-16" />
+    <LoadingSpinner className="border-primary w-12 h-12 sm:w-16 sm:h-16" />
   </div>
 );
 

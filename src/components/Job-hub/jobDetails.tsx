@@ -9,7 +9,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { fetchJobsApi } from "@/src/lib/requests/jobs";
-import { LooadingSpinner } from "@/src/utils/util_component";
+import { LoadingSpinner } from "@/src/utils/util_component";
 
 interface JobDetailsCompProps {
     jobId: string;
@@ -43,7 +43,7 @@ export default function JobDetailsComp({ jobId }: JobDetailsCompProps) {
     if (isLoading) {
         return (
             <div className="flex justify-center items-center h-64">
-                <LooadingSpinner className="border-primary w-16 h-16" />
+                <LoadingSpinner className="border-primary w-16 h-16" />
             </div>
         );
     }

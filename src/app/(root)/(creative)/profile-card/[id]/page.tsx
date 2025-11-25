@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCreatorsApi } from "@/src/lib/requests/creators";
 import { trackProfileViewApi } from "@/src/lib/requests/creative-profile";
-import { LooadingSpinner } from "@/src/utils/util_component";
+import { LoadingSpinner } from "@/src/utils/util_component";
 import Buttons from "@/src/components/Buttons";
 import { IoMdCheckmark } from "react-icons/io";
 import { HiXMark } from "react-icons/hi2";
@@ -221,7 +221,7 @@ const ProfileCard = () => {
     if (isLoading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
-                <LooadingSpinner className="border-primary w-12 h-12 sm:w-16 sm:h-16" />
+                <LoadingSpinner className="border-primary w-12 h-12 sm:w-16 sm:h-16" />
             </div>
         );
     }

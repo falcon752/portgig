@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter, useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { fetchJobsApi } from "@/src/lib/requests/jobs";
-import { LooadingSpinner } from "@/src/utils/util_component";
+import { LoadingSpinner } from "@/src/utils/util_component";
 
 const JobProfile = () => {
   const router = useRouter();
@@ -29,7 +29,7 @@ const JobProfile = () => {
   if (isLoading) {
     return (
       <section className="h-screen w-full flex justify-center items-center">
-        <LooadingSpinner className="border-primary w-16 h-16" />
+        <LoadingSpinner className="border-primary w-16 h-16" />
       </section>
     );
   }

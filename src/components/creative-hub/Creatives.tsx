@@ -2,7 +2,7 @@
 import React, { useState, useMemo } from "react";
 import { fetchCreatorsApi } from "@/src/lib/requests/creators";
 import { IoIosArrowForward } from "react-icons/io";
-import { LooadingSpinner } from "@/src/utils/util_component";
+import { LoadingSpinner } from "@/src/utils/util_component";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -275,7 +275,7 @@ const Creatives: React.FC<CreativesProps> = ({
   if (isLoading) {
     return (
       <div className="center h-full my-5">
-        <LooadingSpinner className="border-primary w-16 h-16" />
+        <LoadingSpinner className="border-primary w-16 h-16" />
       </div>
     );
   }

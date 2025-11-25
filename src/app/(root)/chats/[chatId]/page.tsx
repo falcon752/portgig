@@ -7,7 +7,7 @@ import ChatList from '@/src/components/chat/ChatList';
 import ChatInterface from '@/src/components/chat/ChatInterface';
 import { db } from '@/src/lib/firebase/config';
 import { updateUserPresence } from '@/src/lib/firebase/chat';
-import { LooadingSpinner } from '@/src/utils/util_component';
+import { LoadingSpinner } from '@/src/utils/util_component';
 import { useAppSelector } from '@/src/redux/hooks';
 import { getUserId } from '@/src/utils/chats';
 
@@ -123,7 +123,7 @@ const ChatPage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <LooadingSpinner className="border-primary w-8 h-8" />
+        <LoadingSpinner className="border-primary w-8 h-8" />
       </div>
     );
   }

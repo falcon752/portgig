@@ -3,7 +3,7 @@
 import { Buttons } from "@/src/components/export_components";
 import { fetchCreatorsApi } from "@/src/lib/requests/creatorsForRecruiter";
 import { cn } from "@/src/utils/cn";
-import { LooadingSpinner } from "@/src/utils/util_component";
+import { LoadingSpinner } from "@/src/utils/util_component";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -186,7 +186,7 @@ export default function ExploreCreative({
               "col-span-full flex justify-center items-center h-64"
             )}
           >
-            <LooadingSpinner className={cn("border-primary w-16 h-16")} />
+            <LoadingSpinner className={cn("border-primary w-16 h-16")} />
           </div>
         ) : isError ? (
           <div

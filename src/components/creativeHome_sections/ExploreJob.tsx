@@ -1,5 +1,5 @@
 "use client";
-import { LooadingSpinner } from "@/src/utils/util_component";
+import { LoadingSpinner } from "@/src/utils/util_component";
 import Link from "next/link";
 import { Buttons } from "../export_components";
 import { useQuery } from "@tanstack/react-query";
@@ -31,7 +31,7 @@ const AvailableJobsComp = () => {
       <div className="bodyMargin grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {isLoading ? (
           <div className="col-span-full flex justify-center items-center h-64">
-            <LooadingSpinner className="border-primary w-16 h-16" />
+            <LoadingSpinner className="border-primary w-16 h-16" />
           </div>
         ) : isError ? (
           <div className="col-span-full flex items-center justify-center min-h-[300px]">

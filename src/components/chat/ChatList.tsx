@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { getUserChatRooms, getUserPresence } from '@/src/lib/firebase/chat';
 import { ChatRoom, UserPresence } from '@/types/chat';
-import { LooadingSpinner } from '@/src/utils/util_component';
+import { LoadingSpinner } from '@/src/utils/util_component';
 import { Search, MessageCircle } from 'lucide-react';
 import { useAppSelector } from '@/src/redux/hooks';
 import { getUserId } from '@/src/utils/chats';
@@ -102,7 +102,7 @@ const ChatList = ({ selectedChatId }: ChatListProps) => {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
-          <LooadingSpinner className="border-primary w-8 h-8 mx-auto mb-4" />
+          <LoadingSpinner className="border-primary w-8 h-8 mx-auto mb-4" />
           <p className="text-gray-600">Loading chats...</p>
         </div>
       </div>

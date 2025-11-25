@@ -1,5 +1,5 @@
 'use client'
-import { LooadingSpinner } from '@/src/utils/util_component'
+import { LoadingSpinner } from '@/src/utils/util_component'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -591,7 +591,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
             '
             >
               {isLoading ? (
-                <LooadingSpinner className='border-white group-hover:border-primary w-6 h-6' />
+                <LoadingSpinner className='border-white group-hover:border-primary w-6 h-6' />
               ) : (
                 <span className='text-xs md:text-sm font-inter'>Sign Up</span>
               )}

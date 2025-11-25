@@ -9,7 +9,7 @@ import { useEffect, useState, useRef } from "react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import * as z from "zod"
-import { LooadingSpinner } from "@/src/utils/util_component"
+import { LoadingSpinner } from "@/src/utils/util_component"
 import { uploadAllMedia } from "@/src/api/upload-media"
 import ProfileSuccessModal from "@/src/components/ProfileSuccessModal"
 
@@ -242,7 +242,7 @@ const RecruiterEditProfile = () => {
     if (loading) {
         return (
             <div className="flex justify-center items-center h-full my-5">
-                <LooadingSpinner className="border-primary w-16 h-16" />
+                <LoadingSpinner className="border-primary w-16 h-16" />
             </div>
         )
     }

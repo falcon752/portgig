@@ -1,5 +1,5 @@
 "use client"
-import { LooadingSpinner } from "@/src/utils/util_component"
+import { LoadingSpinner } from "@/src/utils/util_component"
 import Link from "next/link"
 import { useState, useEffect, useMemo } from "react"
 import { IoIosArrowForward } from "react-icons/io"
@@ -107,7 +107,7 @@ const Jobs: React.FC<JobsProps> = ({ filters, onTotalJobsChange }) => {
   if (isLoading) {
     return (
       <div className="h-screen w-full flex justify-center items-center">
-        <LooadingSpinner className="border-primary w-16 h-16" />
+        <LoadingSpinner className="border-primary w-16 h-16" />
       </div>
     )
   }

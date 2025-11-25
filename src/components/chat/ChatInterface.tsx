@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Send, Paperclip, X, MoreVertical} from 'lucide-react';
 import { getChatMessages, sendMessage, getUserPresence } from '@/src/lib/firebase/chat';
 import { Message, UserPresence } from '@/types/chat';
-import { LooadingSpinner } from '@/src/utils/util_component';
+import { LoadingSpinner } from '@/src/utils/util_component';
 import { useAppSelector } from '@/src/redux/hooks';
 import Link from 'next/link';
 import { getUserId, getUserName } from '@/src/utils/chats';
@@ -174,7 +174,7 @@ const ChatInterface = ({ chatId, otherParticipant }: ChatInterfaceProps) => {
         return (
             <div className="flex items-center justify-center h-full">
                 <div className="text-center">
-                    <LooadingSpinner className="border-primary w-8 h-8 mx-auto mb-4" />
+                    <LoadingSpinner className="border-primary w-8 h-8 mx-auto mb-4" />
                     <p className="text-gray-600">Loading chat...</p>
                 </div>
             </div>
@@ -342,7 +342,7 @@ const ChatInterface = ({ chatId, otherParticipant }: ChatInterfaceProps) => {
                         className="p-3 bg-[#0A1754] text-white rounded-full hover:bg-[#0A1754]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {sending ? (
-                            <LooadingSpinner className="w-5 h-5 border-white" />
+                            <LoadingSpinner className="w-5 h-5 border-white" />
                         ) : (
                             <Send className="w-5 h-5" />
                         )}

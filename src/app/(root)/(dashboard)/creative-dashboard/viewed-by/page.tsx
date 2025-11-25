@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { Buttons } from "@/src/components/export_components";
-import { LooadingSpinner } from "@/src/utils/util_component";
+import { LoadingSpinner } from "@/src/utils/util_component";
 import { fetchCreatorProfileApi } from "@/src/lib/requests/creative-profile";
 import { CreatorProfileData } from "@/src/lib/requests/creative-profile"; 
 
@@ -90,7 +90,7 @@ const ViewedByPage = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <LooadingSpinner className="border-primary w-16 h-16" />
+        <LoadingSpinner className="border-primary w-16 h-16" />
       </div>
     );
   }
