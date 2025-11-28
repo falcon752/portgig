@@ -79,7 +79,7 @@ const ApplyContent = () => {
         throw new Error("Authentication token not found in cookies");
       }
 
-      const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+      const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
       const buildApiUrl = (endpoint: string) => {
         const baseUrl = BASE_URL?.replace(/\/$/, '') || '';
