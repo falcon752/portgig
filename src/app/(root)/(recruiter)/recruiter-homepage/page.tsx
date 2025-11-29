@@ -4,16 +4,16 @@ import React, { useState } from "react";
 import {
   RecruiterHeroSection,
   ExploreCreative,
-  SearchSection,
   HowItWorks,
 } from "@/src/components/export_components";
 
-type FilterData = {
-  title: string;
-  category: string;
+import RecruiterSearchSection from "@/src/components/recruiter-creative-hub/RecruiterSearchSection";
+
+// This is the type used by your new search inputs
+export type FilterData = {
+  role: string;
+  industry: string;
   location: string;
-  experienceLevels: string[];
-  employmentTypes: string[];
 };
 
 const RecruiterHomepage = () => {
@@ -32,8 +32,25 @@ const RecruiterHomepage = () => {
   return (
     <main>
       <RecruiterHeroSection />
-      <SearchSection onSearch={handleSearch} />
-      <ExploreCreative searchFilters={searchFilters} />
+
+      {/* Pass search handler to the new search section */}
+      <RecruiterSearchSection onSearch={handleSearch} />
+
+      {/* Map the new FilterData to ExploreCreative's expected FilterData */}
+      <ExploreCreative
+        searchFilters={
+          searchFilters
+            ? {
+                title: searchFilters.role,
+                category: searchFilters.industry,
+                location: searchFilters.location,
+                experienceLevels: [],
+                employmentTypes: [],
+              }
+            : null
+        }
+      />
+
       <HowItWorks />
     </main>
   );

@@ -1,67 +1,90 @@
 "use client";
-import React, { useState } from "react";
-import { fetchCreatorsApi } from "@/src/lib/requests/creatorsForRecruiter" 
+
+import React, { useState, useMemo } from "react";
+import { fetchCreatorsApi } from "@/src/lib/requests/creatorsForRecruiter";
 import { IoIosArrowForward } from "react-icons/io";
 import { LoadingSpinner } from "@/src/utils/util_component";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 
-type SkillLevel = "Beginner" | "Intermediate" | "Mid-level" | "Professional" | "Expert"
+export type CreativesSearchFilters = {
+  title?: string;
+  category?: string;
+  location?: string;
+  experienceLevels?: string[];
+  employmentTypes?: string[];
+} | null;
 
-// Function to map years of experience to skill level
+type Props = {
+  searchFilters?: CreativesSearchFilters;
+};
+
+type SkillLevel = "Beginner" | "Intermediate" | "Mid-level" | "Professional" | "Expert";
+
+// Map years of experience to skill level
 const mapExperienceToSkillLevel = (yearsOfExperience: string | number): SkillLevel => {
-  // Convert to number if it's a string, or use directly if it's already a number
-  const years = typeof yearsOfExperience === 'string' 
-    ? (yearsOfExperience.match(/(\d+)/) ? Number.parseInt(yearsOfExperience.match(/(\d+)/)?.[1] || '0', 10) : Number(yearsOfExperience) || 0)
-    : yearsOfExperience || 0
+  const years =
+    typeof yearsOfExperience === "string"
+      ? yearsOfExperience.match(/(\d+)/)
+        ? Number.parseInt(yearsOfExperience.match(/(\d+)/)?.[1] || "0", 10)
+        : Number(yearsOfExperience) || 0
+      : yearsOfExperience || 0;
 
-  if (years <= 1) {
-    return "Beginner" 
-  } else if (years === 2) {
-    return "Intermediate" 
-  } else if (years === 3) {
-    return "Mid-level" 
-  } else if (years >= 4 && years <= 6) {
-    return "Professional" 
-  } else {
-    return "Expert" 
-  }
-}
+  if (years <= 1) return "Beginner";
+  if (years === 2) return "Intermediate";
+  if (years === 3) return "Mid-level";
+  if (years >= 4 && years <= 6) return "Professional";
+  return "Expert";
+};
 
-const RecruiterCreatives = () => {
-  const navigate = useRouter();
+const RecruiterCreatives = ({ searchFilters }: Props) => {
+  const router = useRouter();
   const creativesPerPage = 12;
   const [currentPage, setCurrentPage] = useState(0);
 
-  const {
-    data: creatorsResponse,
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useQuery({
+  const { data: creatorsResponse, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["creators"],
     queryFn: fetchCreatorsApi,
   });
 
-  // Extract the actual creators array from the response
   const creators = creatorsResponse?.data?.page_data || [];
-  const totalPages = Math.ceil(creators.length / creativesPerPage);
 
+  // Filter creatives based on search filters
+  const filteredCreators = useMemo(() => {
+    if (!searchFilters) return creators;
+
+    return creators.filter((creator: any) => {
+      const matchesTitle =
+        !searchFilters.title ||
+        creator.profile?.field?.toLowerCase().includes(searchFilters.title.toLowerCase()) ||
+        creator.bio_data?.full_name?.toLowerCase().includes(searchFilters.title.toLowerCase());
+
+      const matchesCategory =
+        !searchFilters.category ||
+        creator.profile?.field?.toLowerCase().includes(searchFilters.category.toLowerCase());
+
+      const matchesLocation =
+        !searchFilters.location ||
+        creator.profile?.location?.state?.toLowerCase().includes(searchFilters.location.toLowerCase()) ||
+        creator.profile?.location?.lga?.toLowerCase().includes(searchFilters.location.toLowerCase());
+
+      return matchesTitle && matchesCategory && matchesLocation;
+    });
+  }, [creators, searchFilters]);
+
+  const totalPages = Math.ceil(filteredCreators.length / creativesPerPage);
   const startIndex = currentPage * creativesPerPage;
   const endIndex = startIndex + creativesPerPage;
-  const currentCreatives = creators.slice(startIndex, endIndex);
+  const currentCreatives = filteredCreators.slice(startIndex, endIndex);
 
-  // Function to handle portfolio view
-  const handleViewPortfolio = (creativeId: string, e: React.MouseEvent) => {
+  const handleViewProfile = (creativeId: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    navigate.push(`/profile-card/${creativeId}`);
+    router.push(`/profile-card/${creativeId}`);
   };
 
-  // Function to handle contact
   const handleContact = (creative: any, e: React.MouseEvent) => {
     e.stopPropagation();
-    // You can implement contact functionality here
     console.log("Contact creative:", creative);
   };
 
@@ -78,10 +101,7 @@ const RecruiterCreatives = () => {
       <div className="flex items-center justify-center min-h-[300px]">
         <div className="text-center text-secondary text-lg sm:text-2xl font-semibold bg-gray-100 p-6 rounded-lg shadow-md">
           <p className="text-red-500 mb-4">{error?.message || "An unknown error occurred."}</p>
-          <button
-            onClick={() => refetch()}
-            className="bg-primary text-white px-4 py-2 rounded-lg cursor-pointer"
-          >
+          <button onClick={() => refetch()} className="bg-primary text-white px-4 py-2 rounded-lg cursor-pointer">
             Retry
           </button>
         </div>
@@ -89,15 +109,12 @@ const RecruiterCreatives = () => {
     );
   }
 
-  if (creators.length === 0) {
+  if (filteredCreators.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-[300px]">
         <div className="text-center text-secondary text-lg sm:text-2xl font-semibold bg-gray-100 p-6 rounded-lg shadow-md">
-          <p className="text-gray-500 mb-4">No Creatives found.</p>
-          <button
-            onClick={() => refetch()}
-            className="bg-primary text-white px-4 py-2 rounded-lg cursor-pointer"
-          >
+          <p className="text-gray-500 mb-4">No creatives found.</p>
+          <button onClick={() => refetch()} className="bg-primary text-white px-4 py-2 rounded-lg cursor-pointer">
             Retry
           </button>
         </div>
@@ -106,90 +123,86 @@ const RecruiterCreatives = () => {
   }
 
   return (
-    <section className="p-5">
+    <section id="creatives-section" className="p-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
-        {currentCreatives.map((creative, index) => (
-          <div
-            key={creative._id}
-            className={`flex flex-col gap-2 pb-5 px-5 rounded-lg shadow-lg cursor-pointer ${
-              index % 3 === 1
-                ? "bg-primary text-white"
-                : "bg-white text-primary"
-            }`}>
-            <div className="flex justify-between items-center">
-              <div className="h-[100px] w-[100px] overflow-hidden">
-                {/* Placeholder for profile picture since API doesn't seem to have image field */}
-                <div className="h-full w-full bg-gray-200 rounded flex items-center justify-center text-gray-500 text-xs">
-                  No Image
+        {currentCreatives.map((creative, index) => {
+          const profilePicture = creative.profile?.profile_picture || "/assets/creative.svg";
+          const bio = creative.profile?.bio || creative.bio_data?.bio || "No introduction available";
+
+          return (
+            <div
+              key={creative._id}
+              className={`flex flex-col gap-2 pb-5 px-5 rounded-lg shadow-lg cursor-pointer ${
+                index % 3 === 1 ? "bg-primary text-white" : "bg-white text-primary"
+              }`}
+            >
+              <div className="flex justify-between items-center">
+                <div className="relative h-[100px] w-[100px] overflow-hidden rounded-lg bg-gray-200">
+                  <Image
+                    src={profilePicture}
+                    alt={`${creative.bio_data?.full_name || "Creative"} profile`}
+                    fill
+                    className="object-cover"
+                    sizes="100px"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "/assets/creative.svg";
+                    }}
+                  />
+                </div>
+                <div className="bg-secondary/80 text-white py-1 px-5 font-ramaraja">
+                  {mapExperienceToSkillLevel(creative.profile?.years_of_experience || 0)}
                 </div>
               </div>
-              <div className="bg-secondary/80 text-white py-1 px-5 font-ramaraja">
-                {mapExperienceToSkillLevel(creative.profile?.years_of_experience || 0)}
+              <h2 className="font-bold text-sm px-5 line-clamp-1">{creative.bio_data?.full_name || "Unknown"}</h2>
+              <h3 className="text-primary font-extralight text-sm px-5 line-clamp-1">
+                {creative.profile?.field || "N/A"} / {creative.profile?.location?.state || "N/A"}, {creative.profile?.location?.lga || "N/A"}
+              </h3>
+              <div className={`h-14 p-1 border text-xs line-clamp-3 ${index % 3 === 1 ? "bg-primary text-white" : "bg-gray-50 text-primary border-gray-100"}`}>
+                {bio}
+              </div>
+              <div className="flex justify-between px-2 mt-5">
+                <button
+                  onClick={(e) => handleViewProfile(creative._id, e)}
+                  className={`py-2 px-3 w-fit self-end rounded-lg text-sm font-medium cursor-pointer ${
+                    index % 3 === 1 ? "bg-white text-primary" : "bg-primary text-white"
+                  }`}
+                >
+                  View Profile
+                </button>
+                <button
+                  onClick={(e) => handleContact(creative, e)}
+                  className={`py-2 px-3 w-fit self-end rounded-lg text-sm font-medium cursor-pointer ${
+                    index % 3 === 1 ? "bg-white text-primary" : "bg-primary text-white"
+                  }`}
+                >
+                  Contact Me
+                </button>
               </div>
             </div>
-            <h2 className="font-bold text-sm px-5 line-clamp-1">
-              {creative.bio_data?.full_name || "Unknown"}
-            </h2>
-            <h2 className="text-primary font-extralight text-sm px-5 line-clamp-1">
-              {creative.profile?.field || "N/A"} / {creative.profile?.location?.state || "N/A"}, {creative.profile?.location?.lga || "N/A"}
-            </h2>
-            <div
-              className={`h-14 p-1 border text-xs line-clamp-3 ${
-                index % 3 === 1
-                  ? "bg-primary text-white"
-                  : "bg-gray50 text-primary border-gray100"
-              }`}>
-              {creative.bio_data?.bio || "No introduction available"}
-            </div>
-            <div className="flex justify-between px-2 mt-5">
-              <button
-                onClick={(e) => handleViewPortfolio(creative._id, e)}
-                className={`py-2 px-3 w-fit self-end rounded-lg text-sm font-medium cursor-pointer ${
-                  index % 3 === 1
-                    ? "bg-white text-primary"
-                    : "bg-primary text-white"
-                }`}>
-                View Profile
-              </button>
-              <button
-                onClick={(e) => handleContact(creative, e)}
-                className={`py-2 px-3 w-fit self-end rounded-lg text-sm font-medium cursor-pointer ${
-                  index % 3 === 1
-                    ? "bg-white text-primary"
-                    : "bg-primary text-white"
-                }`}>
-                Contact Me
-              </button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
+
       <div className="flex justify-center gap-4 mt-4">
-        {/* Generate buttons dynamically based on total pages */}
         {Array.from({ length: totalPages }).map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentPage(index)}
             className={`h-10 w-10 flex items-center justify-center rounded-full font-semibold font-inter ${
-              currentPage === index
-                ? "bg-primary text-white cursor-not-allowed"
-                : "text-secondary hover:bg-accents"
-            }`}>
+              currentPage === index ? "bg-primary text-white cursor-not-allowed" : "text-secondary hover:bg-accents"
+            }`}
+          >
             {index + 1}
           </button>
         ))}
-
-        {/* Next Button */}
         <button
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))
-          }
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))}
           className={`h-10 w-10 flex items-center justify-center rounded-full font-semibold border border-accents ${
-            currentPage >= totalPages - 1
-              ? "bg-accents cursor-not-allowed"
-              : "text-secondary hover:bg-accents"
+            currentPage >= totalPages - 1 ? "bg-accents cursor-not-allowed" : "text-secondary hover:bg-accents"
           }`}
-          disabled={currentPage >= totalPages - 1}>
+          disabled={currentPage >= totalPages - 1}
+        >
           <IoIosArrowForward />
         </button>
       </div>
