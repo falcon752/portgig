@@ -50,7 +50,6 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
 
   const creators = creatorsResponse?.data?.page_data || [];
 
-  // Filter creatives based on search filters
   const filteredCreators = useMemo(() => {
     if (!searchFilters) return creators;
 
@@ -80,7 +79,7 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
 
   const handleViewProfile = (creativeId: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    router.push(`/profile-card/${creativeId}`);
+    router.push(`/recruiter-profile-card/${creativeId}`);
   };
 
   const handleContact = (creative: any, e: React.MouseEvent) => {
@@ -88,15 +87,14 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
     console.log("Contact creative:", creative);
   };
 
-  if (isLoading) {
+  if (isLoading)
     return (
       <div className="center h-full my-5">
         <LoadingSpinner className="border-primary w-16 h-16" />
       </div>
     );
-  }
 
-  if (isError) {
+  if (isError)
     return (
       <div className="flex items-center justify-center min-h-[300px]">
         <div className="text-center text-secondary text-lg sm:text-2xl font-semibold bg-gray-100 p-6 rounded-lg shadow-md">
@@ -107,9 +105,8 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
         </div>
       </div>
     );
-  }
 
-  if (filteredCreators.length === 0) {
+  if (filteredCreators.length === 0)
     return (
       <div className="flex items-center justify-center min-h-[300px]">
         <div className="text-center text-secondary text-lg sm:text-2xl font-semibold bg-gray-100 p-6 rounded-lg shadow-md">
@@ -120,7 +117,6 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
         </div>
       </div>
     );
-  }
 
   return (
     <section id="creatives-section" className="p-5">
@@ -129,11 +125,14 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
           const profilePicture = creative.profile?.profile_picture || "/assets/creative.svg";
           const bio = creative.profile?.bio || creative.bio_data?.bio || "No introduction available";
 
+          // Dark card logic
+          const isDarkCard = index % 3 === 1;
+
           return (
             <div
               key={creative._id}
               className={`flex flex-col gap-2 pb-5 px-5 rounded-lg shadow-lg cursor-pointer ${
-                index % 3 === 1 ? "bg-primary text-white" : "bg-white text-primary"
+                isDarkCard ? "bg-primary text-white" : "bg-white text-primary"
               }`}
             >
               <div className="flex justify-between items-center">
@@ -150,22 +149,33 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
                     }}
                   />
                 </div>
-                <div className="bg-secondary/80 text-white py-1 px-5 font-ramaraja">
+                <div
+                  className={`py-1 px-5 font-ramaraja w-32 text-center ${
+                    isDarkCard ? "bg-secondary/70 text-white" : "bg-secondary/80 text-white"
+                  }`}
+                >
                   {mapExperienceToSkillLevel(creative.profile?.years_of_experience || 0)}
                 </div>
               </div>
+
               <h2 className="font-bold text-sm px-5 line-clamp-1">{creative.bio_data?.full_name || "Unknown"}</h2>
-              <h3 className="text-primary font-extralight text-sm px-5 line-clamp-1">
+              <h3 className={`text-sm font-extralight px-5 line-clamp-1 ${isDarkCard ? "text-white" : "text-primary"}`}>
                 {creative.profile?.field || "N/A"} / {creative.profile?.location?.state || "N/A"}, {creative.profile?.location?.lga || "N/A"}
               </h3>
-              <div className={`h-14 p-1 border text-xs line-clamp-3 ${index % 3 === 1 ? "bg-primary text-white" : "bg-gray-50 text-primary border-gray-100"}`}>
+
+              <div
+                className={`h-14 p-1 border text-xs line-clamp-3 ${
+                  isDarkCard ? "bg-primary/90 text-white border-white/20" : "bg-gray-50 text-primary border-gray-100"
+                }`}
+              >
                 {bio}
               </div>
+
               <div className="flex justify-between px-2 mt-5">
                 <button
                   onClick={(e) => handleViewProfile(creative._id, e)}
                   className={`py-2 px-3 w-fit self-end rounded-lg text-sm font-medium cursor-pointer ${
-                    index % 3 === 1 ? "bg-white text-primary" : "bg-primary text-white"
+                    isDarkCard ? "bg-white text-primary" : "bg-primary text-white"
                   }`}
                 >
                   View Profile
@@ -173,7 +183,7 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
                 <button
                   onClick={(e) => handleContact(creative, e)}
                   className={`py-2 px-3 w-fit self-end rounded-lg text-sm font-medium cursor-pointer ${
-                    index % 3 === 1 ? "bg-white text-primary" : "bg-primary text-white"
+                    isDarkCard ? "bg-white text-primary" : "bg-primary text-white"
                   }`}
                 >
                   Contact Me
