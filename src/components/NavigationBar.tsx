@@ -34,6 +34,11 @@ interface MessageState {
   lastViewedCount: number;
 }
 
+interface NavigationBarProps {
+  minimal?: boolean;
+  onProfileInfoUpdate?: (profileName: string, profilePicture: string) => void;
+}
+
 // Helper to get user profile image with fallback
 const getUserProfileImage = (user: any) =>
   user?.profile?.profile_picture ||
@@ -88,25 +93,24 @@ const getRecruiterNavigationItems = (
   ];
 };
 
-const NavigationBar = () => {
+const NavigationBar = ({ minimal, onProfileInfoUpdate }: NavigationBarProps) => {
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { profile } = useAppSelector((state) => state.user);
   const { recruiterProfile } = useAppSelector((state) => state.recruiter);
+
   const [profileModal, setProfileModal] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [dashboardData, setDashboardData] =
     useState<RecruiterDashboardData | null>(null);
 
-  const [notificationState, setNotificationState] = useState<NotificationState>(
-    {
-      totalCount: 0,
-      lastViewedCount: 0,
-      lastFetchedCount: 0,
-    }
-  );
+  const [notificationState, setNotificationState] = useState<NotificationState>({
+    totalCount: 0,
+    lastViewedCount: 0,
+    lastFetchedCount: 0,
+  });
 
   const [messageState, setMessageState] = useState<MessageState>({
     totalUnread: 0,
@@ -120,7 +124,16 @@ const NavigationBar = () => {
   const currentUser = profile || recruiterProfile;
   const currentUserId = getUserId(currentUser);
 
-  const profilePicture = getUserProfileImage(currentUser); // IMAGE
+  const profilePicture = getUserProfileImage(currentUser);
+  const profileName =
+    profile?.bio_data?.user_name || recruiterProfile?.bio_data.full_name || "User";
+
+  // Pass profile info to parent if needed
+  useEffect(() => {
+    if (onProfileInfoUpdate) {
+      onProfileInfoUpdate(profileName, profilePicture);
+    }
+  }, [profileName, profilePicture]);
 
   const unreadMessageCount = useMemo(() => {
     return Math.max(0, messageState.totalUnread - messageState.lastViewedCount);
@@ -173,20 +186,13 @@ const NavigationBar = () => {
   const fetchNotificationCount = async () => {
     try {
       const isAuthenticated = AuthStorage.isAuthenticated();
-      if (!isAuthenticated) return;
-
-      if (!userType) return;
+      if (!isAuthenticated || !userType) return;
 
       const apiRole = userType === "creator" ? "Creator" : "Recruiter";
-      const newTotalCount = await NotificationService.getNotificationCount(
-        apiRole
-      );
+      const newTotalCount = await NotificationService.getNotificationCount(apiRole);
 
       setNotificationState((prev) => {
-        if (prev.lastFetchedCount === newTotalCount) {
-          return prev;
-        }
-
+        if (prev.lastFetchedCount === newTotalCount) return prev;
         return {
           totalCount: newTotalCount,
           lastViewedCount: prev.lastViewedCount,
@@ -200,7 +206,6 @@ const NavigationBar = () => {
 
   useEffect(() => {
     if (!currentUserId) return;
-
     const unsubscribe = getUserChatRooms(currentUserId, (rooms) => {
       const totalUnread = rooms.reduce((total, room) => {
         const unreadCount = room.unreadCounts?.[currentUserId] || 0;
@@ -237,23 +242,19 @@ const NavigationBar = () => {
 
   // Load persisted notification state
   useEffect(() => {
-    const loadPersistedNotificationState = () => {
-      if (typeof window !== "undefined" && userType) {
-        const persistedLastViewed = localStorage.getItem(
-          `notificationLastViewed_${userType}`
-        );
-        const lastViewedCount = persistedLastViewed
-          ? Number.parseInt(persistedLastViewed)
-          : 0;
+    if (typeof window !== "undefined" && userType) {
+      const persistedLastViewed = localStorage.getItem(
+        `notificationLastViewed_${userType}`
+      );
+      const lastViewedCount = persistedLastViewed
+        ? Number.parseInt(persistedLastViewed)
+        : 0;
 
-        setNotificationState((prev) => ({
-          ...prev,
-          lastViewedCount,
-        }));
-      }
-    };
-
-    loadPersistedNotificationState();
+      setNotificationState((prev) => ({
+        ...prev,
+        lastViewedCount,
+      }));
+    }
   }, [userType]);
 
   // Fetch notifications periodically
@@ -262,95 +263,86 @@ const NavigationBar = () => {
     if (!isAuthenticated) return;
 
     fetchNotificationCount();
-
     const intervalId = setInterval(fetchNotificationCount, 30000);
-
     return () => clearInterval(intervalId);
   }, [userType]);
 
   // Fetch user profile
   useEffect(() => {
     const isAuthenticated = AuthStorage.isAuthenticated();
-    if (isAuthenticated) {
-      const currentUserType = AuthStorage.getUserType();
+    if (!isAuthenticated) return;
 
-      if (currentUserType === "recruiter") {
-        dispatch(fetchRecruiterProfile());
-        const fetchDashboardData = async () => {
-          try {
-            const data = await getRecruiterDashboard();
-            setDashboardData(data);
-          } catch (error) {
-            console.error(
-              "Failed to fetch dashboard data for navigation:",
-              error
-            );
-            setDashboardData({
-              total_jobs_posted: 0,
-              total_applicants: 0,
-              job_titles: [],
-              shortlisted_applicants: [],
-              selected_applicants: [],
-              not_qualified_applicants: [],
-              applicant_details: [],
-              latest_application: {
-                job_title: "",
-                applicant_info: {
-                  id: "",
-                  bio_data: {
-                    full_name: "",
-                    user_name: "",
-                    profile_picture: "",
-                  },
-                  profile: {
-                    years_of_experience: "",
-                    field: "",
-                    industry: "",
-                    location: {
-                      state: "",
-                      lga: "",
-                      _id: "",
-                    },
-                    profile_picture: "",
-                  },
-                  resume: {
-                    skills: [],
-                    other_skills: [],
-                    certifications: [],
-                    experience: [],
-                    education: [],
-                  },
-                  rating: 0,
-                  profile_views: 0,
-                  social_clicks: {
-                    linkedin: 0,
-                    twitter: 0,
-                    instagram: 0,
-                    tiktok: 0,
-                  },
+    const currentUserType = AuthStorage.getUserType();
+    if (currentUserType === "recruiter") {
+      dispatch(fetchRecruiterProfile());
+      const fetchDashboardData = async () => {
+        try {
+          const data = await getRecruiterDashboard();
+          setDashboardData(data);
+        } catch (error) {
+          console.error("Failed to fetch dashboard data for navigation:", error);
+          setDashboardData({
+            total_jobs_posted: 0,
+            total_applicants: 0,
+            job_titles: [],
+            shortlisted_applicants: [],
+            selected_applicants: [],
+            not_qualified_applicants: [],
+            applicant_details: [],
+            latest_application: {
+              job_title: "",
+              applicant_info: {
+                id: "",
+                bio_data: {
+                  full_name: "",
+                  user_name: "",
+                  profile_picture: "",
                 },
-                application_date: "",
+                profile: {
+                  years_of_experience: "",
+                  field: "",
+                  industry: "",
+                  location: {
+                    state: "",
+                    lga: "",
+                    _id: "",
+                  },
+                  profile_picture: "",
+                },
+                resume: {
+                  skills: [],
+                  other_skills: [],
+                  certifications: [],
+                  experience: [],
+                  education: [],
+                },
+                rating: 0,
+                profile_views: 0,
+                social_clicks: {
+                  linkedin: 0,
+                  twitter: 0,
+                  instagram: 0,
+                  tiktok: 0,
+                },
               },
-            });
-          }
-        };
-        fetchDashboardData();
-      } else {
-        dispatch(fetchUserProfile());
-      }
+              application_date: "",
+            },
+          });
+        }
+      };
+      fetchDashboardData();
+    } else {
+      dispatch(fetchUserProfile());
     }
   }, [dispatch]);
 
   const homeLink = useMemo(() => {
-    if (recruiterProfile) {
-      return "/recruiter-homepage";
-    }
-    if (profile) {
-      return "/creative-homepage";
-    }
+    if (recruiterProfile) return "/recruiter-homepage";
+    if (profile) return "/creative-homepage";
     return "/";
   }, [profile, recruiterProfile]);
 
+  
   return (
     <nav className="sticky w-full top-0 z-50 h-14 text-primary bg-white">
       <div className="bodyMargin h-full flex items-center justify-between">
@@ -447,67 +439,73 @@ const NavigationBar = () => {
         </div>
 
         {/* Desktop Nav Links */}
-        <div className="max-lg:hidden w-[900px] font-semibold text-primary text-[18px] font-urbanist mx-auto">
-          <ul className="flex gap-6 justify-center">
-            {navigationItems.map((item, index) => {
-              if (item.link.startsWith("http")) {
-                return (
-                  <a
-                    key={index}
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`cursor-pointer hover:underline hover:decoration-primary pb-1 ${
-                      pathname === item.link ? "border-b-2 border-primary" : ""
-                    }`}
-                  >
-                    {item.label}
-                  </a>
-                );
-              }
-
-              const href =
-                item.label === "Home"
-                  ? homeLink
-                  : item.label === "Messages"
-                  ? "/chats"
-                  : item.link;
-
-              if (item.label === "Messages") {
-                return (
-                  <li key={index}>
-                    <Link
-                      href="/chats"
-                      onClick={handleMessageClick}
-                      className={`cursor-pointer hover:underline hover:decoration-primary pb-1 relative ${
-                        pathname === "/chats" ? "border-b-2 border-primary" : ""
+        {!minimal && (
+          <div className="max-lg:hidden w-[900px] font-semibold text-primary text-[18px] font-urbanist mx-auto">
+            <ul className="flex gap-6 justify-center">
+              {navigationItems.map((item, index) => {
+                if (item.link.startsWith("http")) {
+                  return (
+                    <a
+                      key={index}
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`cursor-pointer hover:underline hover:decoration-primary pb-1 ${
+                        pathname === item.link
+                          ? "border-b-2 border-primary"
+                          : ""
                       }`}
                     >
                       {item.label}
-                      {unreadMessageCount > 0 && (
-                        <span className="absolute -top-2 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-                          {unreadMessageCount > 9 ? "9+" : unreadMessageCount}
-                        </span>
-                      )}
-                    </Link>
-                  </li>
-                );
-              }
+                    </a>
+                  );
+                }
 
-              return (
-                <NavLink href={href} key={index}>
-                  <li
-                    className={`cursor-pointer hover:underline hover:decoration-primary pb-1 relative ${
-                      pathname === href ? "border-b-2 border-primary" : ""
-                    }`}
-                  >
-                    {item.label}
-                  </li>
-                </NavLink>
-              );
-            })}
-          </ul>
-        </div>
+                const href =
+                  item.label === "Home"
+                    ? homeLink
+                    : item.label === "Messages"
+                    ? "/chats"
+                    : item.link;
+
+                if (item.label === "Messages") {
+                  return (
+                    <li key={index}>
+                      <Link
+                        href="/chats"
+                        onClick={handleMessageClick}
+                        className={`cursor-pointer hover:underline hover:decoration-primary pb-1 relative ${
+                          pathname === "/chats"
+                            ? "border-b-2 border-primary"
+                            : ""
+                        }`}
+                      >
+                        {item.label}
+                        {unreadMessageCount > 0 && (
+                          <span className="absolute -top-2 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                            {unreadMessageCount > 9 ? "9+" : unreadMessageCount}
+                          </span>
+                        )}
+                      </Link>
+                    </li>
+                  );
+                }
+
+                return (
+                  <NavLink href={href} key={index}>
+                    <li
+                      className={`cursor-pointer hover:underline hover:decoration-primary pb-1 relative ${
+                        pathname === href ? "border-b-2 border-primary" : ""
+                      }`}
+                    >
+                      {item.label}
+                    </li>
+                  </NavLink>
+                );
+              })}
+            </ul>
+          </div>
+        )}
 
         {/* Desktop Profile or Sign up / Login */}
         <div className="max-lg:hidden flex items-center">

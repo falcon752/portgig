@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
+import DashboardLayout from "@/src/components/Dashboard-layout";
 import {
   RecruiterHeroSection,
   ExploreCreative,
   HowItWorks,
 } from "@/src/components/export_components";
-
 import RecruiterSearchSection from "@/src/components/recruiter-creative-hub/RecruiterSearchSection";
 
-// This is the type used by your new search inputs
+// Type for search input
 export type FilterData = {
   role: string;
   industry: string;
@@ -30,13 +30,9 @@ const RecruiterHomepage = () => {
   };
 
   return (
-    <main>
+    <DashboardLayout>
       <RecruiterHeroSection />
-
-      {/* Pass search handler to the new search section */}
       <RecruiterSearchSection onSearch={handleSearch} />
-
-      {/* Map the new FilterData to ExploreCreative's expected FilterData */}
       <ExploreCreative
         searchFilters={
           searchFilters
@@ -50,9 +46,8 @@ const RecruiterHomepage = () => {
             : null
         }
       />
-
       <HowItWorks />
-    </main>
+    </DashboardLayout>
   );
 };
 

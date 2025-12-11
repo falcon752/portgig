@@ -74,7 +74,7 @@ const AllApplicants = () => {
           {/* Header */}
           <div className="h-auto p-4 bg-[#0A1754] w-full flex items-center rounded-md">
             <h2 className="text-lg sm:text-xl lg:text-3xl font-bold text-white lg:pl-5 font-raleway">
-           All Applicants
+              All Applicants
             </h2>
           </div>
 
@@ -187,7 +187,9 @@ const AllApplicants = () => {
                   </p>
                   <p className="text-[#0A1754] text-sm font-raleway font-light mt-1">
                     {capitalizeFirstLetter(applicant.job_title)}/{" "}
-                    {applicant.applicant_info.profile.location.state} State
+                    {applicant.applicant_info.profile.location?.state ||
+                      "Unknown"}{" "}
+                    State
                   </p>
                 </div>
               </div>
@@ -198,8 +200,6 @@ const AllApplicants = () => {
             <p className="text-gray-600">No applicants found.</p>
           </div>
         )}
-
-        
       </section>
 
       {/* Full width section - outside of bodyMargin container */}

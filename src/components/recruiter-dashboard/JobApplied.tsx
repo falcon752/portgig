@@ -169,7 +169,9 @@ const JobApplied = () => {
                   </p>
                   <p className="text-[#0A1754] text-sm font-raleway font-light mt-1">
                     {capitalizeFirstLetter(applicant.job_title)}/{" "}
-                    {applicant.applicant_info.profile.location.state} State
+                    {applicant.applicant_info.profile.location?.state ||
+                      "Unknown"}{" "}
+                    State
                   </p>
                 </div>
               </div>
