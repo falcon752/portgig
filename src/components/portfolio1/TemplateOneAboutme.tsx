@@ -8,12 +8,12 @@ function PortfolioTemplateOneAboutme() {
 
   const responsiveTextStyle = "tracking-[0%] sm:leading-[100%]";
 
-  // --- Skills Grid Styles ---
+  // --- Skills Grid Styles (FIXED) ---
   const skillsGridContainerStyle =
-    "bg-black py-6 px-4 sm:px-6 md:px-8 lg:px-15 grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 md:gap-x-16 md:gap-y-10 place-items-center";
+    "grid grid-cols-1 sm:grid-cols-2 gap-x-16 gap-y-10";
 
   const skillCardBaseStyle =
-    "bg-black rounded-xl flex flex-col gap-3 p-0 w-full items-center";
+    "bg-black rounded-xl flex flex-col gap-3 p-0 w-full";
 
   const skillContentBoxStyle =
     "bg-white h-40 sm:h-48 md:h-56 lg:h-64 rounded-xl w-full overflow-hidden";
@@ -21,8 +21,8 @@ function PortfolioTemplateOneAboutme() {
   const skillNameTextStyle =
     "text-center font-normal text-xs sm:text-sm md:text-base text-gold mt-2";
 
-  const accentColor = "#D3A63B"; // Gold
-  const borderColor = "#FFFFFF"; // White border for image box
+  const accentColor = "#D3A63B";
+  const borderColor = "#FFFFFF";
 
   return (
     <section className="h-fit bg-black">
@@ -48,7 +48,7 @@ function PortfolioTemplateOneAboutme() {
         </div>
 
         {/* Mission */}
-        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-purple-500 text-left sm:text-left">
+        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-purple-500 text-left">
           Mission and Design Philosophy
         </h2>
         <div className={cardStyle}>
@@ -71,39 +71,39 @@ function PortfolioTemplateOneAboutme() {
         </div>
 
         {/* Skills Title */}
-        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-purple-500 text-left sm:text-left">
+        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-purple-500 text-left">
           Skills
         </h2>
+
+        {/* Skills Grid (NOW ALIGNED) */}
+        <div className={skillsGridContainerStyle}>
+          {skills.map((skill, index) => (
+            <div key={index} className={skillCardBaseStyle}>
+              {index === 2 ? (
+                <div
+                  className={`${skillContentBoxStyle} border-4`}
+                  style={{ borderColor }}
+                >
+                  <img
+                    src="/assets/template1.png"
+                    alt="Skill visualization"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ) : (
+                <div className={skillContentBoxStyle}></div>
+              )}
+              <h2 className={skillNameTextStyle} style={{ color: accentColor }}>
+                Branding & Identity Design
+              </h2>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Skills Grid */}
-      <div className={skillsGridContainerStyle}>
-        {skills.map((skill, index) => (
-          <div key={index} className={skillCardBaseStyle}>
-            {index === 2 ? (
-              <div
-                className={`${skillContentBoxStyle} border-4`}
-                style={{ borderColor: borderColor }}
-              >
-                <img
-                  src="/assets/template1.png"
-                  alt="Skill visualization"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ) : (
-              <div className={skillContentBoxStyle}></div>
-            )}
-            <h2 className={skillNameTextStyle} style={{ color: accentColor }}>
-              Branding & Identity Design
-            </h2>
-          </div>
-        ))}
-      </div>
-
-      {/* Tools / Software (matching Mission card style) */}
+      {/* Tools / Software */}
       <div className="px-4 sm:px-6 md:px-8 lg:px-10 pt-10 pb-5 flex flex-col gap-6">
-        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-purple-500 text-left sm:text-left">
+        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-purple-500 text-left">
           <span className="text-purple-500">Tool /</span> Software
         </h2>
         <div className={`${cardStyle} items-start`}>

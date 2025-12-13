@@ -15,7 +15,7 @@ const page = () => {
       {/* Rest of page inside bodyMargin */}
       <div className="bodyMargin">
         <PortfolioTemplateOneAboutme />
-        <div className="bg-white h-15"></div>
+        {/* <div className="bg-white h-15"></div> */}
         <PortfolioTemplateOnePortfolio />
       </div>
 
