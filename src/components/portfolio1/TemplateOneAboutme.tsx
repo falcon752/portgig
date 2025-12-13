@@ -2,91 +2,146 @@ import { skills } from "@/src/constants";
 import React from "react";
 
 function PortfolioTemplateOneAboutme() {
-    // Updated card style with new bg, thicker border, and centered content
-    const cardStyle =
-        "w-full p-5 sm:p-6 md:p-8 lg:p-10 text-white rounded-lg border-2 border-[#4E3E60] bg-[#17151E] shadow-lg shadow-purple-500/10 flex flex-col items-center justify-center";
+  // --- Card styles for About Me / Mission / Tools ---
+  const cardStyle =
+    "w-full px-8 sm:px-6 md:px-10 lg:px-12 py-15 sm:py-6 md:py-10 lg:py-10 text-white rounded-lg border-2 border-[#4E3E60] bg-[#17151E] shadow-lg shadow-purple-500/10 flex flex-col items-center justify-center";
 
-    const responsiveTextStyle = "text-center leading-[100%] tracking-[0%]";
+  const responsiveTextStyle = "tracking-[0%] sm:leading-[100%]";
 
-    return (
-        <section className="h-fit bg-black"> 
-            
-            {/* TEXT SECTION */}
-            <div className="px-4 sm:px-6 md:px-8 lg:px-10 pt-10 pb-5 flex flex-col gap-8">
-                
-                {/* First Text Block */}
-                <div className={cardStyle}>
-                    <p
-                        className={`${responsiveTextStyle} text-[8px] sm:text-[16px] md:text-[24px] lg:text-[30px]`}
-                        style={{ fontFamily: "Arial, sans-serif", fontWeight: 400, fontStyle: "normal" }}
-                    >
-                        I am a creative Graphic Designer & UI/UX Designer with a passion for
-                        crafting visually stunning and user-friendly designs. With a deep
-                        understanding of brand identity, digital design, and user
-                        experience, I help businesses stand out with compelling visuals and
-                        intuitive interfaces. From logo design and branding to web and
-                        mobile app design, my goal is to create designs that not only look
-                        great but also enhance user engagement and conversion.
-                    </p>
-                </div>
+  // --- Skills Grid Styles ---
+  const skillsGridContainerStyle =
+    "bg-black py-6 px-4 sm:px-6 md:px-8 lg:px-15 grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 md:gap-x-16 md:gap-y-10 place-items-center";
 
-                {/* MISSION HEADING */}
-                <h2 className="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl text-purple-500 text-center">
-                    Mission and Design Philosophy
-                </h2>
-                
-                {/* MISSION TEXT BLOCK */}
-                <div className={cardStyle}>
-                    <p
-                        className={`${responsiveTextStyle} text-[8px] sm:text-[16px] md:text-[24px] lg:text-[30px]`}
-                        style={{ fontFamily: "Arial, sans-serif", fontWeight: 400, fontStyle: "normal" }}
-                    >
-                        I am a creative Graphic Designer & UI/UX Designer with a passion for
-                        crafting visually stunning and user-friendly designs. With a deep
-                        understanding of brand identity, digital design, and user
-                        experience, I help businesses stand out with compelling visuals and
-                        intuitive interfaces. From logo design and branding to web and
-                        mobile app design, my goal is to create designs that not only look
-                        great but also enhance user engagement and conversion.
-                    </p>
-                </div>
+  const skillCardBaseStyle =
+    "bg-black rounded-xl flex flex-col gap-3 p-0 w-full items-center";
 
-                {/* SKILLS TITLE */}
-                <h2 className="text-gold font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl text-center">
-                    Skills
-                </h2>
-            </div>
+  const skillContentBoxStyle =
+    "bg-white h-40 sm:h-48 md:h-56 lg:h-64 rounded-xl w-full overflow-hidden";
 
-            {/* SKILLS GRID */}
-            <div className="bg-white py-8 px-4 sm:px-6 md:px-8 lg:px-15 grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-x-20 md:gap-y-12 place-items-center">
-                {skills.map((skill, index) => (
-                    <div
-                        key={index}
-                        className="bg-purpleBg rounded-2xl flex flex-col gap-5 p-5 sm:p-6 md:p-8 w-full items-center"
-                    >
-                        <div className="bg-white h-40 sm:h-48 md:h-60 lg:h-72 rounded-xl"></div>
-                        <h2 className="text-center font-bold text-lg sm:text-xl md:text-2xl text-white">
-                            {skill}
-                        </h2>
-                    </div>
-                ))}
-            </div>
+  const skillNameTextStyle =
+    "text-center font-normal text-xs sm:text-sm md:text-base text-gold mt-2";
 
-            {/* TOOLS */}
-            <div className="bg-purpleBg p-6 sm:p-8 md:p-10 lg:p-20 flex flex-col gap-4 sm:gap-5 items-center">
-                <h2 className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-3xl text-white text-center">
-                    <span className="text-gold">Tool/</span> Software
-                </h2>
-                <p className="font-medium text-base sm:text-lg md:text-xl lg:text-2xl text-white text-center">
-                    Adobe Creative Suite (Photoshop, Illustrator, InDesign, After Effects),
-                    Figma, Adobe XD, Sketch, Canva (for quick design work)
-                </p>
-                <p className="font-medium text-base sm:text-lg md:text-xl lg:text-2xl text-white text-center">
-                    Sketch Canva (for quick design work)
-                </p>
-            </div>
-        </section>
-    );
+  const accentColor = "#D3A63B"; // Gold
+  const borderColor = "#FFFFFF"; // White border for image box
+
+  return (
+    <section className="h-fit bg-black">
+      <div className="px-4 sm:px-6 md:px-8 lg:px-10 pt-10 pb-5 flex flex-col gap-6">
+        {/* About Me */}
+        <div className={cardStyle}>
+          <p
+            className={`${responsiveTextStyle} text-[12px] sm:text-[16px] md:text-[16px] lg:text-[16px] leading-[140%] sm:leading-[140%] text-center max-w-3xl`}
+            style={{
+              fontFamily: "Arial, sans-serif",
+              fontWeight: 300,
+              fontStyle: "normal",
+            }}
+          >
+            I am a creative Graphic Designer & UI/UX Designer with a passion for
+            crafting visually stunning and user-friendly designs. With a deep
+            understanding of brand identity, digital design, and user
+            experience, I help businesses stand out with compelling visuals and
+            intuitive interfaces. From logo design and branding to web and
+            mobile app design, my goal is to create designs that not only look
+            great but also enhance user engagement and conversion.
+          </p>
+        </div>
+
+        {/* Mission */}
+        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-purple-500 text-left sm:text-left">
+          Mission and Design Philosophy
+        </h2>
+        <div className={cardStyle}>
+          <p
+            className={`${responsiveTextStyle} text-[12px] sm:text-[16px] md:text-[16px] lg:text-[16px] leading-[140%] sm:leading-[140%] text-center max-w-3xl`}
+            style={{
+              fontFamily: "Arial, sans-serif",
+              fontWeight: 300,
+              fontStyle: "normal",
+            }}
+          >
+            I am a creative Graphic Designer & UI/UX Designer with a passion for
+            crafting visually stunning and user-friendly designs. With a deep
+            understanding of brand identity, digital design, and user
+            experience, I help businesses stand out with compelling visuals and
+            intuitive interfaces. From logo design and branding to web and
+            mobile app design, my goal is to create designs that not only look
+            great but also enhance user engagement and conversion.
+          </p>
+        </div>
+
+        {/* Skills Title */}
+        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-purple-500 text-left sm:text-left">
+          Skills
+        </h2>
+      </div>
+
+      {/* Skills Grid */}
+      <div className={skillsGridContainerStyle}>
+        {skills.map((skill, index) => (
+          <div key={index} className={skillCardBaseStyle}>
+            {index === 2 ? (
+              <div
+                className={`${skillContentBoxStyle} border-4`}
+                style={{ borderColor: borderColor }}
+              >
+                <img
+                  src="/assets/template1.png"
+                  alt="Skill visualization"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ) : (
+              <div className={skillContentBoxStyle}></div>
+            )}
+            <h2 className={skillNameTextStyle} style={{ color: accentColor }}>
+              Branding & Identity Design
+            </h2>
+          </div>
+        ))}
+      </div>
+
+      {/* Tools / Software (matching Mission card style) */}
+      <div className="px-4 sm:px-6 md:px-8 lg:px-10 pt-10 pb-5 flex flex-col gap-6">
+        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-purple-500 text-left sm:text-left">
+          <span className="text-purple-500">Tool /</span> Software
+        </h2>
+        <div className={`${cardStyle} items-start`}>
+          {(() => {
+            const tools = [
+              "Adobe Photoshop",
+              "Illustrator",
+              "InDesign",
+              "After Effects",
+              "Figma",
+              "Adobe XD",
+              "Sketch",
+              "Canva",
+            ];
+
+            const chunked: string[][] = [];
+            for (let i = 0; i < tools.length; i += 3) {
+              chunked.push(tools.slice(i, i + 3));
+            }
+
+            return chunked.map((group, index) => (
+              <p
+                key={index}
+                className={`${responsiveTextStyle} text-[12px] sm:text-[16px] md:text-[16px] lg:text-[16px] text-left font-semibold`}
+                style={{
+                  fontFamily: "Arial, sans-serif",
+                  fontStyle: "normal",
+                  lineHeight: "2rem",
+                }}
+              >
+                {group.join(", ")}
+              </p>
+            ));
+          })()}
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default PortfolioTemplateOneAboutme;

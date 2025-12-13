@@ -2,10 +2,13 @@ import Image from "next/image";
 import React from "react";
 
 const PortfolioTemplateOneHero = () => {
+  // Match the About Me padding
+  const responsivePadding = "px-4 sm:px-6 md:px-8 lg:px-10";
+
   return (
     <>
       {/* MOBILE – image on top, text below */}
-      <section className="lg:hidden bg-black px-6 pt-6 pb-14">
+      <section className={`lg:hidden bg-black ${responsivePadding} pt-6 pb-14`}>
         {/* Image */}
         <div className="w-full h-[300px] rounded-2xl overflow-hidden mb-6">
           <Image
@@ -32,7 +35,7 @@ const PortfolioTemplateOneHero = () => {
       </section>
 
       {/* DESKTOP */}
-      <section className="hidden lg:flex bg-black items-start pt-8 pb-20 px-8">
+      <section className={`hidden lg:flex bg-black items-start pt-8 pb-20 px-55`}>
         <div className="flex gap-24">
           {/* Image */}
           <div className="flex-shrink-0">
