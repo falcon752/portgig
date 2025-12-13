@@ -2,69 +2,66 @@ import Image from "next/image";
 import React from "react";
 
 const PortfolioTemplateOneHero = () => {
-    return (
-        <>
-            <section className="lg:hidden bg-purpleLight flex flex-col sm:flex-row gap-2 py-4 sm:py-5 px-4 sm:px-6">
-                <div className="flex flex-col gap-2 justify-center w-full">
-                    <h2 className="text-gold font-bold text-xl sm:text-2xl">
-                        I’ am a <br />
-                        <span className="text-white font-bold text-2xl sm:text-3xl">
-                            Graphics/
-                            <br />
-                            UI UX <br />
-                            Designer
-                        </span>
-                    </h2>
-                    <p className="text-white font-bold text-sm sm:text-base">
-                        Creative Graphic & UI/UX Designer Crafting Engaging Digital
-                        Experiences
-                    </p>
-                </div>
-                <div className="w-full flex items-end">
-                    <div className="h-40 sm:h-48 bg-white w-full sm:w-52">
-                        <Image
-                            src="/assets/template1.png"
-                            alt="Designer"
-                            className="h-full w-full object-cover"
-                            width={208}
-                            height={192}
-                            priority
-                        />
-                    </div>
-                </div>
-            </section>
-            <section className="max-lg:hidden lg:h-120 bg-purpleLight flex gap-2">
-                <div className="flex flex-col gap-2 justify-center px-10 w-full">
-                    <h2 className="text-gold text-2xl font-bold">
-                        I’ am a <br />
-                        <span className="text-white font-bold text-6xl">
-                            Graphics/
-                            <br />
-                            UI UX <br />
-                            Designer
-                        </span>
-                    </h2>
-                </div>
-                <div className="w-full flex items-end">
-                    <div className="h-96 bg-white w-full flex items-center justify-center">
-                        <Image
-                            src="/assets/template1.png"
-                            alt="Designer"
-                            className="h-full object-cover"
-                            width={500}
-                            height={500}
-                        />
-                    </div>
-                </div>
-                <div className="w-full flex items-end">
-                    <p className="text-white p-10 font-bold text-xl">
-                        Creative Graphic & UI/UX Designer Crafting Engaging Digital
-                        Experiences
-                    </p>
-                </div>
-            </section>
-        </>
-    );
+  return (
+    <>
+      {/* MOBILE – image on top, text below */}
+      <section className="lg:hidden bg-black px-6 pt-6 pb-14">
+        {/* Image */}
+        <div className="w-full h-[300px] rounded-2xl overflow-hidden mb-6">
+          <Image
+            src="/assets/template1.png"
+            alt="Designer"
+            width={640}
+            height={420}
+            className="w-full h-full object-cover"
+            priority
+          />
+        </div>
+
+        {/* Text */}
+        <div className="flex flex-col gap-3">
+          <h1 className="text-white text-3xl font-bold">Gracier Aftang</h1>
+
+          <p className="text-purple-500 text-base leading-relaxed">
+            Creative Graphic & UI/UX Designer{" "}
+            <span className="sm:block lg:inline">
+              Crafting Engaging Digital Experiences
+            </span>
+          </p>
+        </div>
+      </section>
+
+      {/* DESKTOP */}
+      <section className="hidden lg:flex bg-black items-start pt-8 pb-20 px-8">
+        <div className="flex gap-24">
+          {/* Image */}
+          <div className="flex-shrink-0">
+            <div className="w-[640px] h-[420px] rounded-2xl overflow-hidden">
+              <Image
+                src="/assets/template1.png"
+                alt="Designer"
+                width={640}
+                height={420}
+                className="w-full h-full object-cover"
+                priority
+              />
+            </div>
+          </div>
+
+          {/* Text */}
+          <div className="flex flex-col gap-3 mt-[150px]">
+            <h1 className="text-white text-4xl font-bold">Gracier Aftang</h1>
+
+            <p className="text-purple-500 text-lg max-w-md leading-relaxed">
+              Creative Graphic & UI/UX Designer
+              <br />
+              Crafting Engaging Digital Experiences
+            </p>
+          </div>
+        </div>
+      </section>
+    </>
+  );
 };
 
 export default PortfolioTemplateOneHero;
