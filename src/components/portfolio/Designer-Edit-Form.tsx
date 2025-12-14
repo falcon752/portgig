@@ -1,25 +1,34 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-"use client"
-import type React from "react"
-import { useState, useRef, useEffect } from "react"
-import { X, Upload } from "lucide-react"
-import Image from "next/image"
-import toast from "react-hot-toast"
-import Cookies from "universal-cookie"
-import { useRouter } from "next/navigation"
-import { saveDesignerPortfolio, getPortfolio, uploadAllMedia } from "../../api/portfolio"
-import { revalidateTemplateDesignerPage } from "@/src/app/Actions"
-import type { DesignerFormData, GetPortfolioResponse, PortfolioApiPayload } from "@/types/portfolio"
+"use client";
+import type React from "react";
+import { useState, useRef, useEffect } from "react";
+import { X, Upload } from "lucide-react";
+import Image from "next/image";
+import toast from "react-hot-toast";
+import Cookies from "universal-cookie";
+import { useRouter } from "next/navigation";
+import {
+  saveDesignerPortfolio,
+  getPortfolio,
+  uploadAllMedia,
+} from "../../api/portfolio";
+import { revalidateTemplateDesignerPage } from "@/src/app/Actions";
+import type {
+  DesignerFormData,
+  GetPortfolioResponse,
+  PortfolioApiPayload,
+} from "@/types/portfolio";
 
-interface DesignerFormDataInput extends Omit<DesignerFormData, "tools" | "otherServices" | "jobsOpenTo"> {
-  tools: string
-  otherServices: string
-  jobsOpenTo: string
+interface DesignerFormDataInput
+  extends Omit<DesignerFormData, "tools" | "otherServices" | "jobsOpenTo"> {
+  tools: string;
+  otherServices: string;
+  jobsOpenTo: string;
 }
 
 const DesignerForm: React.FC = () => {
-  const router = useRouter()
-  const cookies = new Cookies(null, { path: "/" })
+  const router = useRouter();
+  const cookies = new Cookies(null, { path: "/" });
   const [formData, setFormData] = useState<DesignerFormDataInput>({
     displayName: "",
     jobTitles: "",
@@ -41,35 +50,40 @@ const DesignerForm: React.FC = () => {
     otherServices: "",
     jobsOpenTo: "",
     whyWorkWithMe: "",
-  })
-  const [isLoading, setIsLoading] = useState(false)
-  const [isFetching, setIsFetching] = useState(true)
-  const [isUploadingMedia, setIsUploadingMedia] = useState(false)
-  const [userId, setUserId] = useState<string | null>(null)
-  const [authToken, setAuthToken] = useState<string | null>(null)
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
+  const [isUploadingMedia, setIsUploadingMedia] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [authToken, setAuthToken] = useState<string | null>(null);
 
-  const headShotInputRef = useRef<HTMLInputElement>(null)
-  const skillImageInputRefs = useRef<(HTMLInputElement | null)[]>([])
-  const portfolioImageInputRefs = useRef<(HTMLInputElement | null)[]>([])
+  const headShotInputRef = useRef<HTMLInputElement>(null);
+  const skillImageInputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const portfolioImageInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
-    const fetchedAuthToken = cookies.get("access_token")
-    const fetchedUserId = cookies.get("userId") || cookies.get("userid")
+    const fetchedAuthToken = cookies.get("access_token");
+    const fetchedUserId = cookies.get("userId") || cookies.get("userid");
 
     if (!fetchedAuthToken || !fetchedUserId) {
-      toast.error("Authentication required. Please log in again.")
-      router.push("/login")
-      return
+      toast.error("Authentication required. Please log in again.");
+      router.push("/login");
+      return;
     }
 
-    setAuthToken(fetchedAuthToken)
-    setUserId(fetchedUserId)
+    setAuthToken(fetchedAuthToken);
+    setUserId(fetchedUserId);
 
     const fetchExistingPortfolio = async () => {
-      setIsFetching(true)
+      setIsFetching(true);
       try {
-        const fullProfileData: GetPortfolioResponse = await getPortfolio(fetchedAuthToken, fetchedUserId)
-        const portfolioData = fullProfileData.data?.user?.data?.portfolio ?? fullProfileData.data?.portfolio
+        const fullProfileData: GetPortfolioResponse = await getPortfolio(
+          fetchedAuthToken,
+          fetchedUserId
+        );
+        const portfolioData =
+          fullProfileData.data?.user?.data?.portfolio ??
+          fullProfileData.data?.portfolio;
 
         if (portfolioData && portfolioData.template_type === "DESIGNER") {
           // Type-safe access to template_specific for designer
@@ -78,14 +92,16 @@ const DesignerForm: React.FC = () => {
             typeof portfolioData.template_specific === "object" &&
             "designer" in portfolioData.template_specific
               ? portfolioData.template_specific.designer
-              : null
+              : null;
 
           const skills = designerSpecific?.skills
-            ? designerSpecific.skills.map((s: { image: string; name: string }) => ({
-                image: { previewUrl: s.image || null, file: null },
-                name: s.name || "",
-              }))
-            : []
+            ? designerSpecific.skills.map(
+                (s: { image: string; name: string }) => ({
+                  image: { previewUrl: s.image || null, file: null },
+                  name: s.name || "",
+                })
+              )
+            : [];
 
           const paddedSkills =
             skills.length >= 4
@@ -96,13 +112,13 @@ const DesignerForm: React.FC = () => {
                     image: { previewUrl: null, file: null },
                     name: "",
                   }),
-                ]
+                ];
 
           const portfolioFiles = (portfolioData.files ?? []).map((f) => ({
             image: { previewUrl: f.image || null, file: null },
             name: f.title || "",
             link: f.link || "",
-          }))
+          }));
           const paddedPortfolioFiles =
             portfolioFiles.length >= 6
               ? portfolioFiles.slice(0, 6)
@@ -113,19 +129,21 @@ const DesignerForm: React.FC = () => {
                     name: "",
                     link: "",
                   }),
-                ]
+                ];
 
           const toolsValue = designerSpecific?.tools
             ? Array.isArray(designerSpecific.tools)
               ? designerSpecific.tools.join(", ")
               : designerSpecific.tools || ""
-            : ""
+            : "";
 
-          const behance = designerSpecific?.behance || ""
-          const jobsOpenToValue = designerSpecific?.job_open_to || ""
+          const behance = designerSpecific?.behance || "";
+          const jobsOpenToValue = designerSpecific?.job_open_to || "";
 
           const whyWorkWithMeValue =
-            designerSpecific?.why_you_should_work_with_me ?? portfolioData.what_you_get_working_with_me ?? ""
+            designerSpecific?.why_you_should_work_with_me ??
+            portfolioData.what_you_get_working_with_me ??
+            "";
 
           setFormData({
             displayName: portfolioData.display_name ?? "",
@@ -141,166 +159,198 @@ const DesignerForm: React.FC = () => {
             tools: toolsValue,
             genericPortfolioFiles: paddedPortfolioFiles,
             behance: behance,
-            otherServices: (portfolioData.other_services ?? []).join(", ") || "",
+            otherServices:
+              (portfolioData.other_services ?? []).join(", ") || "",
             jobsOpenTo: jobsOpenToValue,
             whyWorkWithMe: whyWorkWithMeValue,
-          })
+          });
         } else {
           console.log(
-            "[v0] DesignerForm: No existing designer portfolio found or template type mismatch. Using default form values.",
-          )
+            "[v0] DesignerForm: No existing designer portfolio found or template type mismatch. Using default form values."
+          );
           toast("No existing designer portfolio found. Starting fresh.", {
             icon: "ℹ️",
-          })
+          });
         }
       } catch (error) {
-        console.error("[v0] DesignerForm: Error fetching portfolio:", error)
-        toast.error(`Failed to load portfolio: ${error instanceof Error ? error.message : String(error)}`)
+        console.error("[v0] DesignerForm: Error fetching portfolio:", error);
+        toast.error(
+          `Failed to load portfolio: ${
+            error instanceof Error ? error.message : String(error)
+          }`
+        );
       } finally {
-        setIsFetching(false)
+        setIsFetching(false);
       }
-    }
+    };
 
-    fetchExistingPortfolio()
-  }, [router]) // eslint-disable-line react-hooks/exhaustive-deps
+    fetchExistingPortfolio();
+  }, [router]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleInputChange = (key: keyof DesignerFormDataInput, value: string) => {
-    setFormData((prev) => ({ ...prev, [key]: value }))
-  }
+  const handleInputChange = (
+    key: keyof DesignerFormDataInput,
+    value: string
+  ) => {
+    setFormData((prev) => ({ ...prev, [key]: value }));
+  };
 
-  const handlePortfolioFileChange = (index: number, key: "image" | "name" | "link", value: string) => {
+  const handlePortfolioFileChange = (
+    index: number,
+    key: "image" | "name" | "link",
+    value: string
+  ) => {
     setFormData((prev) => ({
       ...prev,
       genericPortfolioFiles: prev.genericPortfolioFiles.map((item, i) =>
         i === index
           ? {
               ...item,
-              ...(key === "image" ? { image: { ...item.image, previewUrl: value } } : { [key]: value }),
+              ...(key === "image"
+                ? { image: { ...item.image, previewUrl: value } }
+                : { [key]: value }),
             }
-          : item,
+          : item
       ),
-    }))
-  }
+    }));
+  };
 
-  const handleSkillsChange = (index: number, key: "image" | "name", value: string) => {
+  const handleSkillsChange = (
+    index: number,
+    key: "image" | "name",
+    value: string
+  ) => {
     setFormData((prev) => ({
       ...prev,
       skills: prev.skills.map((item, i) =>
         i === index
           ? {
               ...item,
-              ...(key === "image" ? { image: { ...item.image, previewUrl: value } } : { [key]: value }),
+              ...(key === "image"
+                ? { image: { ...item.image, previewUrl: value } }
+                : { [key]: value }),
             }
-          : item,
+          : item
       ),
-    }))
-  }
+    }));
+  };
 
   const handleImageFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     type: "headShot" | "skill" | "portfolio",
-    index?: number,
+    index?: number
   ) => {
-    const file = event.target.files?.[0]
+    const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader()
+      const reader = new FileReader();
       reader.onloadend = () => {
-        const previewUrl = reader.result as string
+        const previewUrl = reader.result as string;
         if (type === "headShot") {
-          setFormData((prev) => ({ ...prev, headShot: { previewUrl, file } }))
+          setFormData((prev) => ({ ...prev, headShot: { previewUrl, file } }));
         } else if (type === "skill" && index !== undefined) {
           setFormData((prev) => ({
             ...prev,
-            skills: prev.skills.map((item, i) => (i === index ? { ...item, image: { previewUrl, file } } : item)),
-          }))
+            skills: prev.skills.map((item, i) =>
+              i === index ? { ...item, image: { previewUrl, file } } : item
+            ),
+          }));
         } else if (type === "portfolio" && index !== undefined) {
           setFormData((prev) => ({
             ...prev,
             genericPortfolioFiles: prev.genericPortfolioFiles.map((item, i) =>
-              i === index ? { ...item, image: { previewUrl, file } } : item,
+              i === index ? { ...item, image: { previewUrl, file } } : item
             ),
-          }))
+          }));
         }
-      }
-      reader.readAsDataURL(file)
+      };
+      reader.readAsDataURL(file);
     }
-  }
+  };
 
   const stringToArray = (str: string): string[] => {
     return str
       .split(",")
       .map((s) => s.trim())
-      .filter(Boolean)
-  }
+      .filter(Boolean);
+  };
 
   const handleSave = async () => {
     if (!authToken || !userId) {
       toast.error("Authentication required. Please log in again.", {
         id: "saveToast",
-      })
-      router.push("/login")
-      return
+      });
+      router.push("/login");
+      return;
     }
 
-    console.log("[v0] DesignerForm: Starting save process")
-    console.log("[v0] DesignerForm: formData.skills before processing:", JSON.stringify(formData.skills, null, 2))
+    console.log("[v0] DesignerForm: Starting save process");
+    console.log(
+      "[v0] DesignerForm: formData.skills before processing:",
+      JSON.stringify(formData.skills, null, 2)
+    );
 
-    setIsLoading(true)
-    setIsUploadingMedia(true)
-    toast.loading("Saving portfolio...", { id: "saveToast" })
+    setIsLoading(true);
+    setIsUploadingMedia(true);
+    toast.loading("Saving portfolio...", { id: "saveToast" });
     try {
-      const filesToUpload: File[] = []
+      const filesToUpload: File[] = [];
       if (formData.headShot.file) {
-        filesToUpload.push(formData.headShot.file)
+        filesToUpload.push(formData.headShot.file);
       }
       formData.skills.forEach((s) => {
         if (s.image.file) {
-          filesToUpload.push(s.image.file)
+          filesToUpload.push(s.image.file);
         }
-      })
+      });
       formData.genericPortfolioFiles.forEach((p) => {
         if (p.image.file) {
-          filesToUpload.push(p.image.file)
+          filesToUpload.push(p.image.file);
         }
-      })
+      });
 
-      let uploadedUrls: string[] = []
+      let uploadedUrls: Array<string | { path?: string; url?: string }> = [];
       if (filesToUpload.length > 0) {
-        uploadedUrls = await uploadAllMedia(filesToUpload)
-        toast.success("All media uploaded successfully!", { id: "saveToast" })
+        uploadedUrls = await uploadAllMedia(filesToUpload);
+        toast.success("All media uploaded successfully!", { id: "saveToast" });
       } else {
-        toast("No new media to upload.", { icon: "ℹ️", id: "saveToast" })
+        toast("No new media to upload.", { icon: "ℹ️", id: "saveToast" });
       }
-      setIsUploadingMedia(false)
 
-      const getNextUploadedUrl = (file: File | null, currentPreviewUrl: string | null) => {
+      setIsUploadingMedia(false);
+
+      const getNextUploadedUrl = (
+        file: File | null,
+        currentPreviewUrl: string | null
+      ) => {
         if (file) {
-          const fileIndex = filesToUpload.indexOf(file)
+          const fileIndex = filesToUpload.indexOf(file);
           if (fileIndex !== -1 && uploadedUrls[fileIndex]) {
-            return uploadedUrls[fileIndex]
+            const uploaded = uploadedUrls[fileIndex];
+            return typeof uploaded === "string"
+              ? uploaded
+              : uploaded.path || uploaded.url || "";
           }
         }
-        return currentPreviewUrl
-      }
+        return currentPreviewUrl || "";
+      };
 
-      const finalHeadShotUrl = getNextUploadedUrl(formData.headShot.file, formData.headShot.previewUrl)
+      const finalHeadShotUrl = getNextUploadedUrl(
+        formData.headShot.file,
+        formData.headShot.previewUrl
+      );
       const finalSkills = formData.skills
         .map((s) => ({
           name: s.name,
-          image: getNextUploadedUrl(s.image.file, s.image.previewUrl) || "",
+          image: getNextUploadedUrl(s.image.file, s.image.previewUrl),
         }))
-        .filter((s) => s.image || s.name)
-
-      console.log("[v0] DesignerForm: finalSkills after processing:", JSON.stringify(finalSkills, null, 2))
-      console.log("[v0] DesignerForm: finalSkills length:", finalSkills.length)
+        .filter((s) => s.name || s.image); // only keep skills with name or image
 
       const finalPortfolioFiles = formData.genericPortfolioFiles
         .map((p) => ({
           title: p.name,
           link: p.link,
-          image: getNextUploadedUrl(p.image.file, p.image.previewUrl) || "",
+          image: getNextUploadedUrl(p.image.file, p.image.previewUrl),
         }))
-        .filter((p) => p.image || p.title || p.link)
+        .filter((p) => p.title || p.link || p.image); // remove completely empty files
 
       const payload: PortfolioApiPayload = {
         portfolio: {
@@ -335,47 +385,54 @@ const DesignerForm: React.FC = () => {
           profile_image: "",
           services: [],
         },
-      }
+      };
 
-      await saveDesignerPortfolio(payload)
-      toast.success("Portfolio updated successfully!", { id: "saveToast" })
+      await saveDesignerPortfolio(payload);
+      toast.success("Portfolio updated successfully!", { id: "saveToast" });
 
-      await revalidateTemplateDesignerPage()
-      router.push("/designer-portfolio/1")
+      await revalidateTemplateDesignerPage();
+      router.push("/designer-portfolio/1");
     } catch (error) {
-      console.error("DesignerForm: Error updating portfolio:", error)
-      toast.error(`Failed to update portfolio: ${error instanceof Error ? error.message : String(error)}`, {
-        id: "saveToast",
-      })
+      console.error("DesignerForm: Error updating portfolio:", error);
+      toast.error(
+        `Failed to update portfolio: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+        {
+          id: "saveToast",
+        }
+      );
     } finally {
-      setIsLoading(false)
-      setIsUploadingMedia(false)
+      setIsLoading(false);
+      setIsUploadingMedia(false);
     }
-  }
+  };
 
   const handleFontColorClick = () => {
-    router.push("/edit-font")
-  }
+    router.push("/edit-font");
+  };
 
   const handleCancel = () => {
-    router.back()
-  }
+    router.back();
+  };
 
-  const isAnyLoading = isLoading || isFetching || isUploadingMedia
+  const isAnyLoading = isLoading || isFetching || isUploadingMedia;
 
   if (isFetching) {
     return (
       <div className="w-full max-w-4xl mx-auto bg-white shadow-md overflow-hidden p-6 text-center text-lg text-[#0A1754]">
         Loading portfolio data...
       </div>
-    )
+    );
   }
 
   return (
     <div className="w-full max-w-4xl mx-auto bg-white shadow-md overflow-hidden">
       {/* Header */}
       <div className="bg-[#0A1754] text-white px-6 py-4 flex justify-between items-center">
-        <h1 className="text-base lg:text-2xl font-semibold font-inter">Edit Profile</h1>
+        <h1 className="text-base lg:text-2xl font-semibold font-inter">
+          Edit Profile
+        </h1>
         <div className="flex gap-3">
           <button
             onClick={handleCancel}
@@ -396,7 +453,11 @@ const DesignerForm: React.FC = () => {
             className="px-4 py-1 lg:px-10 lg:py-3 bg-white text-[#1e3a8a] rounded font-medium hover:bg-gray-100 transition cursor-pointer"
             disabled={isAnyLoading}
           >
-            {isLoading ? "Saving..." : isUploadingMedia ? "Uploading Media..." : "Save"}
+            {isLoading
+              ? "Saving..."
+              : isUploadingMedia
+              ? "Uploading Media..."
+              : "Save"}
           </button>
         </div>
       </div>
@@ -406,11 +467,15 @@ const DesignerForm: React.FC = () => {
           <div className="space-y-6">
             {/* Display Name */}
             <div>
-              <label className="block text-[#0A1754] font-semibold text-xl mb-3">Display Name</label>
+              <label className="block text-[#0A1754] font-semibold text-xl mb-3">
+                Display Name
+              </label>
               <input
                 type="text"
                 value={formData.displayName}
-                onChange={(e) => handleInputChange("displayName", e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("displayName", e.target.value)
+                }
                 className="w-full p-4 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-[#1e3a8a] focus:bg-white transition"
                 placeholder="Enter your display name"
                 disabled={isAnyLoading}
@@ -418,7 +483,9 @@ const DesignerForm: React.FC = () => {
             </div>
             {/* Job Titles */}
             <div>
-              <label className="block text-[#0A1754] font-semibold text-xl mb-3">Job Titles</label>
+              <label className="block text-[#0A1754] font-semibold text-xl mb-3">
+                Job Titles
+              </label>
               <textarea
                 value={formData.jobTitles}
                 onChange={(e) => handleInputChange("jobTitles", e.target.value)}
@@ -431,7 +498,9 @@ const DesignerForm: React.FC = () => {
           </div>
           {/* Head Shot */}
           <div>
-            <label className="block text-[#0A1754] font-semibold text-xl mb-3 text-center">Head shot</label>
+            <label className="block text-[#0A1754] font-semibold text-xl mb-3 text-center">
+              Head shot
+            </label>
             <div
               className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer"
               onClick={() => headShotInputRef.current?.click()}
@@ -447,11 +516,11 @@ const DesignerForm: React.FC = () => {
                   />
                   <button
                     onClick={(e) => {
-                      e.stopPropagation()
+                      e.stopPropagation();
                       setFormData((prev) => ({
                         ...prev,
                         headShot: { previewUrl: null, file: null },
-                      }))
+                      }));
                     }}
                     className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
                     disabled={isAnyLoading}
@@ -462,7 +531,9 @@ const DesignerForm: React.FC = () => {
               ) : (
                 <div className="text-center">
                   <Upload className="mx-auto mb-2 text-[#0A1754]" size={24} />
-                  <span className="text-[#0A1754] font-medium">Upload Image</span>
+                  <span className="text-[#0A1754] font-medium">
+                    Upload Image
+                  </span>
                 </div>
               )}
               <input
@@ -478,7 +549,9 @@ const DesignerForm: React.FC = () => {
         </div>
         {/* About Me */}
         <div>
-          <label className="block text-[#0A1754] font-semibold text-xl mb-3">About Me</label>
+          <label className="block text-[#0A1754] font-semibold text-xl mb-3">
+            About Me
+          </label>
           <textarea
             value={formData.aboutMe}
             onChange={(e) => handleInputChange("aboutMe", e.target.value)}
@@ -490,10 +563,14 @@ const DesignerForm: React.FC = () => {
         </div>
         {/* Mission and Design Philosophy */}
         <div>
-          <label className="block text-[#0A1754] font-semibold text-xl mb-3">Mission and Design Philosophy</label>
+          <label className="block text-[#0A1754] font-semibold text-xl mb-3">
+            Mission and Design Philosophy
+          </label>
           <textarea
             value={formData.missionAndDesignPhilosophy}
-            onChange={(e) => handleInputChange("missionAndDesignPhilosophy", e.target.value)}
+            onChange={(e) =>
+              handleInputChange("missionAndDesignPhilosophy", e.target.value)
+            }
             rows={6}
             className="w-full p-4 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-[#0A1754] focus:bg-white transition resize-none"
             placeholder="Write here"
@@ -502,7 +579,9 @@ const DesignerForm: React.FC = () => {
         </div>
         {/* Skills */}
         <div>
-          <label className="block text-[#0A1754] font-semibold text-xl mb-6">Skills</label>
+          <label className="block text-[#0A1754] font-semibold text-xl mb-6">
+            Skills
+          </label>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {formData.skills.map((skill, index) => (
               <div key={index} className="space-y-3">
@@ -521,7 +600,7 @@ const DesignerForm: React.FC = () => {
                       />
                       <button
                         onClick={(e) => {
-                          e.stopPropagation()
+                          e.stopPropagation();
                           setFormData((prev) => ({
                             ...prev,
                             skills: prev.skills.map((item, i) =>
@@ -530,9 +609,9 @@ const DesignerForm: React.FC = () => {
                                     ...item,
                                     image: { previewUrl: null, file: null },
                                   }
-                                : item,
+                                : item
                             ),
-                          }))
+                          }));
                         }}
                         className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
                         disabled={isAnyLoading}
@@ -542,13 +621,15 @@ const DesignerForm: React.FC = () => {
                     </div>
                   ) : (
                     <div className="text-center">
-                      <span className="text-[#0A1754] font-medium text-lg">Upload Png</span>
+                      <span className="text-[#0A1754] font-medium text-lg">
+                        Upload Png
+                      </span>
                     </div>
                   )}
                   <input
                     type="file"
                     ref={(el) => {
-                      skillImageInputRefs.current[index] = el
+                      skillImageInputRefs.current[index] = el;
                     }}
                     className="hidden"
                     accept="image/png"
@@ -559,7 +640,9 @@ const DesignerForm: React.FC = () => {
                 <input
                   type="text"
                   value={skill.name}
-                  onChange={(e) => handleSkillsChange(index, "name", e.target.value)}
+                  onChange={(e) =>
+                    handleSkillsChange(index, "name", e.target.value)
+                  }
                   placeholder="Name of skill"
                   className="w-full p-3 bg-gray-100 rounded-lg border-0, focus:ring-2 focus:ring-[#1e3a8a] focus:bg-white transition text-center text-sm"
                   disabled={isAnyLoading}
@@ -570,7 +653,9 @@ const DesignerForm: React.FC = () => {
         </div>
         {/* Tools/Software */}
         <div>
-          <label className="block text-[#0A1754] font-semibold text-xl mb-3">Tools/Software</label>
+          <label className="block text-[#0A1754] font-semibold text-xl mb-3">
+            Tools/Software
+          </label>
           <textarea
             value={formData.tools}
             onChange={(e) => handleInputChange("tools", e.target.value)}
@@ -582,13 +667,17 @@ const DesignerForm: React.FC = () => {
         </div>
         {/* My Portfolio */}
         <div>
-          <label className="block text-black font-semibold text-xl mb-6 text-center">My portfolio</label>
+          <label className="block text-black font-semibold text-xl mb-6 text-center">
+            My portfolio
+          </label>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {formData.genericPortfolioFiles.map((item, index) => (
               <div key={index}>
                 <div
                   className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#1e3a8a] transition cursor-pointer"
-                  onClick={() => portfolioImageInputRefs.current[index]?.click()}
+                  onClick={() =>
+                    portfolioImageInputRefs.current[index]?.click()
+                  }
                 >
                   {item.image.previewUrl ? (
                     <div className="relative w-full h-full">
@@ -601,18 +690,19 @@ const DesignerForm: React.FC = () => {
                       />
                       <button
                         onClick={(e) => {
-                          e.stopPropagation()
+                          e.stopPropagation();
                           setFormData((prev) => ({
                             ...prev,
-                            genericPortfolioFiles: prev.genericPortfolioFiles.map((item, i) =>
-                              i === index
-                                ? {
-                                    ...item,
-                                    image: { previewUrl: null, file: null },
-                                  }
-                                : item,
-                            ),
-                          }))
+                            genericPortfolioFiles:
+                              prev.genericPortfolioFiles.map((item, i) =>
+                                i === index
+                                  ? {
+                                      ...item,
+                                      image: { previewUrl: null, file: null },
+                                    }
+                                  : item
+                              ),
+                          }));
                         }}
                         className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
                         disabled={isAnyLoading}
@@ -622,17 +712,21 @@ const DesignerForm: React.FC = () => {
                     </div>
                   ) : (
                     <div className="text-center">
-                      <span className="text-[#0A1754] font-medium text-lg">Upload Image</span>
+                      <span className="text-[#0A1754] font-medium text-lg">
+                        Upload Image
+                      </span>
                     </div>
                   )}
                   <input
                     type="file"
                     ref={(el) => {
-                      portfolioImageInputRefs.current[index] = el
+                      portfolioImageInputRefs.current[index] = el;
                     }}
                     className="hidden"
                     accept="image/*"
-                    onChange={(e) => handleImageFileChange(e, "portfolio", index)}
+                    onChange={(e) =>
+                      handleImageFileChange(e, "portfolio", index)
+                    }
                     disabled={isAnyLoading}
                   />
                 </div>
@@ -642,7 +736,9 @@ const DesignerForm: React.FC = () => {
         </div>
         {/* Social Links */}
         <div>
-          <label className="block text-[#0A1754] font-semibold text-xl mb-3">Pintrest/ Behance Profile liink</label>
+          <label className="block text-[#0A1754] font-semibold text-xl mb-3">
+            Pintrest/ Behance Profile liink
+          </label>
           <input
             type="url"
             value={formData.behance}
@@ -654,7 +750,9 @@ const DesignerForm: React.FC = () => {
         </div>
         {/* Other Services/Skills */}
         <div>
-          <label className="block text-black font-semibold text-xl mb-3">Other Services/Skills</label>
+          <label className="block text-black font-semibold text-xl mb-3">
+            Other Services/Skills
+          </label>
           <textarea
             value={formData.otherServices}
             onChange={(e) => handleInputChange("otherServices", e.target.value)}
@@ -666,7 +764,9 @@ const DesignerForm: React.FC = () => {
         </div>
         {/* Jobs Open To */}
         <div>
-          <label className="block text-black font-semibold text-xl mb-3">Jobs Open To</label>
+          <label className="block text-black font-semibold text-xl mb-3">
+            Jobs Open To
+          </label>
           <input
             type="text"
             value={formData.jobsOpenTo}
@@ -678,7 +778,9 @@ const DesignerForm: React.FC = () => {
         </div>
         {/* Why you should work with me */}
         <div>
-          <label className="block text-black font-semibold text-xl mb-3">Why you should work with me</label>
+          <label className="block text-black font-semibold text-xl mb-3">
+            Why you should work with me
+          </label>
           <textarea
             value={formData.whyWorkWithMe}
             onChange={(e) => handleInputChange("whyWorkWithMe", e.target.value)}
@@ -710,11 +812,15 @@ const DesignerForm: React.FC = () => {
           className="px-4 py-1 lg:px-10 lg:py-3 bg-white text-[#1e3a8a] rounded font-medium hover:bg-gray-100 transition cursor-pointer"
           disabled={isAnyLoading}
         >
-          {isLoading ? "Saving..." : isUploadingMedia ? "Uploading Media..." : "Save"}
+          {isLoading
+            ? "Saving..."
+            : isUploadingMedia
+            ? "Uploading Media..."
+            : "Save"}
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DesignerForm
+export default DesignerForm;

@@ -5,8 +5,7 @@ import { CandidateCard } from "@/src/components/Candidate-card"
 import { Pagination } from "@/src/components/Pagination"
 import Image from "next/image"
 import { CandidateInfo } from "@/src/components/recruiter-dashboard/Candidate-info"
-import { getRecruiterDashboard } from "@/src/lib/requests/recruiterApi"
-import { updateApplicantStatus } from "@/src/lib/requests/recruiterApi"
+import { getRecruiterDashboard, updateApplicantStatus } from "@/src/lib/requests/recruiterApi"
 import toast from "react-hot-toast"
 import AuthStorage from "@/src/lib/requests/auth.new"
 import { useAppDispatch, useAppSelector } from "@/src/redux/hooks"
@@ -31,8 +30,8 @@ interface EnhancedShortlistedCandidate extends ApiShortlistedCandidate {
 
 interface EnhancedApplicantInfo extends ApiApplicantInfo {
   profile: ApiApplicantInfo["profile"] & {
-    email: string
-    full_name: string
+    email?: string
+    full_name?: string
     bio?: string
     phone_number?: string
   }
@@ -60,7 +59,7 @@ interface TransformedCandidate {
 }
 
 const mapExperienceToSkillLevel = (yearsOfExperience: string): SkillLevel => {
-  const yearMatch = yearsOfExperience.match(/(\d+)/)
+  const yearMatch = yearsOfExperience?.match(/(\d+)/)
   const years = yearMatch ? Number.parseInt(yearMatch[1], 10) : 0
 
   if (years <= 1) return "Beginner"
@@ -96,8 +95,7 @@ export default function ShortlistedCandidatesPage() {
   const currentUserType = userType
 
   useEffect(() => {
-    const isAuthenticated = AuthStorage.isAuthenticated()
-    if (isAuthenticated) {
+    if (AuthStorage.isAuthenticated()) {
       if (userType === "recruiter") {
         dispatch(fetchRecruiterProfile())
       } else {
@@ -106,75 +104,68 @@ export default function ShortlistedCandidatesPage() {
     }
   }, [dispatch, userType])
 
-  const transformShortlistedData = (shortlistedApplicants: EnhancedShortlistedCandidate[]): TransformedCandidate[] => {
-    return shortlistedApplicants.map((applicant, index) => {
-      const profile = applicant.applicant_info.profile as EnhancedApplicantInfo["profile"]
+  // Safe transform function
+  const transformShortlistedData = (shortlistedApplicants: EnhancedShortlistedCandidate[] = []): TransformedCandidate[] => {
+    return shortlistedApplicants
+      .filter(Boolean) // remove null/undefined
+      .map((applicant, index) => {
+        const profileInfo = applicant?.applicant_info?.profile || {}
+        const bioData = applicant?.applicant_info?.bio_data || {}
 
-      return {
-        id: applicant.applicant_info.id || `shortlisted-${index + 1}`,
-        name: applicant.applicant_info.bio_data.full_name,
-        role: applicant.job_title,
-        location: `${profile.location?.lga || ""}, ${profile.location?.state || ""}`.trim() || "Location not specified",
-        email: profile.email || "N/A",
-        skillLevel: mapExperienceToSkillLevel(profile.years_of_experience || "0"),
-        avatar: profile.profile_picture || "/assets/creative.svg",
-        industry: profile.industry,
-        cover_letter: applicant.cover_letter,
-        profile: applicant.applicant_info as EnhancedApplicantInfo,
-        yearsOfExperience: profile.years_of_experience,
-        field: profile.field,
-        applicationDate: applicant.application_date,
-        jobId: applicant.job_id || null,
-      }
-    })
+        return {
+          id: applicant?.applicant_info?.id || `shortlisted-${index + 1}`,
+          name: bioData.full_name || "No Name",
+          role: applicant?.job_title || "N/A",
+          location: `${profileInfo?.location?.lga || ""}, ${profileInfo?.location?.state || ""}`.replace(/^, |, $/g, "") || "Location not specified",
+          email: profileInfo?.email || "N/A",
+          skillLevel: mapExperienceToSkillLevel(profileInfo?.years_of_experience || "0"),
+          avatar: profileInfo?.profile_picture || "/assets/creative.svg",
+          industry: profileInfo?.industry,
+          cover_letter: applicant?.cover_letter,
+          profile: applicant?.applicant_info as EnhancedApplicantInfo,
+          yearsOfExperience: profileInfo?.years_of_experience || "0",
+          field: profileInfo?.field || "N/A",
+          applicationDate: applicant?.application_date || "N/A",
+          jobId: applicant?.job_id || null,
+        }
+      })
   }
 
   const handleCandidateRemoved = (candidateId: string) => {
-    if (dashboardData) {
-      const updatedShortlisted = dashboardData.shortlisted_applicants.filter(
-        (applicant) => applicant.applicant_info.id !== candidateId,
-      )
+    if (!dashboardData) return
 
-      setDashboardData({
-        ...dashboardData,
-        shortlisted_applicants: updatedShortlisted,
-      })
+    const updatedShortlisted = dashboardData.shortlisted_applicants.filter(
+      (applicant) => applicant?.applicant_info?.id !== candidateId,
+    )
 
-      if (selectedCandidateId === candidateId) {
-        const transformedCandidates = transformShortlistedData(updatedShortlisted as EnhancedShortlistedCandidate[])
-        setSelectedCandidateId(updatedShortlisted.length > 0 ? transformedCandidates[0].id : null)
-      }
+    setDashboardData({
+      ...dashboardData,
+      shortlisted_applicants: updatedShortlisted,
+    })
+
+    if (selectedCandidateId === candidateId) {
+      const transformed = transformShortlistedData(updatedShortlisted)
+      setSelectedCandidateId(transformed.length > 0 ? transformed[0].id : null)
     }
   }
 
   const handleStartChat = async (candidate: TransformedCandidate) => {
     const candidateUserId = getUserId(candidate)
-
-    if (!currentUserId || !candidateUserId || chatLoading || !currentUser || !candidate) {
-      console.error("Missing required data:", {
-        currentUserId,
-        candidateUserId,
-        hasCurrentUser: !!currentUser,
-        hasCandidate: !!candidate,
-      })
-      return
-    }
+    if (!currentUserId || !candidateUserId || chatLoading || !currentUser || !candidate) return
 
     setChatLoading(true)
     try {
       const candidateUserType = "creative"
-
       const chatId = await createOrGetChatRoom(
         currentUser,
         candidate,
         currentUserType === "creator" ? "creative" : "recruiter",
         candidateUserType,
       )
-
       router.push(`/chats/${chatId}`)
-    } catch (error) {
-      console.error("Error starting chat:", error)
-      alert("Failed to start chat. Please try again.")
+    } catch (err) {
+      console.error("Error starting chat:", err)
+      toast.error("Failed to start chat. Please try again.")
     } finally {
       setChatLoading(false)
     }
@@ -188,18 +179,14 @@ export default function ShortlistedCandidatesPage() {
         setDashboardData(data)
         setError(null)
 
-        if (data.shortlisted_applicants.length > 0) {
-          const transformed = transformShortlistedData(data.shortlisted_applicants as EnhancedShortlistedCandidate[])
-          setSelectedCandidateId(transformed[0].id)
+        if (data?.shortlisted_applicants?.length > 0) {
+          const transformed = transformShortlistedData(data.shortlisted_applicants)
+          setSelectedCandidateId(transformed[0]?.id || null)
         }
       } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message || "Failed to fetch shortlisted candidates")
-          console.error("Error fetching shortlisted candidates:", err)
-        } else {
-          setError("Failed to fetch shortlisted candidates")
-          console.error("Unknown error fetching shortlisted candidates:", err)
-        }
+        const message = err instanceof Error ? err.message : "Failed to fetch shortlisted candidates"
+        setError(message)
+        console.error("Error fetching shortlisted candidates:", err)
       } finally {
         setLoading(false)
       }
@@ -209,11 +196,8 @@ export default function ShortlistedCandidatesPage() {
   }, [refetchTrigger])
 
   const handleStatusUpdate = async (status: string, candidateId?: string) => {
-    const candidates = dashboardData
-      ? transformShortlistedData(dashboardData.shortlisted_applicants as EnhancedShortlistedCandidate[])
-      : []
+    const candidates = dashboardData ? transformShortlistedData(dashboardData.shortlisted_applicants) : []
     const candidateToUpdate = candidates.find((c) => c.id === (candidateId || selectedCandidateId))
-
     if (!candidateToUpdate) return
 
     try {
@@ -222,7 +206,6 @@ export default function ShortlistedCandidatesPage() {
         creator_id: candidateToUpdate.id,
         status: status as "PENDING" | "SHORTLISTED" | "NOT_QUALIFIED" | "SELECTED",
       })
-
       toast.success(result.message || "Status updated successfully!")
       setRefetchTrigger((prev) => prev + 1)
     } catch (err: any) {
@@ -231,9 +214,7 @@ export default function ShortlistedCandidatesPage() {
     }
   }
 
-  const candidates = dashboardData
-    ? transformShortlistedData(dashboardData.shortlisted_applicants as EnhancedShortlistedCandidate[])
-    : []
+  const candidates = dashboardData ? transformShortlistedData(dashboardData.shortlisted_applicants) : []
 
   const filteredCandidates = candidates.filter((candidate) => {
     if (experienceFilter === "all") return true
@@ -243,28 +224,8 @@ export default function ShortlistedCandidatesPage() {
   const shortlistedCount = candidates.length
   const selectedCandidate = candidates.find((c) => c.id === selectedCandidateId) || null
 
-  if (loading) {
-    return (
-      <div className="bg-gray-50 max-w-7xl mx-auto">
-        <div className="flex justify-center items-center h-64">
-          <p className="text-lg text-[#0A1754]">Loading Shortlisted Candidates...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className="bg-gray-50 max-w-7xl mx-auto">
-        <div className="flex justify-center items-center h-64">
-          <div className="text-center">
-            <p className="text-lg text-red-600 mb-2">Error loading data</p>
-            <p className="text-sm text-gray-600">{error}</p>
-          </div>
-        </div>
-      </div>
-    )
-  }
+  if (loading) return <p className="text-center py-20">Loading Shortlisted Candidates...</p>
+  if (error) return <p className="text-center py-20 text-red-600">{error}</p>
 
   return (
     <div className="bg-gray-50 max-w-7xl mx-auto">
@@ -299,37 +260,25 @@ export default function ShortlistedCandidatesPage() {
         </div>
       </div>
 
-      <div className="relative mb-5">
-        <div className="border-b-2 border-black w-full"></div>
-      </div>
+      <div className="border-b-2 border-black mb-5" />
 
       <div className="flex flex-col md:flex-row flex-1 h-full px-4 md:px-6">
         {/* Left Side - Candidates List */}
         <div className="w-full md:flex-1 md:max-w-[50%]">
-          <div className="mb-6">
-            <div className="relative w-full">
-              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-600" />
-              <select
-                className="w-full appearance-none border border-gray-300 rounded-md pl-10 pr-10 py-3 bg-white text-gray-700 font-raleway focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
-                value={experienceFilter}
-                onChange={(e) => setExperienceFilter(e.target.value)}
-              >
-                <option value="all">Filter by Experience</option>
-                <option value="beginner">Beginner (0-1 years)</option>
-                <option value="intermediate">Intermediate (2 years)</option>
-                <option value="mid-level">Mid-level (3 years)</option>
-                <option value="professional">Professional (4-6 years)</option>
-                <option value="expert">Expert (7+ years)</option>
-              </select>
-              <svg
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-600 pointer-events-none"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
+          <div className="mb-6 relative">
+            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-600" />
+            <select
+              className="w-full appearance-none border border-gray-300 rounded-md pl-10 pr-10 py-3 bg-white text-gray-700 font-raleway focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+              value={experienceFilter}
+              onChange={(e) => setExperienceFilter(e.target.value)}
+            >
+              <option value="all">Filter by Experience</option>
+              <option value="beginner">Beginner (0-1 years)</option>
+              <option value="intermediate">Intermediate (2 years)</option>
+              <option value="mid-level">Mid-level (3 years)</option>
+              <option value="professional">Professional (4-6 years)</option>
+              <option value="expert">Expert (7+ years)</option>
+            </select>
           </div>
 
           {filteredCandidates.length > 0 ? (

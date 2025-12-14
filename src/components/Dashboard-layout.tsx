@@ -216,7 +216,7 @@ export default function DashboardLayout({ children, sidebarContent }: DashboardL
 
       <div className="min-h-screen bg-gray-50 pb-16 relative">
         {/* Profile Dropdown */}
-        <div className="fixed top-0 left-0 right-0 h-16 bg-white z-50 shadow flex items-center justify-end px-6">
+        {/* <div className="fixed top-0 left-0 right-0 h-16 bg-white z-50 shadow flex items-center justify-end px-6">
           <div className="relative">
             <div className="flex items-center gap-2">
               <div className="relative h-12 w-12 rounded-full overflow-hidden">
@@ -260,7 +260,7 @@ export default function DashboardLayout({ children, sidebarContent }: DashboardL
               </div>
             )}
           </div>
-        </div>
+        </div> */}
 
         {/* Mobile menu button */}
         <button
