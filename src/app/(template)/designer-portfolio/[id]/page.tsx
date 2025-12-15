@@ -107,7 +107,7 @@ export default async function TemplateOnePage({ params }: PageProps) {
   // Error state rendering
   if (error || !portfolioData) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
+      <main className="flex min-h-screen items-center justify-center p-4">
         <div className="rounded-lg bg-white p-8 shadow-md text-center max-w-md mx-auto">
           <div className="mb-6">
             <div className="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
@@ -145,7 +145,7 @@ export default async function TemplateOnePage({ params }: PageProps) {
 
   // Success state rendering
   return (
-    <main className="font-montserrat bodyMargin bg-purpleBg min-h-screen max-md:mb-20">
+    <main className="font-montserrat">
       {/* Hero Section */}
       <TemplateOneHero portfolio={portfolioData} />
 
@@ -153,26 +153,26 @@ export default async function TemplateOnePage({ params }: PageProps) {
       <TemplateOneAboutme portfolio={portfolioData} />
 
       {/* Spacer */}
-      <div className="bg-white h-15"></div>
+      {/* <div className="bg-white h-15"></div> */}
 
       {/* Portfolio Section */}
       <TemplateOnePortfolio portfolio={portfolioData} />
 
       {/* Share Button */}
-      <div className="bg-white py-8 border-t border-gray-200">
+      {/* <div className="bg-white py-8 border-t border-gray-200">
         <div className="max-w-4xl mx-auto px-4">
           <ShareButton
             creativeId={userid || "unknown"}
             displayName={portfolioData.display_name || "Portfolio"}
           />
         </div>
-      </div>
+      </div> */}
 
       {/* Footer */}
-      <MadeByportgig className="bg-purpleBg" />
+      <MadeByportgig className="bg-black" />
 
       {/* CTA Section */}
-      <div className="text-center py-12 bg-gray-50 border-t border-gray-200">
+      {/* <div className="text-center py-12 bg-gray-50 border-t border-gray-200">
         <div className="max-w-4xl mx-auto px-4">
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-gray-800">
@@ -186,7 +186,7 @@ export default async function TemplateOnePage({ params }: PageProps) {
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
     </main>
   );
 }

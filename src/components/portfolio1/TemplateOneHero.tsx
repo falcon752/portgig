@@ -35,34 +35,36 @@ const PortfolioTemplateOneHero = () => {
       </section>
 
       {/* DESKTOP */}
-      <section className={`hidden lg:flex bg-black items-start pt-8 pb-20 px-55`}>
-        <div className="flex gap-24">
-          {/* Image */}
-          <div className="flex-shrink-0">
-            <div className="w-[640px] h-[420px] rounded-2xl overflow-hidden">
-              <Image
-                src="/assets/template1.png"
-                alt="Designer"
-                width={640}
-                height={420}
-                className="w-full h-full object-cover"
-                priority
-              />
-            </div>
-          </div>
+<section className="hidden lg:flex bg-black pt-8 pb-20 w-full">
+  <div className="flex gap-6 items-start ml-56"> {/* ml-24 moves the whole block to the left */}
+    {/* Image */}
+    <div className="flex-shrink-0">
+      <div className="w-[640px] h-[420px] rounded-2xl overflow-hidden">
+        <Image
+          src="/assets/template1.png"
+          alt="Designer"
+          width={640}
+          height={420}
+          className="w-full h-full object-cover"
+          priority
+        />
+      </div>
+    </div>
 
-          {/* Text */}
-          <div className="flex flex-col gap-3 mt-[150px]">
-            <h1 className="text-white text-4xl font-bold">Gracier Aftang</h1>
+    {/* Text */}
+    <div className="flex flex-col gap-3 mt-[150px]">
+      <h1 className="text-white text-4xl font-bold">Gracier Aftang</h1>
+      <p className="text-purple-500 text-lg max-w-md leading-relaxed">
+        Creative Graphic & UI/UX Designer
+        <br />
+        Crafting Engaging Digital Experiences
+      </p>
+    </div>
+  </div>
+</section>
 
-            <p className="text-purple-500 text-lg max-w-md leading-relaxed">
-              Creative Graphic & UI/UX Designer
-              <br />
-              Crafting Engaging Digital Experiences
-            </p>
-          </div>
-        </div>
-      </section>
+
+
     </>
   );
 };

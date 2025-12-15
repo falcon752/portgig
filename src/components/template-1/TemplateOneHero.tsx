@@ -38,7 +38,7 @@ export const TemplateOneHero = ({ portfolio }: TemplateOneHeroProps) => {
           <h1 className="text-white text-3xl font-bold">{name}</h1>
           <p className="text-purple-500 text-base leading-relaxed">
             {jobTitles}
-            <span className="sm:block lg:inline"> {tagline}</span>
+            {/* <span className="sm:block lg:inline"> {tagline}</span> */}
           </p>
         </div>
       </section>
@@ -66,7 +66,7 @@ export const TemplateOneHero = ({ portfolio }: TemplateOneHeroProps) => {
             <p className="text-purple-500 text-lg max-w-md leading-relaxed">
               {jobTitles}
               <br />
-              {tagline}
+              {/* {tagline} */}
             </p>
           </div>
         </div>
