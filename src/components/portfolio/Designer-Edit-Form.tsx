@@ -327,7 +327,10 @@ const DesignerForm: React.FC = () => {
             const uploaded = uploadedUrls[fileIndex];
             return typeof uploaded === "string"
               ? uploaded
-              : uploaded.path || uploaded.url || "";
+              : (uploaded.path || uploaded.url || "").replace(
+                  "/api.portgig.com/portgig",
+                  ""
+                );
           }
         }
         return currentPreviewUrl || "";

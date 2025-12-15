@@ -37,8 +37,8 @@ export const uploadAllMedia = async (filesToUpload: File[]): Promise<string[]> =
     });
 
     if (response.data && Array.isArray(response.data.files)) {
-      // Ensure we return only string URLs
-      return response.data.files.map((f: any) => f.url || f.path || "").filter(Boolean);
+      // Only return string URLs
+      return response.data.files.filter((f: any) => typeof f === "string");
     } else {
       throw new Error("Batch file upload succeeded but no URLs returned");
     }
@@ -47,6 +47,7 @@ export const uploadAllMedia = async (filesToUpload: File[]): Promise<string[]> =
     throw new Error(error.response?.data?.message || "Failed to upload files");
   }
 };
+
 
 /**
  * Generic function to save any portfolio type.
