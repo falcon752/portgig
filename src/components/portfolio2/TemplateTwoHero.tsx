@@ -6,15 +6,13 @@ const PortfolioTemplateTwoHero = () => {
     <section className="bg-black flex flex-col-reverse md:flex-row gap-2 md:gap-10 pt-15 md:pt-50 px-5 md:px-10">
       {/* Text */}
       <div
-        className="flex flex-col font-bold mb-4 md:mb-0 md:w-1/2 justify-center text-center md:text-left"
+        className="flex flex-col font-bold mb-4 md:mb-0 md:w-1/2 justify-center text-center md:text-left md:-translate-y-10"
         style={{ fontFamily: "The Next Font, sans-serif", fontStyle: "normal" }}
       >
         <h2 className="text-5xl sm:text-6xl md:text-6xl lg:text-7xl font-black text-white">
-
           DENNIS AKPA
         </h2>
         <h2 className="text-xs md:text-base text-white mt-1">
-
           Videographer/Editor, <span>Lagos State</span>
         </h2>
       </div>

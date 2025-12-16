@@ -222,7 +222,7 @@ export default async function Template2Page({
   }));
 
   return (
-    <main className="bg-semiBlack bodyMargin font-montserrat max-md:mb-20">
+    <main className="bg-black font-montserrat max-md:mb-20">
       <TemplateTwoHero
         displayName={portfolio.display_name}
         jobTitles={portfolio.job_titles}
@@ -248,19 +248,19 @@ export default async function Template2Page({
       />
       <TemplateTwoPortfolio
         portfolioItems={portfolioItems}
-        linkedinLink={portfolio.social?.linkedin ?? ""}
-        mediumLink={portfolio.social?.medium ?? ""}
+        // linkedinLink={portfolio.social?.linkedin ?? ""}
+        // mediumLink={portfolio.social?.medium ?? ""}
         whyWorkWithMe={portfolio.what_you_get_working_with_me ?? ""}
         portfolioData={portfolio}
         jobsOpenTo={videographerSpecific.videographer.jobs_open_to ?? ""}
       />
-      {!isPublicView && (
+      {/* {!isPublicView && (
         <ShareButton
           creativeId={actualCreatorId ?? "unknown"}
           displayName={portfolio.display_name ?? "Portfolio"}
         />
-      )}
-      <footer className="center px-10 py-20 bg-semiBlack">
+      )} */}
+      <footer className="center px-10 py-20 bg-black">
         <Image
           src="/assets/madeByPortgig.svg"
           height={200}
@@ -268,7 +268,7 @@ export default async function Template2Page({
           alt="made by portgig"
         />
       </footer>
-      <div className="text-center py-8 bg-gray-50">
+      {/* <div className="text-center py-8 bg-gray-50">
         {isPublicView ? (
           <div className="space-y-4 max-lg:mb-16">
             <p className="text-gray-600">
@@ -297,7 +297,7 @@ export default async function Template2Page({
             Go To Portfolio
           </Link>
         )}
-      </div>
+      </div> */}
     </main>
   );
 }

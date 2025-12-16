@@ -1,86 +1,88 @@
-import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization"
+"use client";
+
+import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
 
 interface TemplateTwoServiceProps {
-    services: string[]
-    videographyTypes: string[]
-    videographySkills: string[]
-    videoEditingSkills: string[]
-    portfolioData: any
+  services: string[];
+  videographyTypes: string[];
+  videographySkills: string[];
+  videoEditingSkills: string[];
+  portfolioData: any;
 }
 
 const TemplateTwoService = ({
-    services,
-    videographyTypes,
-    videographySkills,
-    videoEditingSkills,
-    portfolioData
+  services,
+  videographyTypes,
+  videographySkills,
+  videoEditingSkills,
+  portfolioData,
 }: TemplateTwoServiceProps) => {
-    const { colorUtils, customStyles, getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
-    return (
-        <section>
-            <div className="h-20 flex items-center pl-10">
-                <h2 className="font-bold text-xl lg:text-3xl text-white" style={getHeadingStyle()}>
-                    MY<span className="text-yellowGold"> SERVICES</span>
-                </h2>
-            </div>
+  const { getHeadingStyle, getBodyStyle } =
+    usePortfolioCustomizations(portfolioData);
 
-            {/* Section for Other Services */}
-            {services && services.length > 0 && (
-                <div className="bg-yellowGold pl-5 py-10 md:pl-10 flex flex-col gap-5 text-white" style={{ boxShadow: `0 4px 8px ${colorUtils.darken((customStyles as Record<string, string>)['--accent-color'] || '#FFBA00', 0.5)}` }}>
-                    <h2 className="font-bold text-2xl">VIDEOGRAPHY SKILLS:</h2>
-                    <ol className="space-y-5 list-disc list-inside">
-                        {services.map((service, index) => (
-                            <li key={index} className="font-bold lg:text-xl uppercase">
-                                {service}
-                            </li>
-                        ))}
-                    </ol>
-                </div>
-            )}
+  return (
+    <section className="bg-black py-12 px-4 md:px-10 text-white">
+      {/* Heading */}
+      <h2
+        className="font-bold text-xl md:text-3xl mb-8 text-white"
+        // style={{
+        //   ...getHeadingStyle(),
+        //   color: "#ffffff",
+        // }}
+      >
+        MY <span className="text-yellowGold">SERVICES</span>
+      </h2>
 
-            {/* Section for Videography Types */}
-            {videographyTypes && videographyTypes.length > 0 && (
-                <div className="bg-brownLight pl-5 py-10 md:pl-10 flex flex-col gap-5 text-white" style={{ backgroundColor: `${colorUtils.darken((customStyles as Record<string, string>)['--bg-color'] || '#FFBA00', 0.5)}` }}>
-                    <h2 className="font-bold text-2xl">Videography Types:</h2>
-                    <ol className="grid grid-cols-2 gap-5 list-disc list-inside">
-                        {videographyTypes.map((type, index) => (
-                            <li key={index} className="font-bold lg:text-xl uppercase text-white" style={getBodyStyle()}>
-                                {type}
-                            </li>
-                        ))}
-                    </ol>
-                </div>
-            )}
+      {/* Services */}
+      {services?.length > 0 && (
+        <ul
+          className="space-y-4 md:space-y-5 list-disc list-inside text-sm md:text-base font-bold leading-relaxed md:leading-loose"
+          style={{
+            ...getBodyStyle(),
+            color: "#ffffff",
+          }}
+        >
+          {services.map((service, index) => (
+            <li key={index}>{service}</li>
+          ))}
+        </ul>
+      )}
 
-            {/* Section for Videography Skills */}
-            {videographySkills && videographySkills.length > 0 && (
-                <div className="bg-yellowGold pl-5 py-10 md:pl-10 flex flex-col gap-5 text-white" style={{ backgroundColor: `${colorUtils.darken((customStyles as Record<string, string>)['--accent-color'] || '#FFBA00', 0.5)}` }}>
-                    <h2 className="font-bold text-2xl">Videography Skills:</h2>
-                    <ol className="space-y-5 list-disc list-inside">
-                        {videographySkills.map((skill, index) => (
-                            <li key={index} className="font-bold lg:text-xl uppercase">
-                                {skill}
-                            </li>
-                        ))}
-                    </ol>
-                </div>
-            )}
+      {/* Tools / Skills */}
+      {(videographyTypes.length > 0 ||
+        videographySkills.length > 0 ||
+        videoEditingSkills.length > 0) && (
+        <>
+          <h2
+            className="font-bold text-xl md:text-3xl mt-14 mb-8 text-yellowGold"
+            // style={getHeadingStyle()}
+          >
+            TOOLS
+          </h2>
 
-            {/* Section for Video Editing Skills */}
-            {videoEditingSkills && videoEditingSkills.length > 0 && (
-                <div className="bg-brownLight pl-5 py-10 md:pl-10 flex flex-col gap-5 text-white" style={{ backgroundColor: `${colorUtils.darken((customStyles as Record<string, string>)['--bg-color'] || '#FFBA00', 0.5)}` }}>
-                    <h2 className="font-bold text-2xl">Video Editing Skills:</h2>
-                    <ol className="space-y-5 list-disc list-inside">
-                        {videoEditingSkills.map((skill, index) => (
-                            <li key={index} className="font-bold lg:text-xl uppercase text-white" style={getBodyStyle()}>
-                                {skill}
-                            </li>
-                        ))}
-                    </ol>
-                </div>
-            )}
-        </section>
-    )
-}
+          <ul
+            className="space-y-4 md:space-y-5 list-disc list-inside text-sm md:text-base font-bold leading-relaxed md:leading-loose"
+            style={{
+              ...getBodyStyle(),
+              color: "#ffffff",
+            }}
+          >
+            {videographyTypes.map((item, index) => (
+              <li key={`type-${index}`}>{item}</li>
+            ))}
 
-export default TemplateTwoService
+            {videographySkills.map((item, index) => (
+              <li key={`video-${index}`}>{item}</li>
+            ))}
+
+            {videoEditingSkills.map((item, index) => (
+              <li key={`edit-${index}`}>{item}</li>
+            ))}
+          </ul>
+        </>
+      )}
+    </section>
+  );
+};
+
+export default TemplateTwoService;

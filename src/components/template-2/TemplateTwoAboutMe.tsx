@@ -1,58 +1,76 @@
-import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
+"use client";
+
 import Image from "next/image";
+import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
 
 interface TemplateTwoAboutMeProps {
-  aboutMe: string;
-  portfolioData: any;
+  aboutMe?: string;
+  portfolioData?: any;
 }
 
-const TemplateTwoAboutMe = ({ aboutMe, portfolioData }: TemplateTwoAboutMeProps) => {
-  const { colorUtils, customStyles, getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
+const TemplateTwoAboutMe = ({
+  aboutMe,
+  portfolioData,
+}: TemplateTwoAboutMeProps) => {
+  const { getHeadingStyle, getBodyStyle } =
+    usePortfolioCustomizations(portfolioData);
 
-  const additionalImages = portfolioData?.files
-    ?.filter((file: { image: string; title: string; link: string }) => file.image && !file.title && !file.link)
-    ?.slice(0, 3) || [];
+  // Take first 3 images without title/link
+  const additionalImages =
+    portfolioData?.files
+      ?.filter(
+        (file: { image: string; title?: string; link?: string }) =>
+          file.image && !file.title && !file.link
+      )
+      ?.slice(0, 3) || [];
 
   return (
     <section
-      className="py-20 px-5 md:px-10 flex flex-col gap-10"
+      className="py-8 lg:py-20 px-5 md:px-10 flex flex-col gap-10 bg-black"
       style={{
-        backgroundColor: colorUtils.darken((customStyles as Record<string, string>)["--bg-color"]),
-        fontFamily: portfolioData?.fonts?.body_font,
+        fontFamily:
+          portfolioData?.fonts?.body_font ||
+          "Instrument Sans, sans-serif",
       }}
     >
-      <div className="flex gap-5 md:gap-15">
+      {/* Image boxes – stacked vertically (matches static) */}
+      <div className="flex flex-col gap-5">
         {Array.from({ length: 3 }).map((_, index) => (
           <div
             key={index}
-            className="w-full aspect-square"
-            style={{
-              boxShadow: `0 4px 8px ${colorUtils.darken(
-                (customStyles as Record<string, string>)["--accent-color"] || "#FFBA00",
-                0.5
-              )}`,
-            }}
+            className="w-full h-40 sm:h-52 md:h-72 lg:h-92 rounded-lg overflow-hidden bg-white"
           >
-            {additionalImages[index]?.image ? (
+            {additionalImages[index]?.image && (
               <Image
                 src={additionalImages[index].image}
                 alt={`Additional image ${index + 1}`}
-                className="w-full h-full object-cover rounded-lg"
-                width={300}
-                height={300}
+                width={384}
+                height={384}
+                className="w-full h-full object-cover"
               />
-            ) : (
-              <div className="bg-white w-full h-full rounded-lg" />
             )}
           </div>
         ))}
       </div>
+
+      {/* About Me text */}
       <div className="flex flex-col gap-5">
-        <h2 className="font-bold text-xl lg:text-3xl text-white" style={getHeadingStyle()}>
-          ABOUT<span className="text-yellowGold"> ME</span>
-        </h2>
-        <p className="text-white text-base leading-relaxed" style={getBodyStyle()}>
-          {aboutMe}
+          <h2
+            className="font-next font-bold text-xl md:text-3xl text-white"
+            // style={getHeadingStyle()}
+          >
+            ABOUT <span className="text-gold">ME</span>
+          </h2>
+
+        <p
+          className="text-white text-base leading-relaxed"
+          style={{
+            ...getBodyStyle(),
+            color: "#ffffff",
+          }}
+        >
+          {aboutMe ||
+            "Creative and detail-oriented Graphic Designer with [X] years of experience in brand identity, social media design, and marketing visuals. Adept at transforming concepts into compelling visuals that enhance brand presence. Proficient in Adobe Creative Suite, Canva, and Figma, with a strong understanding of design principles and user experience. Passionate about delivering high-quality designs that resonate with audiences and drive engagement."}
         </p>
       </div>
     </section>

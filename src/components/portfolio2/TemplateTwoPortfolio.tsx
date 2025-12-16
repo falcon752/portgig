@@ -26,10 +26,10 @@ const PortfolioTemplateTwoPortfolio = () => {
           ))}
         </div>
 
-        <Buttons
+        {/* <Buttons
           label="View more"
           className="rounded-none text-black font-bold w-fit px-10 sm:px-12 md:px-16 lg:px-20 py-2 md:py-2.5 mt-8 md:mt-12 lg:mt-20 self-center sm:self-start text-sm md:text-base"
-        />
+        /> */}
 
         <div className="mt-14">
           {/* Header like TOOLS */}
