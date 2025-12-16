@@ -105,31 +105,31 @@ export default function ShortlistedCandidatesPage() {
   }, [dispatch, userType])
 
   // Safe transform function
-  const transformShortlistedData = (shortlistedApplicants: EnhancedShortlistedCandidate[] = []): TransformedCandidate[] => {
-    return shortlistedApplicants
-      .filter(Boolean) // remove null/undefined
-      .map((applicant, index) => {
-        const profileInfo = applicant?.applicant_info?.profile || {}
-        const bioData = applicant?.applicant_info?.bio_data || {}
+const transformShortlistedData = (shortlistedApplicants: EnhancedShortlistedCandidate[] = []): TransformedCandidate[] => {
+  return shortlistedApplicants
+    .filter(Boolean)
+    .map((applicant, index) => {
+      const profileInfo: EnhancedApplicantInfo["profile"] = applicant?.applicant_info?.profile || {} as EnhancedApplicantInfo["profile"]
+      const bioData = applicant?.applicant_info?.bio_data || {}
 
-        return {
-          id: applicant?.applicant_info?.id || `shortlisted-${index + 1}`,
-          name: bioData.full_name || "No Name",
-          role: applicant?.job_title || "N/A",
-          location: `${profileInfo?.location?.lga || ""}, ${profileInfo?.location?.state || ""}`.replace(/^, |, $/g, "") || "Location not specified",
-          email: profileInfo?.email || "N/A",
-          skillLevel: mapExperienceToSkillLevel(profileInfo?.years_of_experience || "0"),
-          avatar: profileInfo?.profile_picture || "/assets/creative.svg",
-          industry: profileInfo?.industry,
-          cover_letter: applicant?.cover_letter,
-          profile: applicant?.applicant_info as EnhancedApplicantInfo,
-          yearsOfExperience: profileInfo?.years_of_experience || "0",
-          field: profileInfo?.field || "N/A",
-          applicationDate: applicant?.application_date || "N/A",
-          jobId: applicant?.job_id || null,
-        }
-      })
-  }
+      return {
+        id: applicant?.applicant_info?.id || `shortlisted-${index + 1}`,
+        name: bioData.full_name || "No Name",
+        role: applicant?.job_title || "N/A",
+        location: `${profileInfo?.location?.lga || ""}, ${profileInfo?.location?.state || ""}`.replace(/^, |, $/g, "") || "Location not specified",
+        email: (profileInfo as { email?: string })?.email || "N/A", // ✅ cast here
+        skillLevel: mapExperienceToSkillLevel(profileInfo?.years_of_experience || "0"),
+        avatar: profileInfo?.profile_picture || "/assets/creative.svg",
+        industry: profileInfo?.industry,
+        cover_letter: applicant?.cover_letter,
+        profile: applicant?.applicant_info as EnhancedApplicantInfo,
+        yearsOfExperience: profileInfo?.years_of_experience || "0",
+        field: profileInfo?.field || "N/A",
+        applicationDate: applicant?.application_date || "N/A",
+        jobId: applicant?.job_id || null,
+      }
+    })
+}
 
   const handleCandidateRemoved = (candidateId: string) => {
     if (!dashboardData) return
