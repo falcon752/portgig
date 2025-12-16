@@ -13,7 +13,7 @@ const page = () => {
       </div>
 
       {/* Rest of page inside bodyMargin */}
-      <div className="bodyMargin">
+      <div>
         <PortfolioTemplateOneAboutme />
         {/* <div className="bg-white h-15"></div> */}
         <PortfolioTemplateOnePortfolio />

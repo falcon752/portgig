@@ -8,13 +8,13 @@ import React from "react";
 
 export default function page() {
   return (
-    <main className="bg-semiBlack bodyMargin font-montserrat">
+    <main className="bg-black font-montserrat">
       <PortfolioTemplateTwoHero />
       <PortfolioTemplateTwoAboutMe />
       <PortfolioTemplateTwoEvent />
       <PortfolioTemplateTwoService />
       <PortfolioTemplateTwoPortfolio />
-      <MadeByportgig className="bg-semiBlack " />
+      <MadeByportgig className="bg-black " />
     </main>
   );
 }
