@@ -95,18 +95,18 @@ export default async function Template3Page({ searchParams }: PageProps) {
   }
 
   return (
-    <main className="bg-semiBlack font-montserrat bodyMargin max-md:mb-20">
+    <main className="bg-semiBlack font-montserrat max-md:mb-20">
       <TemplateThreeHero portfolioData={portfolioData} />
       <TemplateThreeAboutMe portfolioData={portfolioData} />
       <TemplateThreePortfolio portfolioData={portfolioData} />
       <TemplateThreeAvailabilty portfolioData={portfolioData} />
-      {!isPublicView && (
+      {/* {!isPublicView && (
         <ShareButton
           creativeId={actualCreatorId || "unknown"}
           displayName={portfolioData.display_name}
         />
-      )}
-      <footer className="center px-10 py-20 bg-semiBlack">
+      )} */}
+      <footer className="center px-10 py-20 bg-black">
         <Image
           src="/assets/madeByPortgig.svg"
           height={200}
@@ -114,7 +114,7 @@ export default async function Template3Page({ searchParams }: PageProps) {
           alt="made by portgig"
         />
       </footer>
-      <div className="text-center py-8 bg-gray-50">
+      {/* <div className="text-center py-8 bg-gray-50">
         {isPublicView ? (
           <div className="space-y-4 max-lg:mb-16">
             <p className="text-gray-600">
@@ -141,7 +141,7 @@ export default async function Template3Page({ searchParams }: PageProps) {
             Go To Portfolio
           </Link>
         )}
-      </div>
+      </div> */}
     </main>
   );
 }

@@ -1,57 +1,57 @@
 "use client";
-import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
-import { ApiPortfolioData, EMPTY_PORTFOLIO, isDeveloperTemplateSpecific } from "@/types/portfolio";
+import {
+  ApiPortfolioData,
+  EMPTY_PORTFOLIO,
+  isDeveloperTemplateSpecific,
+} from "@/types/portfolio";
 
 interface TemplateThreeAvailabilityProps {
-    portfolioData: ApiPortfolioData | null;
+  portfolioData: ApiPortfolioData | null;
 }
 
-const TemplateThreeAvailability = ({ portfolioData }: TemplateThreeAvailabilityProps) => {
-    const portfolio = portfolioData || EMPTY_PORTFOLIO;
-    const { getHeadingStyle, getBodyStyle, getAccentStyle } = usePortfolioCustomizations(portfolio);
-    const colors = portfolio.fonts?.colors || { background: "#000", accent: "#0A1754", text: "#FFF" };
-    const headingStyle = getHeadingStyle();
-    const bodyStyle = getBodyStyle();
-    const accentStyle = getAccentStyle();
+const TemplateThreeAvailability = ({
+  portfolioData,
+}: TemplateThreeAvailabilityProps) => {
+  const portfolio = portfolioData || EMPTY_PORTFOLIO;
 
-    const availability = isDeveloperTemplateSpecific(portfolio.template_specific)
-        ? portfolio.template_specific.developer.availability || 'I am always available.'
-        : 'I am always available.'
-    const whyWorkWithMe = portfolio.what_you_get_working_with_me ||
-        "I bring a unique blend of technical expertise and creative problem-solving to every project. My commitment to delivering high-quality, scalable, and user-centric solutions ensures your vision comes to life efficiently and effectively. I prioritize clear communication, timely delivery, and a collaborative approach to achieve outstanding results.";
+  const availability = isDeveloperTemplateSpecific(portfolio.template_specific)
+    ? portfolio.template_specific.developer.availability ||
+      "I am always available."
+    : "I am always available.";
 
-    return (
-        <section
-            className="space-y-5"
-            style={{
-                backgroundColor: colors.background,
-                fontFamily: portfolio.fonts?.body_font,
-            }}
-        >
-            <div className="px-5 lg:px-10 flex flex-col">
-                <h2 className="text-lg lg:text-2xl font-bold" style={headingStyle}>Availability</h2>
-            </div>
-            <div className="w-full h-5" style={{ backgroundColor: colors.accent }}></div>
-            <div className="px-10 py-10 mb-30">
-                <p className="font-bold md:text-xl lg:text-2xl" style={bodyStyle}>
-                    {availability}
-                </p>
-            </div>
+  const whyWorkWithMe =
+    portfolio.what_you_get_working_with_me ||
+    "I bring a unique blend of technical expertise and creative problem-solving to every project.";
 
-            <div className="px-5 lg:px-10 flex flex-col">
-                <h2 className="text-lg lg:text-2xl font-bold" style={headingStyle}>
-                    What you get working <span style={accentStyle}>with me</span>
-                </h2>
-            </div>
-            <div className="w-full h-5" style={{ backgroundColor: colors.accent }}></div>
-            <div className="px-10 py-10 mb-30">
-                <p className="font-bold md:text-xl lg:text-2xl" style={bodyStyle}>
-                    {whyWorkWithMe}
-                </p>
-            </div>
-            <div className="w-full h-5" style={{ backgroundColor: colors.accent }}></div>
-        </section>
-    );
+  return (
+    <section className="px-5 lg:px-12 py-20 bg-black space-y-16 text-white">
+      {/* AVAILABILITY */}
+      <div className="space-y-4">
+        <h2 className="text-lg lg:text-2xl font-bold text-white">
+          Availability
+        </h2>
+
+        <div className="border border-cyan-400 rounded-xl px-6 py-8 lg:px-10 lg:py-10 bg-gradient-to-br from-[#0d0d0d] to-[#151515]">
+          <p className="text-sm md:text-lg lg:text-xl text-white text-center leading-relaxed">
+            {availability}
+          </p>
+        </div>
+      </div>
+
+      {/* WHAT YOU GET */}
+      <div className="space-y-4">
+        <h2 className="text-lg lg:text-2xl font-bold text-white">
+          What you get working <span className="text-cyan-400">with me</span>
+        </h2>
+
+        <div className="border border-cyan-400 rounded-xl px-6 py-8 lg:px-10 lg:py-10 bg-gradient-to-br from-[#0d0d0d] to-[#151515]">
+          <p className="text-sm md:text-lg lg:text-xl text-white text-center leading-relaxed">
+            {whyWorkWithMe}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default TemplateThreeAvailability;

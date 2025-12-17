@@ -10,41 +10,46 @@ interface TemplateThreeHeroProps {
 const TemplateThreeHero = ({ portfolioData }: TemplateThreeHeroProps) => {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
   const { getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolio);
-  const colors = portfolio.fonts?.colors || { background: "#000", accent: "#0A1754", text: "#FFF" };
-  const formattedJobTitles = portfolio.job_titles?.length > 0 ? portfolio.job_titles.join(" / ") : "Developer / Designer";
+
   const displayName = portfolio.display_name || "Developer Name";
   const location = portfolio.location || "Location Not Specified";
+  const formattedJobTitles =
+    portfolio.job_titles?.length > 0 ? portfolio.job_titles.join(" / ") : "Developer / Designer";
   const headShot = portfolio.head_shot || "/placeholder.svg?height=300&width=300&query=developer headshot";
   const cta = isDeveloperTemplateSpecific(portfolio.template_specific)
-    ? portfolio.template_specific.developer.cta || "Let's build quality products in programming and design with my services"
+    ? portfolio.template_specific.developer.cta ||
+      "Let's build quality products in programming and design with my services"
     : "Let's build quality products in programming and design with my services";
 
   return (
-    <section className="flex" style={{ backgroundColor: colors.background }}>
-      <div
-        className="flex-1/3 flex justify-end items-end"
-        style={{ backgroundColor: colors.accent }}
-      >
-        <Image
-          src={headShot}
-          alt={`${displayName}'s headshot`}
-          width={300}
-          height={300}
-          className="object-cover h-70"
-        />
-      </div>
-      <div
-        className="flex-2/3 px-10 py-5 sm:pt-20 lg:pt-30 flex justify-end items-end"
-        style={{ color: colors.text }}
-      >
-        <div className="flex flex-col justify-end items-end">
-          <p className="font-bold text-xs md:text-sm lg:text-lg pb-2" style={getBodyStyle()}>{location}</p>
-          <div className="w-[490px] h-px" style={{ backgroundColor: colors.accent }}></div>
-          <h2 className="font-bold text-2xl md:text-3xl lg:text-6xl 2xl:text-8xl" style={getHeadingStyle()}>{displayName}</h2>
-          <h2 className="font-bold text-xs lg:text-2xl 2xl:self-start" style={getHeadingStyle()}>{formattedJobTitles}</h2>
-          <p className="font-normal text-sm lg:text-xl 2xl:text-2xl 2xl:self-start mt-10" style={getBodyStyle()}>
-            {cta}
+    <section className="w-full bg-black text-white px-6 sm:px-10 lg:px-16 py-16">
+      <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
+        {/* LEFT CONTENT */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-center lg:justify-start">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight" style={getHeadingStyle()}>
+            {displayName}
+          </h1>
+
+          <p className="font-bold mt-3 text-sm sm:text-base text-white" style={getBodyStyle()}>
+            {formattedJobTitles}, {location}
           </p>
+
+          <button className="mt-6 bg-cyan-400 hover:bg-cyan-500 text-black font-semibold px-6 py-3 rounded-md transition">
+            {cta}
+          </button>
+        </div>
+
+        {/* RIGHT IMAGE */}
+        <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
+          <div className="bg-[#2f4656] rounded-xl p-6">
+            <Image
+              src={headShot}
+              alt={displayName}
+              width={300}
+              height={380}
+              className="object-contain"
+            />
+          </div>
         </div>
       </div>
     </section>

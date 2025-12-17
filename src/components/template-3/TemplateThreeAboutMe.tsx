@@ -1,7 +1,12 @@
 "use client";
 import Image from "next/image";
 import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
-import { ApiPortfolioData, EMPTY_PORTFOLIO, getDeveloperServices, isDeveloperTemplateSpecific } from "@/types/portfolio";
+import {
+  ApiPortfolioData,
+  EMPTY_PORTFOLIO,
+  getDeveloperServices,
+  isDeveloperTemplateSpecific,
+} from "@/types/portfolio";
 
 interface TemplateThreeAboutMeProps {
   portfolioData: ApiPortfolioData | null;
@@ -9,96 +14,96 @@ interface TemplateThreeAboutMeProps {
 
 const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { getHeadingStyle, getBodyStyle, getAccentStyle } = usePortfolioCustomizations(portfolio);
-  const colors = portfolio.fonts?.colors || { background: "#000", accent: "#0A1754", text: "#FFF", primary: "#6B46C1" };
-  const headingStyle = getHeadingStyle();
-  const bodyStyle = getBodyStyle();
-  const accentStyle = getAccentStyle();
+  const { getHeadingStyle } = usePortfolioCustomizations(portfolio);
 
-  const aboutMe = portfolio.about_me || "No description provided.";
-  const developerServices = getDeveloperServices(portfolio.template_specific);
-  const developerSkills = isDeveloperTemplateSpecific(portfolio.template_specific)
+  const aboutMe =
+    portfolio.about_me ||
+    "I’m a passionate Web Developer & UI/UX Designer dedicated to building visually stunning and high-performing websites and applications.";
+
+  const services = getDeveloperServices(portfolio.template_specific);
+
+  const skills = isDeveloperTemplateSpecific(portfolio.template_specific)
     ? portfolio.template_specific.developer.skills || []
     : [];
 
   return (
-    <section
-      className="py-20 px-5 lg:px-10 flex flex-col gap-5"
-      style={{
-        backgroundColor: colors.background,
-        fontFamily: portfolio.fonts?.body_font,
-      }}
-    >
-      <h2 className="text-lg lg:text-2xl font-bold" style={headingStyle}>
-        About <span style={accentStyle}>Me</span>
-      </h2>
-      <div
-        className="py-2 px-5 text-xs md:text-sm lg:text-2xl font-normal"
-        style={{
-          backgroundColor: colors.primary,
-          color: colors.accent,
-          fontFamily: portfolio.fonts?.body_font,
-        }}
-      >
-        <p>{aboutMe}</p>
+    <section className="px-5 lg:px-12 py-16 flex flex-col gap-10 bg-black text-white">
+      {/* ABOUT ME */}
+      <div>
+        <h2
+          className="text-xl lg:text-2xl font-bold mb-4 text-white"
+          style={getHeadingStyle()}
+        >
+          About Me
+        </h2>
+
+        <div className="border border-cyan-400 rounded-xl px-6 py-6 lg:px-10 lg:py-8 text-sm lg:text-lg text-center text-white leading-relaxed bg-[#0d0d0d]">
+          {aboutMe}
+        </div>
       </div>
 
-      <h2 className="text-lg lg:text-2xl font-bold" style={headingStyle}>
-        Service I <span style={accentStyle}>Offer</span>
-      </h2>
-      {developerServices.length > 0 ? (
-        <div className="flex flex-col sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {developerServices.map((service, index) => (
-            <div
-              key={index}
-              className="w-full flex flex-col items-center px-10 py-10 gap-3"
-              style={{
-                backgroundColor: colors.primary,
-                color: colors.accent,
-              }}
-            >
-              <Image src="/assets/square-logo.svg" alt="square logo" width={30} height={30} />
-              <h2 className="font-bold" style={{ ...headingStyle, color: colors.accent }}>{service.name}</h2>
-              <p className="text-center font-bold text-xs" style={{ ...bodyStyle, color: colors.accent }}>
-                {service.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-center" style={bodyStyle}>No services to display.</p>
-      )}
+      {/* SERVICES */}
+      <div>
+        <h2
+          className="text-xl lg:text-2xl font-bold mb-6 text-white"
+          style={getHeadingStyle()}
+        >
+          Services I <span className="text-cyan-400">Offer</span>
+        </h2>
 
-      <h2 className="text-lg lg:text-2xl font-bold" style={headingStyle}>
-        Skills/ <span style={accentStyle}>Languages</span>
-      </h2>
-      {developerSkills.length > 0 ? (
-        <div className="flex">
-          <div className="px-5 py-5 space-y-3">
-            {developerSkills.map((_, index) => (
-              <div key={index} className="gap-3">
-                <Image src="/assets/arrow.svg" alt="arrow icon" width={30} height={30} />
+        {services.length > 0 ? (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((service, index) => (
+              <div
+                key={index}
+                className="border border-cyan-400 rounded-xl bg-[#0d0d0d] px-8 py-10 flex flex-col items-center gap-4 text-center text-white"
+              >
+                <Image
+                  src="/assets/square-logo.svg"
+                  alt="service icon"
+                  width={40}
+                  height={40}
+                />
+
+                <h3 className="text-cyan-400 font-bold text-lg">
+                  {service.name}
+                </h3>
+
+                <p className="text-xs lg:text-sm text-gray-300">
+                  {service.description}
+                </p>
               </div>
             ))}
           </div>
-          <div
-            className="w-full px-5 py-5 space-y-3 font-bold text-xl lg:w-150"
-            style={{
-              backgroundColor: colors.accent,
-              color: colors.primary,
-              fontFamily: portfolio.fonts?.body_font,
-            }}
-          >
-            {developerSkills.map((skill, index) => (
-              <div key={index} className="flex flex-col items-center gap-3">
-                <span className="w-full">{skill}</span>
+        ) : (
+          <p className="text-white">No services to display.</p>
+        )}
+      </div>
+
+      {/* SKILLS */}
+      <div>
+        <h2
+          className="text-xl lg:text-2xl font-bold mb-6 text-white"
+          style={getHeadingStyle()}
+        >
+          Skills / <span className="text-cyan-400">Language</span>
+        </h2>
+
+        {skills.length > 0 ? (
+          <div className="flex flex-col gap-4">
+            {skills.map((skill, index) => (
+              <div
+                key={index}
+                className="border border-cyan-400 rounded-md px-6 py-3 text-white bg-[#0d0d0d]"
+              >
+                {skill}
               </div>
             ))}
           </div>
-        </div>
-      ) : (
-        <p className="text-center" style={bodyStyle}>No skills to display.</p>
-      )}
+        ) : (
+          <p className="text-white">No skills to display.</p>
+        )}
+      </div>
     </section>
   );
 };
