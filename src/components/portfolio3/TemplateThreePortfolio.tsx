@@ -2,27 +2,34 @@ import React from "react";
 
 const PortfolioTemplateThreePortfolio = () => {
   return (
-    <section className="py-20 space-y-5 lg:px-10">
-      {" "}
-      <div className=" px-5 flex flex-col gap-5">
-        <h2 className="text-lg font-bold text-white">
-          My <span className="text-yellow">Portfolio</span>
-        </h2>
-      </div>
-      <div className="w-full h-5 bg-yellow"></div>
-      <div className=" px-5 flex flex-col gap-5 text-lalezar">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <div
-            key={index}
-            className="border-b border-gray100 py-2 flex items-center gap-5 lg:gap-10 text-white">
-            <div className="flex-1/3 bg-gray100 h-30 max-w-60"></div>
-            <div className="flex-2/3 flex flex-col justify-center">
-              <h2 className="font-bold lg:text-2xl">Web App</h2>
-              <p className="font-bold cursor-pointer text-xs">Click Here</p>
-            </div>
+    <section className="px-5 lg:px-12 py-20 bg-black">
+      
+      {/* SECTION TITLE – LEFT ALIGNED */}
+      <h2 className="text-xl lg:text-2xl font-bold text-white mb-10">
+        My <span className="text-cyan-400">Portfolio</span>
+      </h2>
+
+      {/* PORTFOLIO LIST – FULL WIDTH */}
+      <div className="flex flex-col gap-14">
+        {Array.from({ length: 3 }).map((_, index) => (
+          <div key={index} className="flex flex-col gap-4 w-full">
+            
+            {/* PREVIEW BOX – STRETCHED */}
+            <div className="w-full h-56 lg:h-72 bg-white rounded-xl" />
+
+            {/* TITLE */}
+            <h3 className="text-white font-bold text-lg lg:text-xl">
+              Ecommerce Website
+            </h3>
+
+            {/* BUTTON */}
+            <button className="w-full bg-cyan-400 hover:bg-cyan-500 text-black font-bold py-3 rounded-md transition">
+              Visit Site
+            </button>
           </div>
         ))}
       </div>
+
     </section>
   );
 };

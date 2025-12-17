@@ -7,12 +7,12 @@ import React from "react";
 
 const page = () => {
   return (
-    <main className="bg-semiBlack font-montserrat bodyMargin">
+    <main className="bg-semiBlack font-montserrat">
       <PortfolioTemplateThreeHero />
       <PortfolioTemplateThreeAboutMe />
       <PortfolioTemplateThreePortfolio />
       <PortfolioTemplateThreeAvailabilty />
-      <MadeByportgig className="bg-semiBlack" />
+      <MadeByportgig className="bg-black" />
     </main>
   );
 };

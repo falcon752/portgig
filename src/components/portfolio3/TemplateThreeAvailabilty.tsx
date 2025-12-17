@@ -1,35 +1,40 @@
 import React from "react";
 
-const PortfolioTemplateThreeAvailabilty = () => {
+const PortfolioTemplateThreeAvailability = () => {
   return (
-    <section className="space-y-5">
-      <div className=" px-5 lg:px-10 flex flex-col">
-        <h2 className="text-lg lg:text-2xl font-bold text-white">Availability</h2>
-      </div>
-      <div className="w-full h-5 bg-yellow"></div>
-      <div className="px-10 py-10 mb-30">
-        <p className="font-bold md:text-xl lg:text-2xl text-white">
-          Available for all kind of gigs, projects, jobs, collaboration, kindly
-          reach out to me. Looking forward to working with you.
-        </p>
-      </div>
-      {/* 2 */}
-      <div className=" px-5 lg:px-10 flex flex-col ">
+    <section className="px-5 lg:px-12 py-20 bg-black space-y-16">
+      
+      {/* AVAILABILITY */}
+      <div className="space-y-4">
         <h2 className="text-lg lg:text-2xl font-bold text-white">
-          What you get working <span className="text-yellow">with me</span>
+          Availability
         </h2>
+
+        <div className="border border-cyan-400 rounded-xl px-6 py-8 lg:px-10 lg:py-10 bg-gradient-to-br from-[#0d0d0d] to-[#151515]">
+          <p className="text-sm md:text-lg lg:text-xl text-white text-center leading-relaxed">
+            Available for all kind of gigs, projects, jobs, collaboration, kindly
+            reach out to me. Looking forward to working with you.
+          </p>
+        </div>
       </div>
-      <div className="w-full h-5 bg-yellow"></div>
-      <div className="px-10 py-10 mb-30">
-        <p className="font-bold md:text-xl lg:text-2xl text-white">
-          Available for all kind of gigs, projects, jobs, collaboration, kindly
-          reach out to me. Looking forward to working with you.
-        </p>
+
+      {/* WHAT YOU GET */}
+      <div className="space-y-4">
+        <h2 className="text-lg lg:text-2xl font-bold text-white">
+          What you get working <span className="text-cyan-400">with me</span>
+        </h2>
+
+        <div className="border border-cyan-400 rounded-xl px-6 py-8 lg:px-10 lg:py-10 bg-gradient-to-br from-[#0d0d0d] to-[#151515]">
+          <p className="text-sm md:text-lg lg:text-xl text-white text-center leading-relaxed">
+            Clean code, modern UI/UX, performance-optimized applications,
+            effective communication, and reliable project delivery from start
+            to finish.
+          </p>
+        </div>
       </div>
-      {/* // */}
-      <div className="w-full h-5 bg-yellow"></div>
+
     </section>
   );
 };
 
-export default PortfolioTemplateThreeAvailabilty;
+export default PortfolioTemplateThreeAvailability;
