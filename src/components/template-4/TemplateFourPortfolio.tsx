@@ -5,8 +5,8 @@ import { Buttons } from "../export_components";
 import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
 
 interface PortfolioItem {
-  image: string;
   title: string;
+  image?: string;
   link: string;
 }
 
@@ -17,7 +17,6 @@ interface TemplateFourPortfolioProps {
   mediumLink?: string;
   portfolioData: any;
   whyWorkWithMe?: string;
-  services?: string[];
 }
 
 export function TemplateFourPortfolio({
@@ -28,54 +27,40 @@ export function TemplateFourPortfolio({
   portfolioData,
   whyWorkWithMe,
 }: TemplateFourPortfolioProps) {
-  const {
-    customStyles,
-    getHeadingStyle,
-    getBodyStyle,
-    getButtonStyle,
-    getAccentStyle,
-  } = usePortfolioCustomizations(portfolioData);
+  const { getBodyStyle } = usePortfolioCustomizations(portfolioData);
 
-  const filteredPortfolioItems =
-    portfolioItems?.filter((f) => f.image || f.title || f.link) || [];
-  const hasCaseStudy = caseStudyContent && caseStudyContent.trim().length > 0;
+  const items =
+    portfolioItems?.filter((i) => i.title || i.link || i.image) || [];
 
   return (
-    <section style={customStyles} className="mt-5">
-      {filteredPortfolioItems.length > 0 && (
-        <div className="flex flex-col gap-5 my-10">
-          <h2
-            style={getHeadingStyle({ textAlign: "center", fontWeight: "bold" })}
-          >
-            My Portfolio
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5 lg:mt-10">
-            {filteredPortfolioItems.map((item, index) => (
-              <div
-                key={index}
-                className="space-y-2 sm:space-y-3 center-flexCol font-istokWeb"
-              >
-                {item.image && (
+    <section className="bg-[#faf7f3] px-5 md:px-10 lg:px-20 py-10 space-y-12 font-istokWeb">
+      {/* PORTFOLIO */}
+      {items.length > 0 && (
+        <div className="space-y-8">
+          <h2 className="text-darkBlue font-bold text-lg">My Portfolio</h2>
+
+          {items.map((item, index) => (
+            <div
+              key={index}
+              className="bg-white border border-gray-200 rounded-lg overflow-hidden"
+            >
+              {item.image && (
+                <div className="relative w-full h-56">
                   <Image
-                    src={item.image || "/placeholder.svg"}
+                    src={item.image}
                     alt={item.title || "portfolio"}
-                    height={120}
-                    width={120}
-                    className="sm:w-[200px] sm:h-[200px] object-cover rounded-lg"
+                    fill
+                    className="object-cover"
+                    priority={index === 0}
                   />
-                )}
-                {item.title && (
-                  <h2
-                    style={getHeadingStyle({
-                      textAlign: "center",
-                      fontWeight: "bold",
-                      fontSize: "0.75rem",
-                    })}
-                    className="sm:text-base"
-                  >
-                    {item.title}
-                  </h2>
-                )}
+                </div>
+              )}
+
+              <div className="px-6 py-8 space-y-6 text-center">
+                <h3 className="font-bold text-darkBlue text-base">
+                  {item.title || "Untitled work"}
+                </h3>
+
                 {item.link && (
                   <Link
                     href={item.link}
@@ -83,151 +68,100 @@ export function TemplateFourPortfolio({
                     rel="noopener noreferrer"
                   >
                     <Buttons
-                      label="Click here"
-                      className="rounded-lg text-[10px] sm:text-xs px-2 sm:px-15 py-1 sm:py-2"
-                      style={getButtonStyle({ fontWeight: "bold" })}
+                      label="Read more"
+                      className="
+            w-full
+            border
+            border-orange-400
+            text-orange-400
+            bg-white
+            rounded-md
+            py-3
+            font-medium
+          "
                     />
                   </Link>
                 )}
               </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {hasCaseStudy && (
-        <div className="py-10 space-y-5">
-          <h2
-            style={getHeadingStyle({
-              fontSize: "0.875rem",
-              fontWeight: "bold",
-            })}
-            className="lg:text-2xl"
-          >
-            Case Study
-          </h2>
-          <div
-            style={{
-              backgroundColor: "var(--bg-color)",
-              border: `1px solid var(--primary-color)20`,
-              padding: "1.25rem",
-            }}
-          >
-            <p
-              style={getBodyStyle({
-                fontSize: "0.875rem",
-                whiteSpace: "pre-wrap",
-              })}
-              className="lg:text-lg font-istokWeb"
-            >
-              {caseStudyContent}
-            </p>
-          </div>
-        </div>
-      )}
-
-      {(linkedinLink || mediumLink) && (
-        <div className="pb-10 space-y-5">
-          <p
-            style={getHeadingStyle({
-              fontSize: "0.875rem",
-              fontWeight: "bold",
-            })}
-            className="lg:text-2xl"
-          >
-            Social & Writing Platform Links
-          </p>
-          <div
-            style={{ backgroundColor: "var(--primary-color)" }}
-            className="px-5 pt-10 pb-5 flex justify-between font-istokWeb"
-          >
-            {linkedinLink && (
-              <div className="center-flexCol gap-3">
-                <p
-                  style={getAccentStyle({
-                    fontWeight: "bold",
-                    fontSize: "1rem",
-                  })}
-                  className="lg:text-xl"
-                >
-                  LinkedIn
-                </p>
-                <Link
-                  href={linkedinLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Buttons
-                    label="Click here"
-                    className="rounded-lg text-xs px-10"
-                    style={getButtonStyle({
-                      backgroundColor: "var(--bg-color)",
-                      color: "var(--primary-color)",
-                      fontWeight: "bold",
-                    })}
-                  />
-                </Link>
-              </div>
-            )}
-            {mediumLink && (
-              <div className="center-flexCol gap-3">
-                <p
-                  style={getAccentStyle({
-                    fontWeight: "bold",
-                    fontSize: "1rem",
-                  })}
-                  className="lg:text-xl"
-                >
-                  Medium
-                </p>
-                <Link
-                  href={mediumLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Buttons
-                    label="Click here"
-                    className="rounded-lg text-xs px-10"
-                    style={getButtonStyle({
-                      backgroundColor: "var(--bg-color)",
-                      color: "var(--primary-color)",
-                      fontWeight: "bold",
-                    })}
-                  />
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      <div className="py-5 space-y-5">
-        {whyWorkWithMe && (
-          <div className="flex flex-col gap-5">
-            <p
-              style={getHeadingStyle({
-                fontSize: "0.875rem",
-                fontWeight: "bold",
-                marginLeft: "1.25rem",
-              })}
-              className="lg:text-2xl"
-            >
-              What you get working with me
-            </p>
-            <div
-              style={{
-                backgroundColor: "var(--primary-color)",
-                padding: "1.25rem 2.5rem",
-              }}
-              className="space-y-1 text-sm lg:text-lg font-istokWeb"
-            >
-              <p style={getBodyStyle({ color: "var(--bg-color)" })}>
-                {whyWorkWithMe}
-              </p>
             </div>
+          ))}
+        </div>
+      )}
+
+      {/* CASE STUDY */}
+      {caseStudyContent && caseStudyContent.trim() && (
+        <div className="space-y-6">
+          <h2 className="text-darkBlue font-bold text-lg">Case Study</h2>
+
+          <div className="bg-white border border-gray-200 rounded-lg p-6 text-sm lg:text-base text-gray-600 leading-relaxed">
+            <p style={getBodyStyle({})}>{caseStudyContent}</p>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {/* SOCIAL LINKS */}
+      {(linkedinLink || mediumLink) && (
+        <div className="space-y-6">
+          <h2 className="text-darkBlue font-bold text-lg">
+            Social & Writing Platform Links
+          </h2>
+
+          <div className="flex flex-col gap-10">
+            {linkedinLink && (
+              <div className="space-y-3 text-center">
+                <p className="font-bold text-darkBlue">LinkedIn</p>
+                <Link href={linkedinLink} target="_blank">
+                  <Buttons
+                    label="Click here"
+                    className="
+                      w-full
+                      border
+                      border-orange-400
+                      text-orange-400
+                      bg-white
+                      rounded-md
+                      py-3
+                    "
+                  />
+                </Link>
+              </div>
+            )}
+
+            {mediumLink && (
+              <div className="space-y-3 text-center">
+                <p className="font-bold text-darkBlue">Medium</p>
+                <Link href={mediumLink} target="_blank">
+                  <Buttons
+                    label="Click here"
+                    className="
+                      w-full
+                      border
+                      border-orange-400
+                      text-orange-400
+                      bg-white
+                      rounded-md
+                      py-3
+                    "
+                  />
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* WHY WORK WITH ME */}
+      {whyWorkWithMe && (
+        <div className="space-y-6">
+          <h2 className="text-darkBlue font-bold text-lg">
+            Why you should work with me?
+          </h2>
+
+          <div className="bg-white border border-gray-200 rounded-lg p-6 text-sm lg:text-base text-gray-600 leading-relaxed">
+            <p style={getBodyStyle({})}>{whyWorkWithMe}</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

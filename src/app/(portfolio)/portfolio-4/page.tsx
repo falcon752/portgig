@@ -5,7 +5,7 @@ import PortfolioTemplateFourAboutMe from "@/src/components/portfolio4/TemplateFo
 import PortfolioTemplateFourPortfolio from "@/src/components/portfolio4/TemplateFourPortfolio";
 const page = () => {
   return (
-    <main className="bodyMargin font-montserrat">
+    <main className="font-montserrat">
       <PortfolioTemplateFourHero />
       <PortfolioTemplateFourAboutMe />
       <PortfolioTemplateFourPortfolio />

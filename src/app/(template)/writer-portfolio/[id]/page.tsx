@@ -142,7 +142,7 @@ export default async function Template4Page({
         | undefined;
 
     return (
-        <main className="bodyMargin font-montserrat max-md:mb-20">
+        <main className="font-montserrat max-md:mb-20">
             <TemplateFourHero
                 displayName={portfolio.display_name}
                 jobTitles={portfolio.job_titles}
@@ -166,15 +166,15 @@ export default async function Template4Page({
                 mediumLink={portfolio.social?.medium as string | undefined}
                 portfolioData={portfolio}
                 whyWorkWithMe={portfolio.what_you_get_working_with_me}
-                services={portfolio.other_services}
+                // services={portfolio.other_services}
             />
-            {!isPublicView && (
+            {/* {!isPublicView && (
                 <ShareButton
                     creativeId={actualCreatorId || "unknown"}
                     displayName={portfolio.display_name}
                 />
-            )}
-            <footer className="center px-10 py-20 bg-white">
+            )} */}
+            <footer className="center px-10 py-20 bg-[#faf7f3]">
                 <Image
                     src="/assets/madeByPortgig2.svg"
                     height={200}
@@ -182,7 +182,7 @@ export default async function Template4Page({
                     alt="made by portgig"
                 />
             </footer>
-            <div className="text-center py-8 bg-gray-50">
+            {/* <div className="text-center py-8 bg-gray-50">
                 {isPublicView ? (
                     <div className="space-y-4 max-lg:mb-16">
                         <p className="text-gray-600">
@@ -209,7 +209,7 @@ export default async function Template4Page({
                         Go To Portfolio
                     </Link>
                 )}
-            </div>
+            </div> */}
         </main>
     );
 }
