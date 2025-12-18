@@ -2,25 +2,28 @@ import Image from "next/image";
 
 export default function PortfolioTemplateHero() {
   return (
-    <div className="bg-[#A1242C] flex flex-col-reverse lg:flex-row items-center justify-between gap-8 px-6 py-10">
-      <div className="text-center lg:text-left md:px-10">
-        <h1 className="text-white text-3xl lg:text-8xl font-bold">
-          Sophia Turner
-        </h1>
-        <p className="text-white mt-2 text-base md:text-lg font-bold">
-          Strategic Social Media Manager | Driving Engagement & Growth
-        </p>
-        <p className="text-white text-sm mt-1 font-bold">Adamawa</p>
-      </div>
+    <section className="bg-[#f9f9f9] flex flex-col items-center px-6 py-20 text-center">
 
-      <div className="relative w-[320px] h-[340px] md:w-[400px] md:h-[430px] lg:w-[513px] lg:h-[518px] rounded-md overflow-hidden">
+      {/* Avatar */}
+      <div className="relative w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden border-4 border-[#7fd3f7]">
         <Image
           src="/assets/girl.png"
           alt="Sophia Turner"
           fill
-          className="object-cover rounded-md"
+          className="object-cover"
         />
       </div>
-    </div>
+
+      {/* Name */}
+      <h1 className="mt-8 text-[60px] sm:text-[75px] md:text-[90px] font-medium font-[MTNBrighterSans] leading-[1.83] tracking-normal whitespace-nowrap text-black">
+        Sophia Turner
+      </h1>
+
+      {/* Role */}
+      <p className="-mt-6 text-base md:text-lg font-semibold text-gray-700">
+        Strategic Social Media Manager, Lagos
+      </p>
+
+    </section>
   );
 }

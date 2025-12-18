@@ -9,7 +9,8 @@ import StrategyContent from "@/src/components/portfolio5/StrategyContent";
 import PortfolioTemplateFiveAboutme from "@/src/components/portfolio5/TemplateFiveAboutme";
 import PortfolioTemplateHero from "@/src/components/portfolio5/TemplateHero";
 import Tools from "@/src/components/portfolio5/Tools";
-import VideoEditing from "@/src/components/portfolio5/VideoEditing";
+// import VideoEditing from "@/src/components/portfolio5/VideoEditing";
+import OtherServices from "@/src/components/portfolio5/OtherServices";
 import Image from "next/image";
 
 export default function Template() {
@@ -17,15 +18,16 @@ export default function Template() {
     <div className="font-sans bg-black">
       <PortfolioTemplateHero />
       <PortfolioTemplateFiveAboutme />
-      <StrategyContent />
+      <StrategyContent approachToStrategy="" mission="" />
       <Skills />
       <Services />
-      <PortfolioHealthcareCaseStudy />
+      {/* <PortfolioHealthcareCaseStudy /> */}
       <PortfolioFashionBrand />
       <PortfolioFoodBrand />
-      <Portfolio />
+      {/* <Portfolio /> */}
       <PortfolioGraphicsDesign />
-      <VideoEditing />
+      <OtherServices />
+      {/* <VideoEditing /> */}
       <Tools />
       <footer className={`center px-10 py-20 bg-black`}>
         <Image

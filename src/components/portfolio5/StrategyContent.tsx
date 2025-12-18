@@ -1,47 +1,43 @@
-export default function StrategyContent() {
-    return (
-      <div className="bg-black text-white px-6 md:px-10 py-8">
-        <div className="flex flex-col lg:flex-row justify-center items-center gap-y-10 lg:gap-x-24">
-          
-          {/* Left Card */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-            <h3 className="text-xl lg:text-3xl font-bold mb-4 text-center">
-              My Approach to Strategy,<br/> Content
-            </h3>
-            <div className="bg-[#A1242C] w-full max-w-[487px] border-2 box-border p-5 rounded-md">
-              <p className="text-lg font-medium">
-                Creative and detail-oriented Graphic Designer with [X] years of
-                experience in brand identity, social media design, and marketing
-                visuals. Adept at transforming concepts into compelling visuals
-                that enhance brand presence. Proficient in Adobe Creative Suite,
-                Canva, and Figma, with a strong understanding of design principles
-                and user experience. Passionate about delivering high-quality
-                designs that resonate with audiences and drive engagement.
-              </p>
-            </div>
-          </div>
-  
-          {/* Right Card */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left lg:mt-40">
-            <h3 className="text-xl lg:text-3xl font-bold mb-4 text-center">
-              My Mission & Values
-              <br />
-              how you help brands grow <br/> online.
-            </h3>
-            <div className="bg-[#A1242C] w-full max-w-[487px] border-2 box-border p-5 rounded-md">
-              <p className="text-lg font-medium">
-                Creative and detail-oriented Graphic Designer with [X] years of
-                experience in brand identity, social media design, and marketing
-                visuals. Adept at transforming concepts into compelling visuals
-                that enhance brand presence. Proficient in Adobe Creative Suite,
-                Canva, and Figma, with a strong understanding of design principles
-                and user experience. Passionate about delivering high-quality
-                designs that resonate with audiences and drive engagement.
-              </p>
-            </div>
-          </div>
+interface TemplateFiveStrategyContentProps {
+  approachToStrategy: string;
+  mission: string;
+}
+
+export default function StrategyContent({
+  approachToStrategy,
+  mission,
+}: TemplateFiveStrategyContentProps) {
+  return (
+    <section className="bg-[#f9f9f9] px-6 py-12 space-y-12 text-center">
+      {/* My Approach to Strategy Content */}
+      <div className="space-y-6">
+        <h3 className="text-4xl font-black font-[MuseoSansRounded] text-[#0A1754] leading-none tracking-normal mb-3 text-center">
+          {" "}
+          My Approach to Strategy Content
+        </h3>
+
+        <div className="w-full font-bold bg-white border border-[#7fd3f7] rounded-lg px-6 py-8 text-sm md:text-base text-gray-700 leading-relaxed">
+          {approachToStrategy ||
+            "Creative and detail-oriented Graphic Designer with years of experience in brand identity, social media design, and marketing visuals. Adept at transforming concepts into compelling visuals that enhance brand presence. Proficient in Adobe Creative Suite, Canva, and Figma, with a strong understanding of design principles and user experience. Passionate about delivering high-quality designs that resonate with audiences and drive engagement."}
         </div>
       </div>
-    );
-  }
-  
+
+      {/* My Mission & Values */}
+      <div className="space-y-6">
+        <h3 className="text-4xl font-black font-[MuseoSansRounded] text-[#0A1754] leading-none tracking-normal mb-3 text-center">
+          {" "}
+          My Mission & Values
+        </h3>
+        <h3 className="text-4xl font-black font-[MuseoSansRounded] text-[#0A1754] leading-none tracking-normal mb-3 text-center">
+          {" "}
+          How You Help Brands Grow Online
+        </h3>
+
+        <div className="w-full font-bold bg-white border border-[#7fd3f7] rounded-lg px-6 py-8 text-sm md:text-base text-gray-700 leading-relaxed">
+          {mission ||
+            "I help brands grow online by creating thoughtful, results-driven strategies that connect with the right audience. My mission is to deliver consistent value through creativity, strategy, and clear communication while helping businesses build trust, visibility, and long-term growth."}
+        </div>
+      </div>
+    </section>
+  );
+}

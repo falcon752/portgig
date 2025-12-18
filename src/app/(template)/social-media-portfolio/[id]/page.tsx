@@ -266,6 +266,7 @@ export default async function Template5Page({
 
   return (
     <div className="font-sans bg-black min-h-screen max-md:mb-20">
+  <div className="max-w-5xl mx-auto px-6">
       <TemplateFiveHero
         displayName={portfolioData.display_name}
         jobTitles={portfolioData.job_titles}
@@ -377,6 +378,7 @@ export default async function Template5Page({
           )}
         </div>
       </div>
+    </div>
     </div>
   );
 }

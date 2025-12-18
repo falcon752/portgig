@@ -3,7 +3,6 @@ import React from "react";
 const tools = [
   "Canva",
   "Capcut",
-  "Capcut",
   "Buffer",
   "Microsoft 360",
   "Lots more..",
@@ -11,40 +10,57 @@ const tools = [
 
 const Tools = () => {
   return (
-    <div className="bg-black text-white px-4 py-10">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-8 sm:ml-10 md:ml-12 lg:ml-16">
-          Tools I use
-        </h2>
+    <section className="bg-[#f9f9f9] px-6 py-12">
+      {/* Section Title */}
+      <h3 className="text-4xl font-black font-[MuseoSansRounded] text-[#0A1754] leading-none tracking-normal mb-8 text-center">
+        Tools I Use
+      </h3>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6 max-w-3xl sm:ml-10 md:ml-12 lg:ml-16">
-          {tools.map((tool, index) => (
-            <div
-              key={index}
-              className="bg-[#FFBA00] text-black text-base sm:text-lg lg:text-xl font-bold py-4 sm:py-5 lg:py-6 px-3 sm:px-4 rounded text-center shadow-md"
-            >
-              {tool}
-            </div>
-          ))}
-        </div>
+      {/* Tools Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {tools.map((tool, index) => (
+          <div
+            key={index}
+            className="
+              bg-white
+              border
+              border-[#7fd3f7]
+              rounded-lg
+              px-6
+              py-5
+              text-sm
+              md:text-base
+              text-gray-700
+              font-bold
+              leading-relaxed
+              flex
+              items-center
+              justify-center
+              min-h-[96px]
+            "
+          >
+            {tool}
+          </div>
+        ))}
       </div>
 
-      <h3 className="max-w-5xl mx-auto text-white text-lg sm:text-xl md:text-4xl font-bold mb-4 mt-16">
-        Why you should work with me
+      {/* Why Work With Me */}
+      <h3 className="text-4xl font-black font-[MuseoSansRounded] text-[#0A1754] leading-none tracking-normal mb-6 mt-16 text-center">
+        Why You Should Work With Me
       </h3>
-      <div className="bg-[#2B2B2B] px-10 py-10 rounded-lg text-center max-w-5xl mx-auto">
-        <p className="text-white text-sm lg:text-xl font-normal leading-relaxed">
+      <div className="bg-white border border-[#7fd3f7] font-semibold rounded-lg px-6 py-8 text-sm md:text-base text-gray-700 leading-relaxed">
+        <p>
           As a passionate and detail-oriented photographer, I bring creativity,
-          precision, and storytelling into every shot. Whether it&rsquo;s capturing
-          the essence of a brand, the emotions of an event, or the artistry of a
+          precision, and storytelling into every shot. Whether it’s capturing the
+          essence of a brand, the emotions of an event, or the artistry of a
           product, I ensure every image tells a compelling story. With expertise
           in high-quality editing, lighting, and composition, I deliver visuals
           that stand out. My commitment to professionalism, quick turnaround,
           and client satisfaction makes me the ideal choice for your photography
-          needs. Let&rsquo;s create something amazing together!
+          needs. Let’s create something amazing together!
         </p>
       </div>
-    </div>
+    </section>
   );
 };
 
