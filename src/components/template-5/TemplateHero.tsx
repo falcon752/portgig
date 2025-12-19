@@ -1,68 +1,61 @@
-import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization"
-import Image from "next/image"
+"use client";
+
+import Image from "next/image";
+import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
 
 interface TemplateFiveHeroProps {
-  displayName: string
-  jobTitles: string[]
-  location: string
-  headShot: string
-  portfolioData?: any
+  displayName: string;
+  jobTitles: string[];
+  location: string;
+  headShot: string;
+  portfolioData?: any;
 }
 
-export default function TemplateHero({ 
-  displayName, 
-  jobTitles, 
-  location, 
-  headShot, 
-  portfolioData 
+export default function TemplateHero({
+  displayName,
+  jobTitles,
+  location,
+  headShot,
+  portfolioData,
 }: TemplateFiveHeroProps) {
-  const { customStyles, getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
-  
+  const { getHeadingStyle, getBodyStyle } =
+    usePortfolioCustomizations(portfolioData);
+
   const formattedJobTitles =
-    jobTitles.length > 0 ? jobTitles.join(" | ") : "Strategic Social Media Manager | Driving Engagement & Growth"
+    jobTitles.length > 0
+      ? jobTitles.join(", ")
+      : "Strategic Social Media Manager";
 
   return (
-    <div 
-      className="flex flex-col-reverse lg:flex-row items-center justify-center gap-8 px-6 py-10"
-      style={{ ...customStyles, backgroundColor: `var(--primary-color)` }}
-    >
-      <div className="text-center lg:text-left">
-        <h1 
-          className="text-3xl md:text-4xl font-bold"
-          style={getHeadingStyle({ color: 'white' })}
-        >
-          {displayName}
-        </h1>
-        <p 
-          className="mt-2 text-base md:text-lg font-bold"
-          style={getBodyStyle({ color: 'white' })}
-        >
-          {formattedJobTitles}
-        </p>
-        <p 
-          className="text-sm mt-1 font-bold"
-          style={getBodyStyle({ color: 'white' })}
-        >
-          {location}
-        </p>
+    <section className="bg-[#f9f9f9] flex flex-col items-center px-6 py-10 text-center">
+      
+      {/* Avatar */}
+      <div className="relative w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden border-4 border-[#7fd3f7]">
+        <Image
+          src={headShot || "/placeholder.svg"}
+          alt={displayName}
+          fill
+          className="object-cover"
+        />
       </div>
-      <div className="relative w-[320px] h-[340px] md:w-[400px] md:h-[430px] lg:w-[513px] lg:h-[518px] rounded-md overflow-hidden">
-        {headShot ? (
-          <Image
-            src={headShot || "/placeholder.svg"}
-            alt={`${displayName}'s headshot`}
-            fill
-            className="object-cover rounded-md"
-          />
-        ) : (
-          <Image
-            src="/placeholder.svg?height=518&width=513"
-            alt="Placeholder headshot"
-            fill
-            className="object-cover rounded-md"
-          />
-        )}
-      </div>
-    </div>
-  )
+
+      {/* Name */}
+      <h1
+        className="-mt-6 text-[60px] sm:text-[75px] md:text-[90px] font-medium font-[MTNBrighterSans] leading-[1.83] tracking-normal whitespace-nowrap text-black"
+        style={getHeadingStyle({})}
+      >
+        {displayName}
+      </h1>
+
+      {/* Role + Location */}
+      <p
+        className="-mt-6 text-base md:text-lg font-semibold text-gray-700"
+        style={getBodyStyle({})}
+      >
+        {formattedJobTitles}
+        {location && `, ${location}`}
+      </p>
+
+    </section>
+  );
 }

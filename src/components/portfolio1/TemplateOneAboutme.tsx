@@ -4,19 +4,19 @@ import React from "react";
 function PortfolioTemplateOneAboutme() {
   // --- Card styles for About Me / Mission / Tools ---
   const cardStyle =
-    "w-full px-8 sm:px-6 md:px-10 lg:px-12 py-15 sm:py-6 md:py-10 lg:py-10 text-white rounded-lg border-2 border-[#4E3E60] bg-[#17151E] shadow-lg shadow-purple-500/10 flex flex-col items-center justify-center";
+    "w-full px-8 sm:px-6 md:px-10 lg:px-12 py-10 sm:py-10 md:py-12 lg:py-14 text-white rounded-lg border-2 border-[#4E3E60] bg-[#17151E] shadow-lg shadow-purple-500/10 flex flex-col items-center justify-center";
 
   const responsiveTextStyle = "tracking-[0%] sm:leading-[100%]";
 
-  // --- Skills Grid Styles (FIXED) ---
+  // --- Skills Grid Styles ---
   const skillsGridContainerStyle =
-    "grid grid-cols-1 sm:grid-cols-2 gap-x-16 gap-y-10";
+    "grid grid-cols-1 sm:grid-cols-2 gap-x-16 gap-y-10 xl:gap-x-20 2xl:gap-x-24";
 
   const skillCardBaseStyle =
     "bg-black rounded-xl flex flex-col gap-3 p-0 w-full";
 
   const skillContentBoxStyle =
-    "bg-white h-40 sm:h-48 md:h-56 lg:h-64 rounded-xl w-full overflow-hidden";
+    "bg-white h-52 sm:h-60 md:h-72 lg:h-80 xl:h-96 2xl:h-[28rem] rounded-xl w-full overflow-hidden";
 
   const skillNameTextStyle =
     "text-center font-normal text-xs sm:text-sm md:text-base text-gold mt-2";
@@ -26,11 +26,11 @@ function PortfolioTemplateOneAboutme() {
 
   return (
     <section className="h-fit bg-black">
-      <div className="px-4 sm:px-6 md:px-8 lg:px-10 pt-10 pb-5 flex flex-col gap-6">
+      <div className="px-4 sm:px-6 md:px-8 lg:px-10 xl:px-16 2xl:px-20 pt-10 pb-5 flex flex-col gap-6">
         {/* About Me */}
         <div className={cardStyle}>
           <p
-            className={`${responsiveTextStyle} text-[12px] sm:text-[16px] md:text-[16px] lg:text-[16px] leading-[140%] sm:leading-[140%] text-center max-w-3xl`}
+            className={`${responsiveTextStyle} text-[14px] sm:text-[16px] md:text-[18px] lg:text-[18px] leading-[150%] sm:leading-[150%] text-center max-w-3xl`}
             style={{
               fontFamily: "Arial, sans-serif",
               fontWeight: 300,
@@ -53,7 +53,7 @@ function PortfolioTemplateOneAboutme() {
         </h2>
         <div className={cardStyle}>
           <p
-            className={`${responsiveTextStyle} text-[12px] sm:text-[16px] md:text-[16px] lg:text-[16px] leading-[140%] sm:leading-[140%] text-center max-w-3xl`}
+            className={`${responsiveTextStyle} text-[14px] sm:text-[16px] md:text-[18px] lg:text-[18px] leading-[150%] sm:leading-[150%] text-center max-w-3xl`}
             style={{
               fontFamily: "Arial, sans-serif",
               fontWeight: 300,
@@ -75,7 +75,7 @@ function PortfolioTemplateOneAboutme() {
           Skills
         </h2>
 
-        {/* Skills Grid (NOW ALIGNED) */}
+        {/* Skills Grid */}
         <div className={skillsGridContainerStyle}>
           {skills.map((skill, index) => (
             <div key={index} className={skillCardBaseStyle}>
@@ -102,7 +102,7 @@ function PortfolioTemplateOneAboutme() {
       </div>
 
       {/* Tools / Software */}
-      <div className="px-4 sm:px-6 md:px-8 lg:px-10 pt-10 pb-5 flex flex-col gap-6">
+      <div className="px-4 sm:px-6 md:px-8 lg:px-10 xl:px-16 2xl:px-20 pt-10 pb-5 flex flex-col gap-6">
         <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-purple-500 text-left">
           <span className="text-purple-500">Tool /</span> Software
         </h2>
@@ -127,7 +127,7 @@ function PortfolioTemplateOneAboutme() {
             return chunked.map((group, index) => (
               <p
                 key={index}
-                className={`${responsiveTextStyle} text-[12px] sm:text-[16px] md:text-[16px] lg:text-[16px] text-left font-semibold`}
+                className={`${responsiveTextStyle} text-[14px] sm:text-[16px] md:text-[18px] lg:text-[18px] text-left font-semibold`}
                 style={{
                   fontFamily: "Arial, sans-serif",
                   fontStyle: "normal",
