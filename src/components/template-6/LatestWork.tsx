@@ -28,7 +28,7 @@ export default function TemplatesixLatestWork({ portfolioData }: TemplatesixLate
           <p className="text-white mb-1 text-xl font-inter" style={getBodyStyle()}>
             My Portfolio
           </p>
-          <h2 className="text-3xl font-bold text-[#FFBA00]" style={getHeadingStyle()}>
+          <h2 className="text-3xl font-bold text-[#FCC92F]" style={getHeadingStyle()}>
             LATEST WORK
           </h2>
         </div>
@@ -38,7 +38,7 @@ export default function TemplatesixLatestWork({ portfolioData }: TemplatesixLate
               <div
                 key={i}
                 className="border-2 border-white overflow-hidden rounded-md max-w-[450px] mx-auto"
-                style={{ boxShadow: `0 4px 8px ${colorUtils.darken((customStyles as CustomCSSProperties)["--accent-color"] || "#FFBA00", 0.5)}` }}
+                style={{ boxShadow: `0 4px 8px ${colorUtils.darken((customStyles as CustomCSSProperties)["--accent-color"] || "#FCC92F", 0.5)}` }}
               >
                 {item.image ? (
                   <Image

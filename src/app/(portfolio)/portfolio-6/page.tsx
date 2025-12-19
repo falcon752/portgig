@@ -18,7 +18,7 @@ const page = () => {
       <LatestWork />
       <MoreWork />
       <Jobs />
-      <MadeByportgig className="bg-semiBlack " />
+      <MadeByportgig className="bg-black " />
     </div>
   );
 };

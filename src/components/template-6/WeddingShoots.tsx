@@ -80,7 +80,7 @@ export default function TemplatesixWeddingShoots({
                 style={{
                   boxShadow: `0 4px 8px ${colorUtils.darken(
                     (customStyles as CustomCSSProperties)["--accent-color"] ||
-                      "#FFBA00",
+                      "#FCC92F",
                     0.5
                   )}`,
                 }}
@@ -117,7 +117,7 @@ export default function TemplatesixWeddingShoots({
                       boxShadow: `0 4px 8px ${colorUtils.darken(
                         (customStyles as CustomCSSProperties)[
                           "--accent-color"
-                        ] || "#FFBA00",
+                        ] || "#FCC92F",
                         0.5
                       )}`,
                     }}
@@ -132,7 +132,7 @@ export default function TemplatesixWeddingShoots({
                   style={{
                     boxShadow: `0 4px 8px ${colorUtils.darken(
                       (customStyles as CustomCSSProperties)["--accent-color"] ||
-                        "#FFBA00",
+                        "#FCC92F",
                       0.5
                     )}`,
                   }}

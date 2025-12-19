@@ -10,7 +10,7 @@ interface TemplatesixHeroSectionProps {
 export default function TemplatesixHeroSection({ portfolioData }: TemplatesixHeroSectionProps) {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
   const { colorUtils, customStyles, getHeadingStyle } = usePortfolioCustomizations(portfolio);
-  const colors = portfolio.fonts?.colors || { primary: "#000", accent: "#FFBA00", text: "#FFF", background: "#000" };
+  const colors = portfolio.fonts?.colors || { primary: "#000", accent: "#FCC92F", text: "#FFF", background: "#000" };
 
   const displayName = portfolio.display_name || "Photographer Name";
   const nameParts = displayName.split(" ");
@@ -44,7 +44,7 @@ export default function TemplatesixHeroSection({ portfolioData }: TemplatesixHer
               <h1 className="text-6xl font-bold lg:text-9xl tracking-tight" style={getHeadingStyle()}>
                 {firstName.toUpperCase()}
               </h1>
-              <h2 className="text-3xl lg:text-4xl font-bold text-[#FFBA00] mb-6 lg:mt-0" style={getHeadingStyle()}>
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#FCC92F] mb-6 lg:mt-0" style={getHeadingStyle()}>
                 {lastName.toUpperCase()}
               </h2>
               <div className="mb-6">

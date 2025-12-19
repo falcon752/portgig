@@ -46,7 +46,7 @@ export default function TemplatesixJobs({
           >
             Jobs
           </h2>
-          <h3 className="text-xl md:text-2xl lg:text-4xl font-bold text-[#FFBA00] mb-8 md:mb-10 lg:mb-12 px-4">
+          <h3 className="text-xl md:text-2xl lg:text-4xl font-bold text-[#FCC92F] mb-8 md:mb-10 lg:mb-12 px-4">
             OPEN TO ALL KINDS OF GIGS
           </h3>
         </div>
@@ -68,7 +68,7 @@ export default function TemplatesixJobs({
 
         <div className="text-center">
           <h3
-            className="text-base md:text-xl lg:text-4xl mb-6 md:mb-8 mt-10 md:mt-12 lg:mt-16 font-bold text-[#FFBA00] px-4"
+            className="text-base md:text-xl lg:text-4xl mb-6 md:mb-8 mt-10 md:mt-12 lg:mt-16 font-bold text-[#FCC92F] px-4"
             style={getHeadingStyle()}
           >
             WHY YOU SHOULD WORK WITH ME

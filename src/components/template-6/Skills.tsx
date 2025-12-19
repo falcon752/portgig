@@ -26,7 +26,7 @@ export default function TemplatesixSkills({ portfolioData }: TemplatesixSkillsPr
         backgroundColor: colorUtils.darken((customStyles as CustomCSSProperties)["--bg-color"] || "#000"),
       }}
     >
-      <h2 className="text-2xl font-bold text-[#FFBA00] mb-8 lg:mt-3" style={getHeadingStyle()}>
+      <h2 className="text-2xl font-bold text-[#FCC92F] mb-8 lg:mt-3" style={getHeadingStyle()}>
         MY SKILLS
       </h2>
       <div className="bg-[#212121] text-white py-12 px-10" style={getBodyStyle()}>
@@ -34,7 +34,7 @@ export default function TemplatesixSkills({ portfolioData }: TemplatesixSkillsPr
           <>
             {skills.length > 0 && (
               <>
-                <h3 className="text-xl font-bold text-[#FFBA00] mb-4" style={getHeadingStyle()}>
+                <h3 className="text-xl font-bold text-[#FCC92F] mb-4" style={getHeadingStyle()}>
                   Skills
                 </h3>
                 <div className="grid md:grid-cols-2 gap-y-4 gap-x-20 max-w-4xl mx-auto mb-8">
@@ -48,7 +48,7 @@ export default function TemplatesixSkills({ portfolioData }: TemplatesixSkillsPr
             )}
             {photographerServices.length > 0 && (
               <>
-                <h3 className="text-xl font-bold text-[#FFBA00] mb-4" style={getHeadingStyle()}>
+                <h3 className="text-xl font-bold text-[#FCC92F] mb-4" style={getHeadingStyle()}>
                   My Services
                 </h3>
                 <div className="space-y-12">
@@ -60,7 +60,7 @@ export default function TemplatesixSkills({ portfolioData }: TemplatesixSkillsPr
                             className="w-[300px] h-[200px] rounded overflow-hidden relative bg-gray-700 flex items-center justify-center"
                             style={{
                               boxShadow: `0 4px 8px ${colorUtils.darken(
-                                (customStyles as CustomCSSProperties)["--accent-color"] || "#FFBA00",
+                                (customStyles as CustomCSSProperties)["--accent-color"] || "#FCC92F",
                                 0.5
                               )}`,
                             }}
@@ -87,7 +87,7 @@ export default function TemplatesixSkills({ portfolioData }: TemplatesixSkillsPr
                                 className="bg-white text-black px-6 font-bold py-3 rounded hover:bg-gray-200 transition-colors cursor-pointer"
                                 style={{
                                   boxShadow: `0 4px 8px ${colorUtils.darken(
-                                    (customStyles as CustomCSSProperties)["--accent-color"] || "#FFBA00",
+                                    (customStyles as CustomCSSProperties)["--accent-color"] || "#FCC92F",
                                     0.5
                                   )}`,
                                 }}
@@ -100,7 +100,7 @@ export default function TemplatesixSkills({ portfolioData }: TemplatesixSkillsPr
                               className="bg-white text-black px-6 py-3 rounded opacity-50 cursor-not-allowed"
                               style={{
                                 boxShadow: `0 4px 8px ${colorUtils.darken(
-                                  (customStyles as CustomCSSProperties)["--accent-color"] || "#FFBA00",
+                                  (customStyles as CustomCSSProperties)["--accent-color"] || "#FCC92F",
                                   0.5
                                 )}`,
                               }}

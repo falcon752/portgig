@@ -23,7 +23,7 @@ export default function TemplatesixMoreWork({ portfolioData }: TemplatesixMoreWo
     >
       <div className="px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold text-[#FFBA00]" style={getHeadingStyle()}>
+          <h2 className="text-3xl lg:text-4xl font-bold text-[#FCC92F]" style={getHeadingStyle()}>
             MORE OF MY WORK/EVENTS
           </h2>
         </div>
@@ -34,14 +34,14 @@ export default function TemplatesixMoreWork({ portfolioData }: TemplatesixMoreWo
                 <div
                   key={i}
                   className="mb-8 md:mb-0"
-                  style={{ boxShadow: `0 4px 8px ${colorUtils.darken((customStyles as CustomCSSProperties)["--accent-color"] || "#FFBA00", 0.5)}` }}
+                  style={{ boxShadow: `0 4px 8px ${colorUtils.darken((customStyles as CustomCSSProperties)["--accent-color"] || "#FCC92F", 0.5)}` }}
                 >
                   <h3 className="text-2xl lg:text-3xl font-bold mb-6">{item.name}</h3>
                   {item.link ? (
                     <Link href={item.link} target="_blank" rel="noopener noreferrer">
                       <button
                         className="bg-white text-[#0A1754] py-2 px-6 rounded font-extrabold hover:bg-gray-200 transition-colors"
-                        style={{ boxShadow: `0 4px 8px ${colorUtils.darken((customStyles as CustomCSSProperties)["--accent-color"] || "#FFBA00", 0.5)}` }}
+                        style={{ boxShadow: `0 4px 8px ${colorUtils.darken((customStyles as CustomCSSProperties)["--accent-color"] || "#FCC92F", 0.5)}` }}
                       >
                         View on Google Drive
                       </button>

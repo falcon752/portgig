@@ -18,7 +18,7 @@ export default function TemplatesixAboutMe({ portfolioData }: TemplatesixAboutMe
       style={{ backgroundColor: colorUtils.darken((customStyles as CustomCSSProperties)["--bg-color"] || "#000") }}
     >
       <div className="max-w-4xl mx-auto my-5 lg:my-20 px-4">
-        <h2 className="text-2xl font-bold text-[#FFBA00] mb-2" style={getHeadingStyle()}>
+        <h2 className="text-2xl font-bold text-[#FCC92F] mb-2" style={getHeadingStyle()}>
           ABOUT ME
         </h2>
         <div className="bg-[#212121] text-white py-12">
