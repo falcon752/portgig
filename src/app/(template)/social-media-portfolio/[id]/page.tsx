@@ -317,7 +317,7 @@ export default async function Template5Page({
           }
           whyWorkWithMe={portfolioData.what_you_get_working_with_me || ""}
         />
-        {/* {!isPublicView && (
+        {!isPublicView && (
           <div className="bg-black py-8 border-t border-gray-800">
             <div className="max-w-4xl mx-auto px-4">
               <ShareButton
@@ -326,7 +326,7 @@ export default async function Template5Page({
               />
             </div>
           </div>
-        )} */}
+        )}
         <footer className="center px-10 py-20 bg-black">
           <Image
             src="/assets/madeByPortgig.svg"
@@ -336,7 +336,7 @@ export default async function Template5Page({
             className="mx-auto"
           />
         </footer>
-        {/* <div className="text-center py-12 bg-gray-50 border-t border-gray-200">
+        <div className="text-center py-12 bg-gray-50 border-t border-gray-200">
           <div className="max-w-4xl mx-auto px-4">
             {isPublicView ? (
               <div className="space-y-4 max-lg:mb-16">
@@ -376,7 +376,7 @@ export default async function Template5Page({
               </div>
             )}
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );

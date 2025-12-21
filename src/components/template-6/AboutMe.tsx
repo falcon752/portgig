@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
-import { ApiPortfolioData, EMPTY_PORTFOLIO, CustomCSSProperties } from "@/types/portfolio";
+import { ApiPortfolioData, EMPTY_PORTFOLIO } from "@/types/portfolio";
 
 interface TemplatesixAboutMeProps {
   portfolioData: ApiPortfolioData | null;
@@ -9,25 +10,48 @@ interface TemplatesixAboutMeProps {
 
 export default function TemplatesixAboutMe({ portfolioData }: TemplatesixAboutMeProps) {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { colorUtils, customStyles, getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolio);
+  const { getBodyStyle } = usePortfolioCustomizations(portfolio);
   const aboutMe = portfolio.about_me || "Tell us about yourself! Add a description in your portfolio settings.";
 
   return (
-    <div
-      className="bg-black"
-      style={{ backgroundColor: colorUtils.darken((customStyles as CustomCSSProperties)["--bg-color"] || "#000") }}
-    >
-      <div className="max-w-4xl mx-auto my-5 lg:my-20 px-4">
-        <h2 className="text-2xl font-bold text-[#FCC92F] mb-2" style={getHeadingStyle()}>
-          ABOUT ME
-        </h2>
-        <div className="bg-[#212121] text-white py-12">
-          <div className="container mx-auto" style={getBodyStyle()}>
-            <p className="text-center text-lg">{aboutMe}</p>
-          </div>
+    <section className="relative w-full py-20 font-montserrat bg-black">
+
+      {/* Background image + overlay */}
+      <div className="absolute inset-0 flex justify-center overflow-hidden">
+        <div className="w-full max-w-[1450px] relative">
+          <Image
+            src={"/assets/portfolio/heroimage.png"}
+            alt="About background"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/80" />
         </div>
       </div>
 
-    </div>
+      {/* Content wrapper */}
+      <div className="relative z-10 mx-auto max-w-[1450px] px-2 sm:px-4 lg:px-12">
+
+        {/* Title */}
+        <h2 className="text-center text-2xl sm:text-3xl lg:text-4xl font-bold text-[#FCC92F] mb-8">
+          ABOUT ME
+        </h2>
+
+        {/* Text */}
+        <div className="mx-auto w-full lg:max-w-5xl">
+          <p
+            className="text-center text-white leading-relaxed"
+            // style={{
+            //   fontSize: "clamp(13px, 3.2vw, 18px)",
+            //   ...getBodyStyle(),
+            // }}
+          >
+            {aboutMe}
+          </p>
+        </div>
+
+      </div>
+    </section>
   );
 }

@@ -10,43 +10,50 @@ interface TemplatesixLatestWorkProps {
 export default function TemplatesixLatestWork({ portfolioData }: TemplatesixLatestWorkProps) {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
   const { colorUtils, customStyles, getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolio);
-  
-  // Corrected access: go through .photographer property
+
+  // Get latest work from photographer-specific template data
   const latestWork = isPhotographerTemplateSpecific(portfolio.template_specific)
-    ? portfolio.template_specific.photographer.latest_work || []  
+    ? portfolio.template_specific.photographer.latest_work || []
     : [];
 
-  console.log("TemplatesixLatestWork: Rendering with data:", { latestWork });
-
   return (
-    <div
-      className="bg-black py-12"
-      style={{ color: (customStyles as CustomCSSProperties)["--primary"] || "#FFF", backgroundColor: colorUtils.darken((customStyles as CustomCSSProperties)["--bg-color"] || "#000") }}
+    <section
+      className="bg-black text-white py-10"
+      style={{ color: (customStyles as CustomCSSProperties)["--text-color"] || "#FFF" }}
     >
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <p className="text-white mb-1 text-xl font-inter" style={getBodyStyle()}>
+      <div className="mx-auto max-w-[1450px] px-3 sm:px-6 md:px-8">
+
+        {/* Header */}
+        <div className="text-center mb-10 md:mb-12">
+          <p className="text-white mb-2 text-base sm:text-lg md:text-xl font-inter" style={getBodyStyle()}>
             My Portfolio
           </p>
-          <h2 className="text-3xl font-bold text-[#FCC92F]" style={getHeadingStyle()}>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#FCC92F]" style={getHeadingStyle()}>
             LATEST WORK
           </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-center max-w-[960px] mx-auto">
-          {latestWork.length > 0 ? (
-            latestWork.map((item, i) => (
+
+        {/* Grid */}
+        {latestWork.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-6">
+            {latestWork.map((item, i) => (
               <div
                 key={i}
-                className="border-2 border-white overflow-hidden rounded-md max-w-[450px] mx-auto"
-                style={{ boxShadow: `0 4px 8px ${colorUtils.darken((customStyles as CustomCSSProperties)["--accent-color"] || "#FCC92F", 0.5)}` }}
+                className="border-2 border-white overflow-hidden rounded-md w-full"
+                style={{
+                  boxShadow: `0 4px 8px ${colorUtils.darken(
+                    (customStyles as CustomCSSProperties)["--accent-color"] || "#FCC92F",
+                    0.5
+                  )}`,
+                }}
               >
                 {item.image ? (
                   <Image
                     src={item.image}
-                    alt={item.title || `Latest work image ${i + 1}`}
-                    width={450}
-                    height={300}
-                    className="w-full h-[300px] object-cover"
+                    alt={item.title || `Portfolio image ${i + 1}`}
+                    width={900}
+                    height={600}
+                    className="w-full h-[300px] sm:h-[300px] md:h-[260px] lg:h-[300px] object-cover"
                   />
                 ) : (
                   <div className="w-full h-[300px] bg-gray-700 flex items-center justify-center text-gray-400 text-sm">
@@ -54,14 +61,14 @@ export default function TemplatesixLatestWork({ portfolioData }: TemplatesixLate
                   </div>
                 )}
               </div>
-            ))
-          ) : (
-            <div className="md:col-span-2 text-center text-lg text-gray-400" style={getBodyStyle()}>
-              No latest work listed. Add some in your portfolio settings!
-            </div>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-lg text-gray-400 mt-6" style={getBodyStyle()}>
+            No latest work listed. Add some in your portfolio settings!
+          </p>
+        )}
       </div>
-    </div>
+    </section>
   );
 }

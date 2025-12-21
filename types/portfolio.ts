@@ -78,7 +78,7 @@ export interface PhotographerFormData extends PortfolioFormData {
     name: string;
     link: string;
   }>;
-  jobsOpenTo: string[];
+  jobsOpenTo: string;
   whyWorkWithMe: string;
   moreWork: Array<{ name: string; link: string }>;
 }

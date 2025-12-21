@@ -254,12 +254,12 @@ export default async function Template2Page({
         portfolioData={portfolio}
         jobsOpenTo={videographerSpecific.videographer.jobs_open_to ?? ""}
       />
-      {/* {!isPublicView && (
+      {!isPublicView && (
         <ShareButton
           creativeId={actualCreatorId ?? "unknown"}
           displayName={portfolio.display_name ?? "Portfolio"}
         />
-      )} */}
+      )}
       <footer className="center px-10 py-20 bg-black">
         <Image
           src="/assets/madeByPortgig.svg"
@@ -268,7 +268,7 @@ export default async function Template2Page({
           alt="made by portgig"
         />
       </footer>
-      {/* <div className="text-center py-8 bg-gray-50">
+      <div className="text-center py-8 bg-gray-50">
         {isPublicView ? (
           <div className="space-y-4 max-lg:mb-16">
             <p className="text-gray-600">
@@ -297,7 +297,7 @@ export default async function Template2Page({
             Go To Portfolio
           </Link>
         )}
-      </div> */}
+      </div>
     </main>
   );
 }

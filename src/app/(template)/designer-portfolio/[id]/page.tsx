@@ -159,20 +159,20 @@ export default async function TemplateOnePage({ params }: PageProps) {
       <TemplateOnePortfolio portfolio={portfolioData} />
 
       {/* Share Button */}
-      {/* <div className="bg-white py-8 border-t border-gray-200">
+      <div className="bg-white py-8 border-t border-gray-200">
         <div className="max-w-4xl mx-auto px-4">
           <ShareButton
             creativeId={userid || "unknown"}
             displayName={portfolioData.display_name || "Portfolio"}
           />
         </div>
-      </div> */}
+      </div>
 
       {/* Footer */}
       <MadeByportgig className="bg-black" />
 
       {/* CTA Section */}
-      {/* <div className="text-center py-12 bg-gray-50 border-t border-gray-200">
+      <div className="text-center py-12 bg-gray-50 border-t border-gray-200">
         <div className="max-w-4xl mx-auto px-4">
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-gray-800">
@@ -186,7 +186,7 @@ export default async function TemplateOnePage({ params }: PageProps) {
             </Link>
           </div>
         </div>
-      </div> */}
+      </div>
     </main>
   );
 }
