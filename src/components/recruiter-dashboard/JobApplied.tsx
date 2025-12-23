@@ -47,7 +47,6 @@ const JobApplied = () => {
     useState<RecruiterDashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);

@@ -1,4 +1,5 @@
 "use client";
+
 import { NavigationBar, Footer } from "@/src/components/export_components";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -6,7 +7,6 @@ import React from "react";
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
-  // Define paths where navbar should NOT appear
   const noNavPaths = [
     "/dashboard",
     "/dashboard/recruiter-dashboard",
@@ -14,7 +14,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     "/recruiter",
   ];
 
-  const showNav = !noNavPaths.some((path) => pathname.startsWith(path));
+  const showNav = !noNavPaths.some((path) =>
+    pathname.startsWith(path)
+  );
 
   return (
     <div className="text-white">

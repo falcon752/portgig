@@ -51,8 +51,21 @@ function BottomNavigationFallback() {
 
 function BottomNavigationContent() {
   const pathname = usePathname();
+
+  const noBottomNavPaths = [
+    "/dashboard",
+    "/dashboard/recruiter-dashboard",
+    "/JobBoard",
+    "/recruiter",
+  ];
+
+  if (noBottomNavPaths.some((path) => pathname.startsWith(path))) {
+    return null;
+  }
+
   const router = useRouter();
   const searchParams = useSearchParams();
+
   const [userType, setUserType] = useState<UserType>("creator");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 

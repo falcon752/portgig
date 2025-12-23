@@ -187,15 +187,14 @@ export const AuthStorage = {
       localStorage.removeItem("storedProfile");
       localStorage.removeItem("userEmail");
       localStorage.removeItem("userId");
-
-     
     } catch (error) {
       console.error("Error clearing auth data:", error);
     }
   },
 
   isAuthenticated: () => {
-    const token = cookies.get("access_token") || localStorage.getItem("access_token");
+    const token =
+      cookies.get("access_token") || localStorage.getItem("access_token");
     return token ? isValidJWT(token) : false;
   },
 
@@ -203,11 +202,9 @@ export const AuthStorage = {
     if (!AuthStorage.isAuthenticated()) {
       return null;
     }
-    return (
-      cookies.get("userType") ||
+    return (cookies.get("userType") ||
       localStorage.getItem("userType") ||
-      null
-    ) as "creator" | "recruiter" | "admin" | null;
+      null) as "creator" | "recruiter" | "admin" | null;
   },
 
   getUserId: (): string | null => {
@@ -218,7 +215,8 @@ export const AuthStorage = {
   },
 
   getAccessToken: (): string | null => {
-    const token = cookies.get("access_token") || localStorage.getItem("access_token");
+    const token =
+      cookies.get("access_token") || localStorage.getItem("access_token");
     return token && isValidJWT(token) ? token : null;
   },
 
@@ -226,14 +224,19 @@ export const AuthStorage = {
     if (!AuthStorage.isAuthenticated()) {
       return null;
     }
-    return cookies.get("refresh_token") || localStorage.getItem("refresh_token") || null;
+    return (
+      cookies.get("refresh_token") ||
+      localStorage.getItem("refresh_token") ||
+      null
+    );
   },
 
   getStoredProfile: <T = any>(): T | null => {
     if (!AuthStorage.isAuthenticated()) {
       return null;
     }
-    const data = cookies.get("storedProfile") || localStorage.getItem("storedProfile");
+    const data =
+      cookies.get("storedProfile") || localStorage.getItem("storedProfile");
     if (!data) return null;
     try {
       return JSON.parse(data) as T;
@@ -271,11 +274,14 @@ export const AuthStorage = {
     if (!AuthStorage.isAuthenticated()) {
       return null;
     }
-    return cookies.get("userEmail") || localStorage.getItem("userEmail") || null;
+    return (
+      cookies.get("userEmail") || localStorage.getItem("userEmail") || null
+    );
   },
 
   validateAndCleanAuth: (): boolean => {
-    const token = cookies.get("access_token") || localStorage.getItem("access_token");
+    const token =
+      cookies.get("access_token") || localStorage.getItem("access_token");
     if (token && !isValidJWT(token)) {
       console.log("Invalid token detected, clearing auth state");
       AuthStorage.clearAuth();
@@ -335,6 +341,9 @@ export const CreatorAuth = {
 
       if (response.data.access_token) {
         const userType = determineUserType(credentials.email, "creator");
+
+        AuthStorage.clearAuth();
+
         const success = AuthStorage.setAuth(
           response.data.access_token,
           response.data.refresh_token || "",
@@ -474,7 +483,7 @@ export const CreatorAuth = {
     try {
       if (!AuthStorage.isAuthenticated()) {
         console.warn("No active session to logout");
-        return true; 
+        return true;
       }
 
       AuthStorage.clearAuth();
@@ -628,6 +637,9 @@ export const RecruiterAuth = {
 
       if (response.data.access_token) {
         const userType = determineUserType(credentials.email, "recruiter");
+
+        AuthStorage.clearAuth();
+
         console.log(
           "Determined user type:",
           userType,
@@ -855,7 +867,7 @@ export const RecruiterAuth = {
     try {
       if (!AuthStorage.isAuthenticated()) {
         console.warn("No active session to logout");
-        return true; 
+        return true;
       }
 
       AuthStorage.clearAuth();
