@@ -24,17 +24,11 @@ const mapExperienceToSkillLevel = (
         : Number(yearsOfExperience) || 0
       : yearsOfExperience || 0;
 
-  if (years <= 1) {
-    return "Beginner";
-  } else if (years === 2) {
-    return "Intermediate";
-  } else if (years === 3) {
-    return "Mid-level";
-  } else if (years >= 4 && years <= 6) {
-    return "Professional";
-  } else {
-    return "Expert";
-  }
+  if (years <= 1) return "Beginner";
+  if (years === 2) return "Intermediate";
+  if (years === 3) return "Mid-level";
+  if (years >= 4 && years <= 6) return "Professional";
+  return "Expert";
 };
 
 const capitalizeFirstLetter = (str: string) => {
@@ -47,6 +41,7 @@ const JobApplied = () => {
     useState<RecruiterDashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -142,17 +137,19 @@ const JobApplied = () => {
               >
                 <div className="absolute -top-3 right-4 bg-[#5A8FCF] text-white px-3 py-2 text-sm font-semibold font-ramaraja font-number lg:text-xl">
                   {mapExperienceToSkillLevel(
-                    applicant.applicant_info.profile.years_of_experience
+                    applicant.applicant_info?.profile?.years_of_experience ?? 0
                   )}
                 </div>
 
                 <div className="h-[100px] w-[100px] bg-gray-200 rounded-full shrink-0 overflow-hidden">
                   <Image
                     src={
-                      applicant.applicant_info.profile.profile_picture ||
+                      applicant.applicant_info?.profile?.profile_picture ||
                       "/assets/creative.svg"
                     }
-                    alt={applicant.applicant_info.bio_data.full_name}
+                    alt={
+                      applicant.applicant_info?.bio_data?.full_name || "Applicant"
+                    }
                     width={100}
                     height={100}
                     className="object-cover w-full h-full"
@@ -161,15 +158,14 @@ const JobApplied = () => {
 
                 <div className="flex-1">
                   <h3 className="text-lg lg:text-xl font-raleway font-bold text-[#0A1754] mb-1">
-                    {applicant.applicant_info.bio_data.full_name}
+                    {applicant.applicant_info?.bio_data?.full_name || "Applicant"}
                   </h3>
                   <p className="text-gray-600 text-sm">
-                    {applicant.applicant_info.profile.field}
+                    {applicant.applicant_info?.profile?.field || "Not specified"}
                   </p>
                   <p className="text-[#0A1754] text-sm font-raleway font-light mt-1">
                     {capitalizeFirstLetter(applicant.job_title)}/{" "}
-                    {applicant.applicant_info.profile.location?.state ||
-                      "Unknown"}{" "}
+                    {applicant.applicant_info?.profile?.location?.state || "Unknown"}{" "}
                     State
                   </p>
                 </div>

@@ -57,7 +57,10 @@ const defaultSidebarItems: SidebarItem[] = [
     icon: Briefcase,
     isSection: true,
     children: [
-      { title: "Create new job postings", href: "/recruiter-dashboard/post-jobs" },
+      {
+        title: "Create new job postings",
+        href: "/recruiter-dashboard/post-jobs",
+      },
       { title: "Active jobs", href: "/recruiter-dashboard/active-jobs" },
     ],
   },
@@ -102,7 +105,10 @@ const generateJobHref = (jobTitle: string) => {
   return `/recruiter-dashboard/jobs/${slug}`;
 };
 
-export default function DashboardLayout({ children, sidebarContent }: DashboardLayoutProps) {
+export default function DashboardLayout({
+  children,
+  sidebarContent,
+}: DashboardLayoutProps) {
   const pathname = usePathname();
   const [dashboardData, setDashboardData] =
     useState<RecruiterDashboardData | null>(null);
@@ -206,13 +212,15 @@ export default function DashboardLayout({ children, sidebarContent }: DashboardL
   return (
     <>
       {/* Navigation Bar */}
-      <NavigationBar
-        minimal={true}
-        onProfileInfoUpdate={(name, picture) => {
-          setProfileName(name);
-          setProfilePicture(picture);
-        }}
-      />
+      <div className="-mb-14 sm:-mb-13 md:-mb-12">
+        <NavigationBar
+          minimal={true}
+          onProfileInfoUpdate={(name, picture) => {
+            setProfileName(name);
+            setProfilePicture(picture);
+          }}
+        />
+      </div>
 
       <div className="min-h-screen bg-gray-50 pb-16 relative">
         {/* Profile Dropdown */}
@@ -264,7 +272,7 @@ export default function DashboardLayout({ children, sidebarContent }: DashboardL
 
         {/* Mobile menu button */}
         <button
-          className="lg:hidden fixed top-20 left-4 z-50 bg-[#0A1754] text-white p-2 rounded-md"
+          className="lg:hidden fixed top-4 left-4 z-[60] bg-[#0A1754] text-white p-2 rounded-md"
           onClick={() => setIsMobileSidebarOpen(true)}
         >
           <HiOutlineMenu className="w-6 h-6" />
@@ -288,7 +296,9 @@ export default function DashboardLayout({ children, sidebarContent }: DashboardL
                           <div className="mb-4">
                             <div className="flex items-center space-x-3 py-2 px-3 border-b border-white">
                               <item.icon className="w-5 h-5" />
-                              <span className="font-bold text-lg">{item.title}</span>
+                              <span className="font-bold text-lg">
+                                {item.title}
+                              </span>
                             </div>
                             {item.children && item.children.length > 0 ? (
                               <div className="ml-8 mt-2 space-y-1">
@@ -330,7 +340,9 @@ export default function DashboardLayout({ children, sidebarContent }: DashboardL
                             )}
                           >
                             <item.icon className="w-5 h-5" />
-                            <span className="font-bold text-xl">{item.title}</span>
+                            <span className="font-bold text-xl">
+                              {item.title}
+                            </span>
                           </Link>
                         )}
                       </div>
@@ -375,7 +387,9 @@ export default function DashboardLayout({ children, sidebarContent }: DashboardL
                         <div className="mb-4">
                           <div className="flex items-center space-x-3 py-2 px-3 border-b border-white">
                             <item.icon className="w-5 h-5" />
-                            <span className="font-bold text-lg">{item.title}</span>
+                            <span className="font-bold text-lg">
+                              {item.title}
+                            </span>
                           </div>
                           {item.children && item.children.length > 0 ? (
                             <div className="ml-6 mt-2 space-y-1">
@@ -386,7 +400,8 @@ export default function DashboardLayout({ children, sidebarContent }: DashboardL
                                   onClick={() => setIsMobileSidebarOpen(false)}
                                   className={cn(
                                     "block py-2 px-3 text-sm text-white rounded-md hover:bg-blue-800 cursor-pointer",
-                                    pathname === child.href && "bg-blue-800 font-medium"
+                                    pathname === child.href &&
+                                      "bg-blue-800 font-medium"
                                   )}
                                 >
                                   {child.title}

@@ -93,7 +93,10 @@ const getRecruiterNavigationItems = (
   ];
 };
 
-const NavigationBar = ({ minimal, onProfileInfoUpdate }: NavigationBarProps) => {
+const NavigationBar = ({
+  minimal,
+  onProfileInfoUpdate,
+}: NavigationBarProps) => {
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -106,11 +109,13 @@ const NavigationBar = ({ minimal, onProfileInfoUpdate }: NavigationBarProps) => 
   const [dashboardData, setDashboardData] =
     useState<RecruiterDashboardData | null>(null);
 
-  const [notificationState, setNotificationState] = useState<NotificationState>({
-    totalCount: 0,
-    lastViewedCount: 0,
-    lastFetchedCount: 0,
-  });
+  const [notificationState, setNotificationState] = useState<NotificationState>(
+    {
+      totalCount: 0,
+      lastViewedCount: 0,
+      lastFetchedCount: 0,
+    }
+  );
 
   const [messageState, setMessageState] = useState<MessageState>({
     totalUnread: 0,
@@ -126,7 +131,9 @@ const NavigationBar = ({ minimal, onProfileInfoUpdate }: NavigationBarProps) => 
 
   const profilePicture = getUserProfileImage(currentUser);
   const profileName =
-    profile?.bio_data?.user_name || recruiterProfile?.bio_data.full_name || "User";
+    profile?.bio_data?.user_name ||
+    recruiterProfile?.bio_data.full_name ||
+    "User";
 
   // Pass profile info to parent if needed
   useEffect(() => {
@@ -189,7 +196,9 @@ const NavigationBar = ({ minimal, onProfileInfoUpdate }: NavigationBarProps) => 
       if (!isAuthenticated || !userType) return;
 
       const apiRole = userType === "creator" ? "Creator" : "Recruiter";
-      const newTotalCount = await NotificationService.getNotificationCount(apiRole);
+      const newTotalCount = await NotificationService.getNotificationCount(
+        apiRole
+      );
 
       setNotificationState((prev) => {
         if (prev.lastFetchedCount === newTotalCount) return prev;
@@ -280,7 +289,10 @@ const NavigationBar = ({ minimal, onProfileInfoUpdate }: NavigationBarProps) => 
           const data = await getRecruiterDashboard();
           setDashboardData(data);
         } catch (error) {
-          console.error("Failed to fetch dashboard data for navigation:", error);
+          console.error(
+            "Failed to fetch dashboard data for navigation:",
+            error
+          );
           setDashboardData({
             total_jobs_posted: 0,
             total_applicants: 0,
@@ -342,7 +354,6 @@ const NavigationBar = ({ minimal, onProfileInfoUpdate }: NavigationBarProps) => 
     return "/";
   }, [profile, recruiterProfile]);
 
-  
   return (
     <nav className="sticky w-full top-0 z-50 h-14 text-primary bg-white">
       <div className="bodyMargin h-full flex items-center justify-between">
@@ -362,14 +373,18 @@ const NavigationBar = ({ minimal, onProfileInfoUpdate }: NavigationBarProps) => 
 
         <div className="lg:hidden flex items-center justify-between w-full">
           <div className="flex items-center gap-2">
-            <button onClick={toggleMobileMenu} className="shrink-0">
-              <Image
-                src="/assets/nav-menu.svg"
-                alt="Menu Icon"
-                width={32}
-                height={32}
-              />
-            </button>
+            {!minimal && (
+              <button onClick={toggleMobileMenu} className="shrink-0">
+                <Image
+                  src="/assets/nav-menu.svg"
+                  alt="Menu Icon"
+                  width={32}
+                  height={32}
+                />
+              </button>
+            )}
+
+            {!minimal && (
             <Link href={homeLink}>
               <Image
                 src="/assets/PortgigLogo.png"
@@ -380,6 +395,7 @@ const NavigationBar = ({ minimal, onProfileInfoUpdate }: NavigationBarProps) => 
                 className="cursor-pointer"
               />
             </Link>
+            )}
           </div>
 
           <div className="shrink-0">
@@ -575,6 +591,7 @@ const NavigationBar = ({ minimal, onProfileInfoUpdate }: NavigationBarProps) => 
         </div>
       </div>
 
+{!minimal && (
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
@@ -850,6 +867,7 @@ const NavigationBar = ({ minimal, onProfileInfoUpdate }: NavigationBarProps) => 
           </>
         )}
       </AnimatePresence>
+      )}
     </nav>
   );
 };
