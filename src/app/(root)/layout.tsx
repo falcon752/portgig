@@ -12,6 +12,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     "/dashboard/recruiter-dashboard",
     "/JobBoard",
     "/recruiter",
+    "/chats",
   ];
 
   const showNav = !noNavPaths.some((path) => pathname.startsWith(path));

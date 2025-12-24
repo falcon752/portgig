@@ -1,51 +1,50 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import DashboardLayout from "@/src/components/Dashboard-layout";
-import {
-  RecruiterHeroSection,
-  ExploreCreative,
-  HowItWorks,
-} from "@/src/components/export_components";
-import RecruiterSearchSection from "@/src/components/recruiter-creative-hub/RecruiterSearchSection";
+import { RecruiterHeroSection, ExploreCreative, HowItWorks } from "@/src/components/export_components";
+import SearchCreatives from "@/src/components/SearchCreatives";
 
-// Type for search input
-export type FilterData = {
+export type SearchData = {
   role: string;
   industry: string;
   location: string;
 };
 
 const RecruiterHomepage = () => {
-  const [searchFilters, setSearchFilters] = useState<FilterData | null>(null);
+  const [searchData, setSearchData] = useState<SearchData>({
+    role: "",
+    industry: "",
+    location: "",
+  });
 
-  const handleSearch = (filters: FilterData) => {
-    console.log("Search filters:", filters);
-    setSearchFilters(filters);
+  const [searchFilters, setSearchFilters] = useState<any>(null);
+
+  const handleSearchChange = useCallback((search: SearchData) => {
+    setSearchData(search);
+
+    setSearchFilters({
+      title: search.role || "",
+      category: search.industry || "",
+      location: search.location || "",
+      experienceLevels: [],
+      employmentTypes: [],
+    });
 
     const creativesSection = document.querySelector("section");
     if (creativesSection) {
       creativesSection.scrollIntoView({ behavior: "smooth" });
     }
-  };
+  }, []);
 
   return (
     <DashboardLayout>
       <RecruiterHeroSection />
-      <RecruiterSearchSection onSearch={handleSearch} />
-      <ExploreCreative
-        searchFilters={
-          searchFilters
-            ? {
-                title: searchFilters.role,
-                category: searchFilters.industry,
-                location: searchFilters.location,
-                experienceLevels: [],
-                employmentTypes: [],
-              }
-            : null
-        }
-      />
+
+      <SearchCreatives onSearchChange={handleSearchChange} />
+
+      <ExploreCreative searchFilters={searchFilters} />
+
       <HowItWorks />
     </DashboardLayout>
   );

@@ -157,7 +157,13 @@ export default function ExploreCreative({
     }
   };
 
-  const displayCreators = filteredCreators;
+  const displayCreators = useMemo(() => {
+  // Shuffle filteredCreators
+  const shuffled = [...filteredCreators].sort(() => 0.5 - Math.random());
+  // Take only first 10
+  return shuffled.slice(0, 10);
+}, [filteredCreators]);
+
   const hasSearchFilters =
     searchFilters &&
     (searchFilters.title || searchFilters.category || searchFilters.location);

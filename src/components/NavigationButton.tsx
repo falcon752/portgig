@@ -61,7 +61,7 @@ const CREATOR_NAV: NavigationItem[] = [
 
 const RECRUITER_NAV: NavigationItem[] = [
   { id: "home", href: "/recruiter-homepage", iconSrc: "/assets/home.svg" },
-  { id: "jobs", href: "/job-hub", iconSrc: "/assets/job.svg" },
+  { id: "recruiter-creatives-hub", href: "/recruiter-creatives-hub", iconSrc: "/assets/hub.svg" },
   {
     id: "messages",
     href: "/chats",
