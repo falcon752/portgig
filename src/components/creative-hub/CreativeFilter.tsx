@@ -28,7 +28,6 @@ const CreativeFilter: React.FC<CreativeFilterProps> = ({
   const [formData, setFormData] = useState<FilterData>(
     activeFilters ?? EMPTY_FILTERS
   );
-
   const [errors, setErrors] = useState<
     Partial<Record<keyof FilterData, string>>
   >({});
@@ -36,12 +35,10 @@ const CreativeFilter: React.FC<CreativeFilterProps> = ({
   const [loadingLgas, setLoadingLgas] = useState(false);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
-  /* -------------------- Sync external filters -------------------- */
   useEffect(() => {
     if (activeFilters) setFormData(activeFilters);
   }, [activeFilters]);
 
-  /* -------------------- Fetch LGAs -------------------- */
   useEffect(() => {
     if (!formData.state) {
       setLgas([]);
@@ -56,7 +53,6 @@ const CreativeFilter: React.FC<CreativeFilterProps> = ({
     }
   }, [formData.state]);
 
-  /* -------------------- Options -------------------- */
   const fieldOptions = useMemo(
     () =>
       Object.keys(industryOptions).map((field) => ({
@@ -74,7 +70,6 @@ const CreativeFilter: React.FC<CreativeFilterProps> = ({
     }));
   }, [formData.field]);
 
-  /* -------------------- Handlers -------------------- */
   const handleFieldChange = (value: string) => {
     setFormData((prev) => {
       const next = { ...prev, field: value, industry: "" };
@@ -122,7 +117,7 @@ const CreativeFilter: React.FC<CreativeFilterProps> = ({
 
   /* -------------------- Validation -------------------- */
   const validateIndustry = () => {
-    if (formData.industry && !formData.field) {
+    if (!formData.field) {
       setErrors((prev) => ({
         ...prev,
         field: "Field is required before selecting an industry",
@@ -134,7 +129,7 @@ const CreativeFilter: React.FC<CreativeFilterProps> = ({
   };
 
   const validateLga = () => {
-    if (formData.localGovernment && !formData.state) {
+    if (!formData.state) {
       setErrors((prev) => ({
         ...prev,
         state: "State is required before selecting an LGA",
@@ -167,7 +162,7 @@ const CreativeFilter: React.FC<CreativeFilterProps> = ({
         </button>
       </div>
 
-      {/* Mobile toggle button */}
+      {/* Mobile toggle */}
       <button
         className="flex items-center justify-between lg:hidden w-full mb-4 bg-white border border-gray100 px-3 py-3 rounded-md"
         onClick={() => setShowMobileFilters((prev) => !prev)}
@@ -201,6 +196,7 @@ const CreativeFilter: React.FC<CreativeFilterProps> = ({
           <select
             value={formData.field}
             onChange={(e) => handleFieldChange(e.target.value)}
+            onBlur={() => setErrors((prev) => ({ ...prev, field: undefined }))}
             className={`${inputStyles} ${errors.field ? "border-red-500" : ""}`}
           >
             <option value="">Select field</option>
@@ -217,21 +213,18 @@ const CreativeFilter: React.FC<CreativeFilterProps> = ({
 
         {/* Industry */}
         <div>
-          <label className={labelStyles}>Industry</label>
+          <label className={labelStyles}>
+            Industry{" "}
+            {!formData.field && (
+              <span className="text-red-500 text-sm">(select field first)</span>
+            )}
+          </label>
           <select
             value={formData.industry}
-            onClick={() => {
-              if (!formData.field) {
-                setErrors((prev) => ({
-                  ...prev,
-                  field: "Field is required before selecting an industry",
-                }));
-              } else {
-                setErrors((prev) => ({ ...prev, field: undefined }));
-              }
-            }}
+            onClick={validateIndustry} // runs when dropdown is tapped
+            onBlur={validateIndustry} // runs when focus leaves
             onChange={(e) => {
-              if (!formData.field) return; // prevent selection
+              if (!formData.field) return;
               handleChange("industry", e.target.value);
             }}
             className={`${inputStyles} ${errors.field ? "border-red-500" : ""}`}
@@ -254,6 +247,7 @@ const CreativeFilter: React.FC<CreativeFilterProps> = ({
           <select
             value={formData.state}
             onChange={(e) => handleStateChange(e.target.value)}
+            onBlur={() => setErrors((prev) => ({ ...prev, state: undefined }))}
             className={`${inputStyles} ${errors.state ? "border-red-500" : ""}`}
           >
             <option value="">Select state</option>
@@ -273,18 +267,10 @@ const CreativeFilter: React.FC<CreativeFilterProps> = ({
           <label className={labelStyles}>Local Government</label>
           <select
             value={formData.localGovernment}
-            onClick={() => {
-              if (!formData.state) {
-                setErrors((prev) => ({
-                  ...prev,
-                  state: "State is required before selecting an LGA",
-                }));
-              } else {
-                setErrors((prev) => ({ ...prev, state: undefined }));
-              }
-            }}
+            onClick={validateLga} // mobile tap validation
+            onBlur={validateLga} // desktop focus-out validation
             onChange={(e) => {
-              if (!formData.state) return; // prevent selection
+              if (!formData.state) return;
               handleChange("localGovernment", e.target.value);
             }}
             className={`${inputStyles} ${errors.state ? "border-red-500" : ""}`}
