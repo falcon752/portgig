@@ -264,7 +264,13 @@ const CreativeFilter: React.FC<CreativeFilterProps> = ({
 
         {/* Local Government */}
         <div>
-          <label className={labelStyles}>Local Government</label>
+          <label className={labelStyles}>
+            Local Government{" "}
+            {!formData.state && (
+              <span className="text-red-500 text-sm">(select state first)</span>
+            )}
+          </label>
+
           <select
             value={formData.localGovernment}
             onClick={validateLga} // mobile tap validation

@@ -162,7 +162,7 @@ export default function RecruiterLoginForm() {
             <span className="mx-2 text-gray-500 text-sm">or</span>
             <div className="grow h-px bg-gray-300"></div>
           </div>
-          <AppButton
+          {/* <AppButton
             type="button"
             variant="outline"
             className="w-full flex items-center justify-center gap-2"
@@ -171,7 +171,7 @@ export default function RecruiterLoginForm() {
           >
             {"Sign in with Google"}
             <FcGoogle size={24} />
-          </AppButton>
+          </AppButton> */}
 
           <Link
             href="/recruiter-forget-password"

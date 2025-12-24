@@ -233,7 +233,7 @@ export default function RecruiterSignupForm() {
               {formik.isSubmitting ? 'Signing up...' : 'Sign Up'}
             </button>
 
-            <AppButton
+            {/* <AppButton
               type="button"
               variant="outline"
               className="w-full flex items-center justify-center gap-2"
@@ -241,7 +241,7 @@ export default function RecruiterSignupForm() {
               disabled={formik.isSubmitting}>
               {'Sign in with Google'}
               <FcGoogle size={24} />
-            </AppButton>
+            </AppButton> */}
           </form>
         </div>
       </div>
