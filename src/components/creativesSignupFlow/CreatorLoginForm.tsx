@@ -36,9 +36,6 @@ export default function CreatorLoginForm() {
       try {
         setError("");
         const response = await CreatorAuth.login(values);
-
-
-        
         toast.success(
           response.message || "Login successful! Redirecting to dashboard..."
         );
