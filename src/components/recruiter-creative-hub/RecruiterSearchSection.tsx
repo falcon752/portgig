@@ -3,7 +3,12 @@
 import { AiOutlineSearch } from "react-icons/ai";
 import { Buttons } from "../export_components";
 import { useState } from "react";
-import { FilterData } from "@/src/app/(root)/(recruiter)/recruiter-homepage/page"; // import the FilterData type
+
+type FilterData = {
+  role: string;
+  industry: string;
+  location: string;
+};
 
 type Props = {
   onSearch: (filters: FilterData) => void;
