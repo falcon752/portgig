@@ -569,7 +569,7 @@ const NavigationBar = ({
                       const dashboardRoute =
                         userType === "creator"
                           ? "/creative-dashboard"
-                          : "/recruiter-dashboard";
+                          : "/creative-dashboard";
                       window.location.href = dashboardRoute;
                     }}
                     className="h-12 px-4 rounded-md w-full hover:bg-gray-200 cursor-pointer"

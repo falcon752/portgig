@@ -42,7 +42,7 @@ const AppliedContent = () => {
   const links = [
     { label: "Go back to Job Portal", path: "/job-hub" },
     { label: "Go to Dashboard", path: "/creative-dashboard" },
-    { label: "Go to Hompage", path: "/creative-homepage" },
+    { label: "Go to Homepage", path: "/creative-homepage" },
   ];
 
   const buttonStyles =
