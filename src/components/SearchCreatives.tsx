@@ -12,8 +12,10 @@ import {
   setSelectedState,
 } from "@/src/redux/features/authSlice";
 import { Field, industryOptions } from "@/src/utils/industryData";
-import NaijaStates from 'naija-state-local-government';
-import { SearchData } from "@/src/app/(root)/(creative)/creatives-hub/page"; 
+import NaijaStates from "naija-state-local-government";
+import { SearchData } from "@/src/app/(root)/(creative)/creatives-hub/page";
+import { fetchCreatorsApi, Creator } from "@/src/lib/requests/creators";
+
 
 // Get Nigerian states from the library
 const nigerianStates = NaijaStates.states();
@@ -38,7 +40,9 @@ interface SearchCreativesProps {
   onSearchChange: (search: SearchData) => void;
 }
 
-const SearchCreatives: React.FC<SearchCreativesProps> = ({ onSearchChange }) => {
+const SearchCreatives: React.FC<SearchCreativesProps> = ({
+  onSearchChange,
+}) => {
   const dispatch = useAppDispatch();
   const {
     selectedField,
@@ -77,7 +81,11 @@ const SearchCreatives: React.FC<SearchCreativesProps> = ({ onSearchChange }) => 
       try {
         // Use naija-state-local-government library to get LGAs
         const lgaResult = NaijaStates.lgas(selectedState);
-        if (lgaResult && Array.isArray(lgaResult.lgas) && lgaResult.lgas.length > 0) {
+        if (
+          lgaResult &&
+          Array.isArray(lgaResult.lgas) &&
+          lgaResult.lgas.length > 0
+        ) {
           dispatch(setLgas(lgaResult.lgas));
         } else {
           dispatch(setError("No LGAs found for this state."));
@@ -142,7 +150,7 @@ const SearchCreatives: React.FC<SearchCreativesProps> = ({ onSearchChange }) => 
     console.log("Applied filters:", filters);
     console.log("Search inputs:", searchInputs);
     setShowMobileFilter(false);
-    
+
     // Convert filters and search inputs to SearchData format
     const searchData: SearchData = {
       role: searchInputs.role,
@@ -157,7 +165,7 @@ const SearchCreatives: React.FC<SearchCreativesProps> = ({ onSearchChange }) => 
 
   const handleSearch = () => {
     console.log("Search clicked with inputs:", searchInputs);
-    
+
     const searchData: SearchData = {
       role: searchInputs.role,
       industry: searchInputs.industry,
@@ -174,30 +182,49 @@ const SearchCreatives: React.FC<SearchCreativesProps> = ({ onSearchChange }) => 
       {/* Search Section */}
       <section className="border border-gray100 flex flex-col lg:flex-row bg-white font-raleway gap-2 lg:gap-0 p-2 lg:p-0">
         {/* Mobile: Role and Industry in a row */}
-        <div className="flex lg:hidden gap-2 w-full">
-          <div className="flex gap-3 pl-3 text-textColor items-center w-full border border-gray100 font-raleway py-3">
-            <AiOutlineSearch className="h-4 w-4 shrink-0" />
-            <input
-              type="text"
-              name="search-role"
-              placeholder="Search by role"
-              value={searchInputs.role}
-              onChange={(e) => handleSearchInputChange("role", e.target.value)}
-              className="w-full h-full border-none outline-none focus:outline-none focus:border-none focus:ring-0 text-sm"
-            />
-          </div>
-
+        {/* MOBILE & TABLET SEARCH INPUTS */}
+        <div className="flex flex-col lg:hidden gap-2 w-full">
+          {/* Role */}
           <div className="flex gap-3 pl-3 text-textColor items-center w-full border border-gray100 py-3">
             <AiOutlineSearch className="h-4 w-4 shrink-0" />
             <input
               type="text"
-              name="search-industry"
-              placeholder="Search by industry"
-              value={searchInputs.industry}
-              onChange={(e) => handleSearchInputChange("industry", e.target.value)}
-              className="w-full h-full border-none outline-none focus:outline-none focus:border-none focus:ring-0 text-sm"
+              placeholder="Search by role"
+              value={searchInputs.role}
+              onChange={(e) => handleSearchInputChange("role", e.target.value)}
+              className="w-full border-none outline-none focus:ring-0 text-sm"
             />
           </div>
+
+          {/* Industry */}
+          <div className="flex gap-3 pl-3 text-textColor items-center w-full border border-gray100 py-3">
+            <AiOutlineSearch className="h-4 w-4 shrink-0" />
+            <input
+              type="text"
+              placeholder="Search by industry"
+              value={searchInputs.industry}
+              onChange={(e) =>
+                handleSearchInputChange("industry", e.target.value)
+              }
+              className="w-full border-none outline-none focus:ring-0 text-sm"
+            />
+          </div>
+
+          {/* Location */}
+          <div className="flex gap-3 pl-3 text-textColor items-center w-full border border-gray100 py-3">
+            <AiOutlineSearch className="h-4 w-4 shrink-0" />
+            <input
+              type="text"
+              placeholder="Search by LGA"
+              value={searchInputs.location}
+              onChange={(e) =>
+                handleSearchInputChange("location", e.target.value)
+              }
+              className="w-full border-none outline-none focus:ring-0 text-sm"
+            />
+          </div>
+
+
         </div>
 
         {/* Desktop: All fields in a row */}
@@ -220,7 +247,9 @@ const SearchCreatives: React.FC<SearchCreativesProps> = ({ onSearchChange }) => 
             name="search-industry"
             placeholder="Search creative by industry"
             value={searchInputs.industry}
-            onChange={(e) => handleSearchInputChange("industry", e.target.value)}
+            onChange={(e) =>
+              handleSearchInputChange("industry", e.target.value)
+            }
             className="w-full h-full border-none outline-none focus:outline-none focus:border-none focus:ring-0 text-sm lg:text-base"
           />
         </div>
@@ -230,9 +259,11 @@ const SearchCreatives: React.FC<SearchCreativesProps> = ({ onSearchChange }) => 
           <input
             type="text"
             name="search-location"
-            placeholder="Search creative by location"
+            placeholder="Search creative by state or LGA"
             value={searchInputs.location}
-            onChange={(e) => handleSearchInputChange("location", e.target.value)}
+            onChange={(e) =>
+              handleSearchInputChange("location", e.target.value)
+            }
             className="w-full h-full border-none outline-none focus:outline-none focus:border-none focus:ring-0 text-sm lg:text-base"
           />
         </div>

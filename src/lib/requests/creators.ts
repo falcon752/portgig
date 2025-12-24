@@ -61,25 +61,19 @@ export interface Creator {
   portfolio: {
     template_type: string;
   };
-  profile: {
-    profile_picture: string;
-    years_of_experience(years_of_experience: any): import("react").ReactNode;
-    field: ReactNode;
-    location: any;
-    bio: string;
-    profile: {
-    profile_picture: string;
-    years_of_experience: string;
-    field: string;
-    bio: string;
-    industry: string;
-    location: {
-      state: string;
-      lga: string;
-      _id: string;
-    };
-}
+profile: {
+  profile_picture: string;
+  years_of_experience: string; // or number if your API returns a number
+  field: string;
+  bio: string;
+  industry: string;
+  location: {
+    state: string;
+    lga: string;
+    _id: string;
   };
+};
+
   resume: {
     skills: string[];
     other_skills: string[];
@@ -121,5 +115,3 @@ export async function fetchCreatorsApi(): Promise<CreatorsApiResponse> {
     throw new Error("Failed to fetch creators data");
   }
 }
-
-
