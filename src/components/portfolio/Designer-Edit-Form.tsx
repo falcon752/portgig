@@ -340,12 +340,13 @@ const DesignerForm: React.FC = () => {
         formData.headShot.file,
         formData.headShot.previewUrl
       );
+
       const finalSkills = formData.skills
         .map((s) => ({
-          name: s.name,
+          name: typeof s.name === "string" ? s.name.trim() : "",
           image: getNextUploadedUrl(s.image.file, s.image.previewUrl),
         }))
-        .filter((s) => s.name || s.image); // only keep skills with name or image
+        .filter((s) => s.name.length > 0 || s.image);
 
       const finalPortfolioFiles = formData.genericPortfolioFiles
         .map((p) => ({

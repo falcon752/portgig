@@ -159,7 +159,7 @@ export default function RecruiterLoginForm() {
           </AppButton>
           <div className="flex items-center my-3 lg:my-6">
             <div className="grow h-px bg-gray-300"></div>
-            <span className="mx-2 text-gray-500 text-sm">or</span>
+            {/* <span className="mx-2 text-gray-500 text-sm">or</span> */}
             <div className="grow h-px bg-gray-300"></div>
           </div>
           {/* <AppButton
