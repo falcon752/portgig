@@ -132,6 +132,37 @@ function BottomNavigationContent() {
     lastViewedCount: 0,
   });
 
+  /* =========================
+     LOAD LAST VIEWED COUNT FROM LOCALSTORAGE
+  ========================== */
+  useEffect(() => {
+    if (!currentUserId) return;
+
+    const storedNotificationCount = localStorage.getItem(
+      `notificationLastViewed_${userType}`
+    );
+    if (storedNotificationCount) {
+      setNotificationState((prev) => ({
+        ...prev,
+        lastViewedCount: parseInt(storedNotificationCount, 10),
+      }));
+    }
+
+    const storedMessageCount = localStorage.getItem(
+      `messageLastViewed_${currentUserId}`
+    );
+    if (storedMessageCount) {
+      setMessageState((prev) => ({
+        ...prev,
+        lastViewedCount: parseInt(storedMessageCount, 10),
+      }));
+    }
+  }, [userType, currentUserId]);
+
+  /* =========================
+     COMPUTED UNREAD COUNTS
+  ========================== */
+
   const unreadNotificationCount = useMemo(
     () =>
       Math.max(
