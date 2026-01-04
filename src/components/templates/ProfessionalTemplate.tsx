@@ -8,14 +8,19 @@ interface ProfessionalTemplateProps {
   formData: FormData;
 }
 
-export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({ formData }) => {
+export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({
+  formData,
+}) => {
   // Helper function to format dates with short month abbreviations
   const formatDate = (dateString: string): string => {
     if (!dateString) return "";
     try {
       const date = new Date(dateString);
       if (isNaN(date.getTime())) return dateString;
-      const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "short" };
+      const options: Intl.DateTimeFormatOptions = {
+        year: "numeric",
+        month: "short",
+      };
       return date.toLocaleDateString("en-US", options);
     } catch {
       return dateString;
@@ -26,7 +31,7 @@ export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({ form
     <div className="professional-template">
       <style jsx>{`
         body {
-          font-family: 'Inter', 'Arial', sans-serif;
+          font-family: "Inter", "Arial", sans-serif;
           background: white;
           color: #333;
           line-height: 1.4;
@@ -42,7 +47,7 @@ export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({ form
         }
 
         .header {
-          background: #0A1754;
+          background: #0a1754;
           color: white;
           padding: 15px 30px 20px 30px;
           position: relative;
@@ -122,7 +127,6 @@ export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({ form
           color: #666;
         }
 
-
         .section {
           margin-bottom: 8px;
           page-break-inside: avoid;
@@ -145,8 +149,8 @@ export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({ form
 
         .brief-area {
           padding: 10px 0;
-          color: #0A1754;
-          font-family: 'Raleway', sans-serif;
+          color: #0a1754;
+          font-family: "Raleway", sans-serif;
           font-weight: 600;
           font-size: 13px;
           line-height: 1.5;
@@ -176,8 +180,8 @@ export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({ form
         }
 
         .user-input-text {
-          color: #0A1754;
-          font-family: 'Raleway', sans-serif;
+          color: #0a1754;
+          font-family: "Raleway", sans-serif;
           font-weight: 600;
           font-size: 13px;
           line-height: 1.5;
@@ -201,8 +205,8 @@ export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({ form
 
         .experience-description {
           padding: 10px 0;
-          color: #0A1754;
-          font-family: 'Raleway', sans-serif;
+          color: #0a1754;
+          font-family: "Raleway", sans-serif;
           font-weight: 600;
           font-size: 13px;
           line-height: 1.5;
@@ -245,8 +249,8 @@ export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({ form
         .skill-item,
         .other-skill-item,
         .certification-item {
-          color: #0A1754;
-          font-family: 'Raleway', sans-serif;
+          color: #0a1754;
+          font-family: "Raleway", sans-serif;
           font-weight: 600;
           font-size: 13px;
           line-height: 1.5;
@@ -279,7 +283,7 @@ export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({ form
           }
 
           .header {
-            background: #0A1754;
+            background: #0a1754;
             -webkit-print-color-adjust: exact !important;
             page-break-inside: avoid;
           }
@@ -327,16 +331,34 @@ export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({ form
       `}</style>
 
       <div className="header">
-        <Image src="/assets/white-logo.png" alt="Portgig Logo" className="logo-img" width={50} height={50} />
+        <Image
+          src="/assets/white-logo.png"
+          alt="Portgig Logo"
+          className="logo-img"
+          width={50}
+          height={50}
+        />
         <div className="name-section">
           <div className="name">{formData.full_name || "Not specified"}</div>
-          <div className="job-title">{formData.job_title || "Not specified"}</div>
+          <div className="job-title">
+            {formData.job_title || "Not specified"}
+          </div>
           <div className="contact-row">
-            {formData.email && <div className="contact-item">{formData.email}</div>}
+            {formData.email && (
+              <div className="contact-item">{formData.email}</div>
+            )}
             {formData.location && formData.email ? <span>|</span> : ""}
-            {formData.location && <div className="contact-item">{formData.location}</div>}
-            {formData.phone_number && (formData.email || formData.location) ? <span>|</span> : ""}
-            {formData.phone_number && <div className="contact-item">{formData.phone_number}</div>}
+            {formData.location && (
+              <div className="contact-item">{formData.location}</div>
+            )}
+            {formData.phone_number && (formData.email || formData.location) ? (
+              <span>|</span>
+            ) : (
+              ""
+            )}
+            {formData.phone_number && (
+              <div className="contact-item">{formData.phone_number}</div>
+            )}
           </div>
         </div>
       </div>
@@ -374,62 +396,28 @@ export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({ form
           </div>
         )}
 
-        {/* Skills Section */}
-        {formData.skills && formData.skills.length > 0 && (
-          <div className="section">
-            <div className="section-title">Skills</div>
-            <ul className="skills-list">
-              {formData.skills.map((skill, index) => (
-                <li key={index} className="skill-item">
-                  {skill.value}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Certifications Section */}
-        {formData.certifications && formData.certifications.length > 0 && (
-          <div className="section">
-            <div className="section-title">Certifications</div>
-            <ul className="certifications-list">
-              {formData.certifications.map((cert, index) => (
-                <li key={index} className="certification-item">
-                  {cert.value}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Other Skills Section */}
-        {formData.other_skills && formData.other_skills.length > 0 && (
-          <div className="section">
-            <div className="section-title">Other Skills</div>
-            <ul className="other-skills-list">
-              {formData.other_skills.map((skill, index) => (
-                <li key={index} className="other-skill-item">
-                  {skill.value}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
         {/* Education */}
         <div className="section">
           <div className="section-title">Education</div>
           {formData.education && formData.education.length > 0 ? (
             formData.education.map((edu, index) => (
-              <div key={index} className="education-item" style={{ marginBottom: "10px" }}>
+              <div
+                key={index}
+                className="education-item"
+                style={{ marginBottom: "10px" }}
+              >
                 <div className="field-with-label">
                   <div className="field-label">Course/Degree</div>
                   <div className="field">
-                    <span className="user-input-text">{edu.course || "Not specified"}</span>
+                    <span className="user-input-text">
+                      {edu.course || "Not specified"}
+                    </span>
                   </div>
                   <div className="field-label">School/Institution</div>
                   <div className="field">
-                    <span className="user-input-text">{edu.school || "Not specified"}</span>
+                    <span className="user-input-text">
+                      {edu.school || "Not specified"}
+                    </span>
                   </div>
                 </div>
                 <div className="field-with-label">
@@ -437,7 +425,9 @@ export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({ form
                   <div className="field">
                     <span className="user-input-text">
                       {edu.started && edu.ended
-                        ? `${formatDate(edu.started)} - ${formatDate(edu.ended)}`
+                        ? `${formatDate(edu.started)} - ${formatDate(
+                            edu.ended
+                          )}`
                         : "Not specified"}
                     </span>
                   </div>
@@ -470,13 +460,17 @@ export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({ form
                   <div className="field-with-label">
                     <div className="field-label">Job Title/Brand</div>
                     <div className="field">
-                      <span className="user-input-text">{exp.job_title || "Not specified"}</span>
+                      <span className="user-input-text">
+                        {exp.job_title || "Not specified"}
+                      </span>
                     </div>
                   </div>
                   <div className="field-with-label">
                     <div className="field-label">Company/Location</div>
                     <div className="field">
-                      <span className="user-input-text">{exp.location || "Not specified"}</span>
+                      <span className="user-input-text">
+                        {exp.location || "Not specified"}
+                      </span>
                     </div>
                   </div>
                   <div className="field-with-label">
@@ -484,15 +478,21 @@ export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({ form
                     <div className="field">
                       <span className="user-input-text">
                         {exp.started && exp.ended
-                          ? `${formatDate(exp.started)} - ${formatDate(exp.ended)}`
+                          ? `${formatDate(exp.started)} - ${formatDate(
+                              exp.ended
+                            )}`
                           : "Not specified"}
                       </span>
                     </div>
                   </div>
                 </div>
                 <div className="field-with-label">
-                  <div className="field-label">Job Description/Contribution</div>
-                  <div className="experience-description">{exp.contribution || "Not specified"}</div>
+                  <div className="field-label">
+                    Job Description/Contribution
+                  </div>
+                  <div className="experience-description">
+                    {exp.contribution || "Not specified"}
+                  </div>
                 </div>
               </div>
             ))
@@ -519,19 +519,67 @@ export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({ form
             </div>
           )}
         </div>
+
+        {/* Skills Section */}
+        {formData.skills && formData.skills.length > 0 && (
+          <div className="section">
+            <div className="section-title">Skills</div>
+            <ul className="skills-list">
+              {formData.skills.map((skill, index) => (
+                <li key={index} className="skill-item">
+                  {skill.value}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Other Skills Section */}
+        {formData.other_skills && formData.other_skills.length > 0 && (
+          <div className="section">
+            <div className="section-title">Other Skills</div>
+            <ul className="other-skills-list">
+              {formData.other_skills.map((skill, index) => (
+                <li key={index} className="other-skill-item">
+                  {skill.value}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Certifications Section */}
+        {formData.certifications && formData.certifications.length > 0 && (
+          <div className="section">
+            <div className="section-title">Certifications</div>
+            <ul className="certifications-list">
+              {formData.certifications.map((cert, index) => (
+                <li key={index} className="certification-item">
+                  {cert.value}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
       </div>
     </div>
   );
 };
 
-export const generateProfessionalTemplateHTML = (formData: FormData): string => {
+export const generateProfessionalTemplateHTML = (
+  formData: FormData
+): string => {
   // Helper function to format dates with short month abbreviations
   const formatDate = (dateString: string): string => {
     if (!dateString) return "";
     try {
       const date = new Date(dateString);
       if (isNaN(date.getTime())) return dateString;
-      const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "short" };
+      const options: Intl.DateTimeFormatOptions = {
+        year: "numeric",
+        month: "short",
+      };
       return date.toLocaleDateString("en-US", options);
     } catch {
       return dateString;
@@ -849,13 +897,31 @@ export const generateProfessionalTemplateHTML = (formData: FormData): string => 
           <img src="/assets/white-logo.png" alt="Portgig Logo" class="logo-img" />
           <div class="name-section">
             <div class="name">${formData.full_name || "Not specified"}</div>
-            <div class="job-title">${formData.job_title || "Not specified"}</div>
+            <div class="job-title">${
+              formData.job_title || "Not specified"
+            }</div>
             <div class="contact-row">
-              ${formData.email ? `<div class="contact-item">${formData.email}</div>` : ""}
+              ${
+                formData.email
+                  ? `<div class="contact-item">${formData.email}</div>`
+                  : ""
+              }
               ${formData.location && formData.email ? `<span>|</span>` : ""}
-              ${formData.location ? `<div class="contact-item">${formData.location}</div>` : ""}
-              ${formData.phone_number && (formData.email || formData.location) ? `<span>|</span>` : ""}
-              ${formData.phone_number ? `<div class="contact-item">${formData.phone_number}</div>` : ""}
+              ${
+                formData.location
+                  ? `<div class="contact-item">${formData.location}</div>`
+                  : ""
+              }
+              ${
+                formData.phone_number && (formData.email || formData.location)
+                  ? `<span>|</span>`
+                  : ""
+              }
+              ${
+                formData.phone_number
+                  ? `<div class="contact-item">${formData.phone_number}</div>`
+                  : ""
+              }
             </div>
           </div>
         </div>
@@ -863,85 +929,126 @@ export const generateProfessionalTemplateHTML = (formData: FormData): string => 
         <div class="main-content">
           <!-- Social Links Section -->
           <div class="social-section">
-            ${formData.links?.instagram ? `<div class="social-item"><span>Instagram: ${formData.links.instagram}</span></div>` : ""}
-            ${formData.links?.linkedin ? `<div class="social-item"><span>LinkedIn: ${formData.links.linkedin}</span></div>` : ""}
-            ${formData.links?.twitter ? `<div class="social-item"><span>Twitter: ${formData.links.twitter}</span></div>` : ""}
-            ${formData.links?.tiktok ? `<div class="social-item"><span>TikTok: ${formData.links.tiktok}</span></div>` : ""}
+            ${
+              formData.links?.instagram
+                ? `<div class="social-item"><span>Instagram: ${formData.links.instagram}</span></div>`
+                : ""
+            }
+            ${
+              formData.links?.linkedin
+                ? `<div class="social-item"><span>LinkedIn: ${formData.links.linkedin}</span></div>`
+                : ""
+            }
+            ${
+              formData.links?.twitter
+                ? `<div class="social-item"><span>Twitter: ${formData.links.twitter}</span></div>`
+                : ""
+            }
+            ${
+              formData.links?.tiktok
+                ? `<div class="social-item"><span>TikTok: ${formData.links.tiktok}</span></div>`
+                : ""
+            }
           </div>
 
           <!-- Professional Brief -->
-          ${formData.brief
-            ? `
+          ${
+            formData.brief
+              ? `
           <div class="section">
             <div class="section-title">Professional Brief</div>
             <div class="brief-area">${formData.brief}</div>
           </div>
           `
-            : ""}
+              : ""
+          }
 
           <!-- Skills Section -->
-          ${formData.skills && formData.skills.length > 0
-            ? `
+          ${
+            formData.skills && formData.skills.length > 0
+              ? `
           <div class="section">
             <div class="section-title">Skills</div>
             <ul class="skills-list">
-              ${formData.skills.map((skill) => `<li class="skill-item">${skill.value}</li>`).join("")}
+              ${formData.skills
+                .map((skill) => `<li class="skill-item">${skill.value}</li>`)
+                .join("")}
             </ul>
           </div>
           `
-            : ""}
+              : ""
+          }
 
           <!-- Certifications Section -->
-          ${formData.certifications && formData.certifications.length > 0
-            ? `
+          ${
+            formData.certifications && formData.certifications.length > 0
+              ? `
           <div class="section">
             <div class="section-title">Certifications</div>
             <ul class="certifications-list">
-              ${formData.certifications.map((cert) => `<li class="certification-item">${cert.value}</li>`).join("")}
+              ${formData.certifications
+                .map(
+                  (cert) => `<li class="certification-item">${cert.value}</li>`
+                )
+                .join("")}
             </ul>
           </div>
           `
-            : ""}
+              : ""
+          }
 
           <!-- Other Skills Section -->
-          ${formData.other_skills && formData.other_skills.length > 0
-            ? `
+          ${
+            formData.other_skills && formData.other_skills.length > 0
+              ? `
           <div class="section">
             <div class="section-title">Other Skills</div>
             <ul class="other-skills-list">
-              ${formData.other_skills.map((skill) => `<li class="other-skill-item">${skill.value}</li>`).join("")}
+              ${formData.other_skills
+                .map(
+                  (skill) => `<li class="other-skill-item">${skill.value}</li>`
+                )
+                .join("")}
             </ul>
           </div>
           `
-            : ""}
+              : ""
+          }
 
           <!-- Education -->
           <div class="section">
             <div class="section-title">Education</div>
-            ${formData.education && formData.education.length > 0
-              ? formData.education
-                  .map(
-                    (edu) => `
+            ${
+              formData.education && formData.education.length > 0
+                ? formData.education
+                    .map(
+                      (edu) => `
                 <div class="education-item">
                   <div class="field-with-label">
                     <div class="field-label">Course/Degree</div>
-                    <div class="field"><span class="user-input-text">${edu.course || "Not specified"}</span></div>
+                    <div class="field"><span class="user-input-text">${
+                      edu.course || "Not specified"
+                    }</span></div>
                     <div class="field-label">School/Institution</div>
-                    <div class="field"><span class="user-input-text">${edu.school || "Not specified"}</span></div>
+                    <div class="field"><span class="user-input-text">${
+                      edu.school || "Not specified"
+                    }</span></div>
                   </div>
                   <div class="field-with-label">
                     <div class="field-label">Duration</div>
                     <div class="field"><span class="user-input-text">${
                       edu.started && edu.ended
-                        ? `${formatDate(edu.started)} - ${formatDate(edu.ended)}`
+                        ? `${formatDate(edu.started)} - ${formatDate(
+                            edu.ended
+                          )}`
                         : "Not specified"
                     }</span></div>
                   </div>
                 </div>
               `
-                  )
-                  .join("")
-              : `
+                    )
+                    .join("")
+                : `
                 <div class="education-item">
                   <div class="field-with-label">
                     <div class="field-label">Course/Degree</div>
@@ -954,44 +1061,54 @@ export const generateProfessionalTemplateHTML = (formData: FormData): string => 
                     <div class="field"></div>
                   </div>
                 </div>
-              `}
+              `
+            }
           </div>
 
           <!-- Work Experience -->
           <div class="section">
             <div class="section-title">Work Experience</div>
-            ${formData.experience && formData.experience.length > 0
-              ? formData.experience
-                  .map(
-                    (exp) => `
+            ${
+              formData.experience && formData.experience.length > 0
+                ? formData.experience
+                    .map(
+                      (exp) => `
                 <div style="margin-bottom: 15px; page-break-inside: avoid;">
                   <div class="experience-fields">
                     <div class="field-with-label">
                       <div class="field-label">Job Title/Brand</div>
-                      <div class="field"><span class="user-input-text">${exp.job_title || "Not specified"}</span></div>
+                      <div class="field"><span class="user-input-text">${
+                        exp.job_title || "Not specified"
+                      }</span></div>
                     </div>
                     <div class="field-with-label">
                       <div class="field-label">Company/Location</div>
-                      <div class="field"><span class="user-input-text">${exp.location || "Not specified"}</span></div>
+                      <div class="field"><span class="user-input-text">${
+                        exp.location || "Not specified"
+                      }</span></div>
                     </div>
                     <div class="field-with-label">
                       <div class="field-label">Duration</div>
                       <div class="field"><span class="user-input-text">${
                         exp.started && exp.ended
-                          ? `${formatDate(exp.started)} - ${formatDate(exp.ended)}`
+                          ? `${formatDate(exp.started)} - ${formatDate(
+                              exp.ended
+                            )}`
                           : "Not specified"
                       }</span></div>
                     </div>
                   </div>
                   <div class="field-with-label">
                     <div class="field-label">Job Description/Contribution</div>
-                    <div class="experience-description">${exp.contribution || "Not specified"}</div>
+                    <div class="experience-description">${
+                      exp.contribution || "Not specified"
+                    }</div>
                   </div>
                 </div>
               `
-                  )
-                  .join("")
-              : `
+                    )
+                    .join("")
+                : `
                 <div style="margin-bottom: 15px; page-break-inside: avoid;">
                   <div class="experience-fields">
                     <div class="field-with-label">
@@ -1012,7 +1129,8 @@ export const generateProfessionalTemplateHTML = (formData: FormData): string => 
                     <div class="experience-description"></div>
                   </div>
                 </div>
-              `}
+              `
+            }
           </div>
         </div>
       </div>
