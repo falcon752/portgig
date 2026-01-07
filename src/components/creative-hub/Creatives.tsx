@@ -5,6 +5,9 @@ import { IoIosArrowForward } from "react-icons/io";
 import { LoadingSpinner } from "@/src/utils/util_component";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { useAppSelector } from "@/src/redux/hooks";
+import { getUserId } from "@/src/utils/chats";
+import { createOrGetChatRoom } from "@/src/lib/firebase/chat";
 import Image from "next/image";
 import {
   FilterData,
@@ -128,6 +131,13 @@ const Creatives: React.FC<CreativesProps> = ({
   });
 
   const creators = creatorsResponse?.data?.page_data || [];
+
+  const router = useRouter();
+  const { profile } = useAppSelector((state) => state.user);
+  const { recruiterProfile } = useAppSelector((state) => state.recruiter);
+  const currentUser = profile || recruiterProfile;
+  const currentUserId = currentUser ? getUserId(currentUser) : null;
+  const currentUserType = profile ? "creator" : "recruiter";
 
   const filteredCreatives = useMemo(() => {
     if (!creators.length) return [];
@@ -267,11 +277,27 @@ const Creatives: React.FC<CreativesProps> = ({
     }
   };
 
-  const handleContact = (creative: any, e: React.MouseEvent) => {
-    e.stopPropagation();
-    console.log("Contact creative:", creative);
-  };
+const handleContact = async (creative: any, e: React.MouseEvent) => {
+  e.stopPropagation();
+  if (!creative || !currentUser || !currentUserId) return;
 
+  const creativeUserId = getUserId(creative);
+  if (!creativeUserId) return;
+
+  try {
+    const creativeUserType = "creative";
+    const chatId = await createOrGetChatRoom(
+      currentUser,
+      creative,
+      currentUserType === "creator" ? "creative" : "recruiter",
+      creativeUserType
+    );
+    if (chatId) router.push(`/chats/${chatId}`);
+  } catch (err) {
+    console.error("Failed to start chat:", err);
+    alert("Failed to start chat. Please try again.");
+  }
+};
   if (isLoading) {
     return (
       <div className="center h-full my-5">

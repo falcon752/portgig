@@ -19,19 +19,19 @@ const teamMembers = [
     name: "Samuel Ajewole",
     role: "Business Strategist/Data Analyist",
   },
-  { image: "sharon.png", name: "Sharon Lamebri ", role: "Product Manager" },
-  { image: "bukky.png", name: "Bukky", role: "Operations Manager" },
-  {
-    image: "lashe.png",
-    name: "Lashe",
-    role: "Frontend Developer/ Video Editor",
-  },
-  { image: "virtue.png", name: "Virtue(One Man)", role: "Communities Manager" },
-  {
-    image: "precious.png",
-    name: "Precious",
-    role: "Content Writer/Strategist",
-  },
+  // { image: "sharon.png", name: "Sharon Lamebri ", role: "Product Manager" },
+  // { image: "bukky.png", name: "Bukky", role: "Operations Manager" },
+  // {
+  //   image: "lashe.png",
+  //   name: "Lashe",
+  //   role: "Frontend Developer/ Video Editor",
+  // },
+
+  // {
+  //   image: "precious.png",
+  //   name: "Precious",
+  //   role: "Content Writer/Strategist",
+  // },
   {
     image: "taiwo.png",
     name: "Taiye temitope",
@@ -42,6 +42,7 @@ const teamMembers = [
     name: "David Brownson",
     role: "Social Media Manager/Strategist",
   },
+  { image: "virtue.png", name: "Virtue(One Man)", role: "Communities Manager" },
 ];
 
 const AboutUs = () => {

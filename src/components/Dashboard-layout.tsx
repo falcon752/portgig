@@ -52,6 +52,12 @@ const defaultSidebarItems: SidebarItem[] = [
     icon: Home,
     isSection: false,
   },
+    {
+    title: "Creatives Hub",
+    href: "/recruiter-creatives-hub",
+    icon: Users,
+    isSection: false,
+  },
   {
     title: "Job Posting",
     icon: Briefcase,

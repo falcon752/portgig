@@ -1,9 +1,9 @@
-"use client"
-import Link from "next/link"
-import { useQuery } from "@tanstack/react-query"
-import { LoadingSpinner } from "@/src/utils/util_component"
-import { Buttons } from "../export_components"
-import { fetchAppliedJobsApi } from "@/src/lib/requests/appliedJobs"
+"use client";
+import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { LoadingSpinner } from "@/src/utils/util_component";
+import { Buttons } from "../export_components";
+import { fetchAppliedJobsApi } from "@/src/lib/requests/appliedJobs";
 
 const AppliedJobsList = () => {
   const {
@@ -15,30 +15,42 @@ const AppliedJobsList = () => {
   } = useQuery({
     queryKey: ["appliedJobs", { creatorJob: "yes" }],
     queryFn: () => fetchAppliedJobsApi({ creatorJob: "yes" }),
-  })
+  });
 
-  const appliedJobs = appliedJobsResponse?.data?.page_data || []
-  const pageCount = appliedJobsResponse?.data?.page_count || 0
+  const appliedJobs = appliedJobsResponse?.data?.page_data || [];
+  const pageCount = appliedJobsResponse?.data?.page_count || 0;
 
   // Updated to check both views and normalized status
-  const viewedStatuses = ["shortlisted", "selected", "reviewed"]
+  const viewedStatuses = [
+    "shortlisted",
+    "selected",
+    "reviewed",
+    "not_qualified",
+  ];
 
   const getViewStatus = (item: any) => {
-    if ((item.application_views || 0) > 0) return "Viewed by Recruiter"
-    if (item.application_status && viewedStatuses.includes(item.application_status.toLowerCase()))
-      return "Viewed by Recruiter"
-    return "Not seen yet"
-  }
+    if ((item.application_views || 0) > 0) return "Viewed by Recruiter";
+    if (
+      item.application_status &&
+      viewedStatuses.includes(item.application_status.toLowerCase())
+    )
+      return "Viewed by Recruiter";
+    return "Not seen yet";
+  };
 
   const getViewStatusColor = (item: any) => {
-    return getViewStatus(item) === "Viewed by Recruiter" ? "bg-green-500" : "bg-gray-500"
-  }
+    return getViewStatus(item) === "Viewed by Recruiter"
+      ? "bg-green-500"
+      : "bg-gray-500";
+  };
 
   return (
     <section className="bodyMargin flex flex-col gap-8 font-raleway px-4 sm:px-6 md:px-12 py-6">
       {/* Header */}
       <div className="h-auto p-4 bg-[#0A1754] w-full flex items-center rounded-md">
-        <h2 className="text-lg sm:text-xl lg:text-3xl font-bold text-white lg:pl-5">Job Applied</h2>
+        <h2 className="text-lg sm:text-xl lg:text-3xl font-bold text-white lg:pl-5">
+          Job Applied
+        </h2>
       </div>
 
       {/* Job Grid */}
@@ -85,21 +97,25 @@ const AppliedJobsList = () => {
                 <span>{item.location}</span>
                 {item.salary_range &&
                   (() => {
-                    const [min, max] = item.salary_range.split("/").map(Number)
+                    const [min, max] = item.salary_range.split("/").map(Number);
                     return (
                       <span className="ml-2 text-[#00489A] font-raleway">
                         NGN{min.toLocaleString()} - {max.toLocaleString()}
                       </span>
-                    )
+                    );
                   })()}
               </div>
 
               {/* Tags - view status and application status */}
               <div className="flex justify-between text-white text-xs font-bold">
-                <div className={`${getViewStatusColor(item)} rounded-lg py-2 px-3`}>
+                <div
+                  className={`${getViewStatusColor(item)} rounded-lg py-2 px-3`}
+                >
                   {getViewStatus(item)}
                 </div>
-                <div className="bg-secondary rounded-lg py-2 px-3">{item.status}</div>
+                <div className="bg-secondary rounded-lg py-2 px-3">
+                  {item.status}
+                </div>
               </div>
             </Link>
           ))
@@ -116,7 +132,7 @@ const AppliedJobsList = () => {
         </Link>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default AppliedJobsList
+export default AppliedJobsList;
