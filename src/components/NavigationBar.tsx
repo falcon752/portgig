@@ -385,16 +385,16 @@ const NavigationBar = ({
             )}
 
             {!minimal && (
-            <Link href={homeLink}>
-              <Image
-                src="/assets/PortgigLogo.png"
-                alt="Portgig Logo"
-                quality={100}
-                width={80}
-                height={56}
-                className="cursor-pointer"
-              />
-            </Link>
+              <Link href={homeLink}>
+                <Image
+                  src="/assets/PortgigLogo.png"
+                  alt="Portgig Logo"
+                  quality={100}
+                  width={80}
+                  height={56}
+                  className="cursor-pointer"
+                />
+              </Link>
             )}
           </div>
 
@@ -569,7 +569,7 @@ const NavigationBar = ({
                       const dashboardRoute =
                         userType === "creator"
                           ? "/creative-dashboard"
-                          : "/creative-dashboard";
+                          : "/recruiter-dashboard";
                       window.location.href = dashboardRoute;
                     }}
                     className="h-12 px-4 rounded-md w-full hover:bg-gray-200 cursor-pointer"
@@ -591,282 +591,283 @@ const NavigationBar = ({
         </div>
       </div>
 
-{!minimal && (
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              className="fixed inset-0 bg-black bg-opacity-40 z-40"
-              onClick={() => setIsMobileMenuOpen(false)}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            />
+      {!minimal && (
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                className="fixed inset-0 bg-black bg-opacity-40 z-40"
+                onClick={() => setIsMobileMenuOpen(false)}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              />
 
-            {/* Mobile Sidebar */}
-            <motion.div
-              className={`fixed top-0 left-0 w-[280px] h-full shadow-lg z-50 flex flex-col px-6 py-8 ${
-                isRecruiter
-                  ? "bg-[#0A1754] text-white"
-                  : "bg-white text-primary"
-              }`}
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            >
-              {/* Header */}
-              <div className="flex justify-between items-center mb-8">
-                <Link href={homeLink}>
-                  <Image
-                    src={
-                      isRecruiter
-                        ? "/assets/white-logo.png"
-                        : "/assets/PortgigLogo.png"
-                    }
-                    alt="Portgig Logo"
-                    quality={100}
-                    width={100}
-                    height={70}
-                    className="cursor-pointer"
-                  />
-                </Link>
-                <button onClick={toggleMobileMenu}>
-                  <AiOutlineClose
-                    className={`w-6 h-6 ${
-                      isRecruiter ? "text-white" : "text-black"
-                    }`}
-                  />
-                </button>
-              </div>
-
-              {/* Navigation Content */}
-              <div className="flex-1 overflow-y-auto font-urbanist flex flex-col">
-                {isRecruiter ? (
-                  <>
-                    {pathname ===
-                      "/recruiter-dashboard/recruiter-edit-profile" ||
-                    pathname ===
-                      "/recruiter-dashboard/recruiter-change-password" ? (
-                      <>
-                        {/* Account Settings */}
-                        <div className="flex-1">
-                          <div className="mb-6 border-b border-white">
-                            <h3 className="text-xl font-semibold text-white text-center">
-                              Account Settings
-                            </h3>
-                          </div>
-                          <div className="flex flex-col gap-5 ml-4">
-                            <Link
-                              href="/recruiter-dashboard/recruiter-edit-profile"
-                              className={`px-4 py-3 rounded-md font-medium text-center font-inter ${
-                                pathname ===
-                                "/recruiter-dashboard/recruiter-edit-profile"
-                                  ? "bg-white text-[#0A1754] font-semibold shadow-md"
-                                  : "bg-white text-[#0A1754] hover:bg-gray-100 hover:shadow-md"
-                              }`}
-                              onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                              Profile & Account
-                            </Link>
-                            <Link
-                              href="/recruiter-dashboard/recruiter-change-password"
-                              className={`px-4 py-3 rounded font-medium text-center ${
-                                pathname ===
-                                "/recruiter-dashboard/recruiter-change-password"
-                                  ? "bg-white text-[#0A1754] font-semibold shadow-md"
-                                  : "bg-white text-[#0A1754] hover:bg-gray-100 hover:shadow-md"
-                              }`}
-                              onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                              Change Password
-                            </Link>
-                          </div>
-                        </div>
-
-                        {/* Help & Support */}
-                        <div className="pb-4 flex flex-col items-center cursor-pointer gap-3 mt-8">
-                          <Link
-                            href="/dashboard/help"
-                            className="text-white text-sm hover:underline font-inter font-semibold"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            Help & Support
-                          </Link>
-                          <p className="font-inter text-xs text-white text-center">
-                            Report an issue/Contact support
-                          </p>
-                        </div>
-                      </>
-                    ) : (
-                      // Dynamic Recruiter Navigation
-                      <div className="space-y-8">
-                        {getRecruiterNavigationItems(dashboardData).map(
-                          (section, sectionIndex) => (
-                            <div key={sectionIndex}>
-                              {/* Section Header */}
-                              <div className="mb-6 border-b border-white">
-                                <h3 className="text-xl font-semibold text-white text-center">
-                                  {section.category}
-                                </h3>
-                              </div>
-                              {/* Section Items */}
-                              {section.items.length > 0 ? (
-                                <ul className="space-y-4 ml-4">
-                                  {section.items.map((item, itemIndex) => (
-                                    <li key={itemIndex} className="relative">
-                                      {section.category === "Messages" ? (
-                                        <Link
-                                          href={item.link}
-                                          onClick={handleMessageClick}
-                                          className={`block text-base transition-colors duration-200 ${
-                                            pathname === item.link
-                                              ? "text-white font-semibold"
-                                              : "text-white/90"
-                                          } hover:text-white`}
-                                        >
-                                          {item.label}
-                                          {unreadMessageCount > 0 && (
-                                            <span className="ml-2 bg-red-500 text-white rounded-full w-5 h-5 inline-flex items-center justify-center text-xs">
-                                              {unreadMessageCount > 9
-                                                ? "9+"
-                                                : unreadMessageCount}
-                                            </span>
-                                          )}
-                                        </Link>
-                                      ) : (
-                                        <Link
-                                          href={item.link}
-                                          className={`block text-base transition-colors duration-200 ${
-                                            pathname === item.link
-                                              ? "text-white font-semibold"
-                                              : "text-white/90"
-                                          } hover:text-white`}
-                                          onClick={() =>
-                                            setIsMobileMenuOpen(false)
-                                          }
-                                        >
-                                          {item.label}
-                                        </Link>
-                                      )}
-                                    </li>
-                                  ))}
-                                </ul>
-                              ) : (
-                                <p className="text-white/70 text-sm ml-4">
-                                  {section.category === "Job Posted" &&
-                                    "No jobs posted yet"}
-                                  {section.category === "Applicants" &&
-                                    "No applicants yet"}
-                                  {section.category === "Messages" &&
-                                    "No messages"}
-                                  {section.category === "Help & Support" && ""}
-                                </p>
-                              )}
-                            </div>
-                          )
-                        )}
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  // Creative/Regular User Navigation
-                  <ul className="flex flex-col gap-6 text-lg font-medium text-primary">
-                    {navigationItemsMobile.map((item, index) => {
-                      const href =
-                        item.label === "Home"
-                          ? homeLink
-                          : item.label === "Messages"
-                          ? "/chats"
-                          : item.link;
-
-                      return (
-                        <li key={index} className="relative">
-                          {item.label === "Messages" ? (
-                            <Link
-                              href="/chats"
-                              onClick={handleMessageClick}
-                              className={`block ${
-                                pathname === "/chats"
-                                  ? "text-primary font-bold"
-                                  : "text-gray-700"
-                              }`}
-                            >
-                              {item.label}
-                              {unreadMessageCount > 0 && (
-                                <span className="ml-2 bg-red-500 text-white rounded-full w-5 h-5 inline-flex items-center justify-center text-xs">
-                                  {unreadMessageCount > 9
-                                    ? "9+"
-                                    : unreadMessageCount}
-                                </span>
-                              )}
-                            </Link>
-                          ) : (
-                            <Link
-                              href={href}
-                              className={`block ${
-                                pathname === href
-                                  ? "text-primary font-bold"
-                                  : "text-gray-700"
-                              }`}
-                              onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                              {item.label}
-                            </Link>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
-              </div>
-
-              {/* Auth buttons */}
-              <div className="pb-6 mb-10">
-                {!profile && !recruiterProfile ? (
-                  <div className="flex flex-col gap-3">
-                    <Link
-                      href="/onboarding"
-                      className={`py-3 px-4 rounded-full text-sm text-center font-medium ${
+              {/* Mobile Sidebar */}
+              <motion.div
+                className={`fixed top-0 left-0 w-[280px] h-full shadow-lg z-50 flex flex-col px-6 py-8 ${
+                  isRecruiter
+                    ? "bg-[#0A1754] text-white"
+                    : "bg-white text-primary"
+                }`}
+                initial={{ x: "-100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "-100%" }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              >
+                {/* Header */}
+                <div className="flex justify-between items-center mb-8">
+                  <Link href={homeLink}>
+                    <Image
+                      src={
                         isRecruiter
-                          ? "bg-white text-[#0A1754] hover:bg-gray-100"
-                          : "bg-primary text-white hover:bg-primary/90"
+                          ? "/assets/white-logo.png"
+                          : "/assets/PortgigLogo.png"
+                      }
+                      alt="Portgig Logo"
+                      quality={100}
+                      width={100}
+                      height={70}
+                      className="cursor-pointer"
+                    />
+                  </Link>
+                  <button onClick={toggleMobileMenu}>
+                    <AiOutlineClose
+                      className={`w-6 h-6 ${
+                        isRecruiter ? "text-white" : "text-black"
                       }`}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Sign up
-                    </Link>
-                    <Link
-                      href="/login"
-                      className={`py-3 px-4 rounded-full text-sm text-center font-medium border ${
-                        isRecruiter
-                          ? "border-white text-white hover:bg-white/10"
-                          : "border-primary text-primary hover:bg-primary/5"
-                      }`}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Log in
-                    </Link>
-                  </div>
-                ) : (
-                  <button
-                    onClick={handleUserLogout}
-                    className={`text-left w-full py-3 px-4 rounded-full text-sm font-medium border ${
-                      isRecruiter
-                        ? "text-red-300 border-red-500 hover:bg-red-300/10"
-                        : ""
-                    }`}
-                    disabled={isLoggingOut}
-                  >
-                    {isLoggingOut ? "Logging out..." : "Logout"}
+                    />
                   </button>
-                )}
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+                </div>
+
+                {/* Navigation Content */}
+                <div className="flex-1 overflow-y-auto font-urbanist flex flex-col">
+                  {isRecruiter ? (
+                    <>
+                      {pathname ===
+                        "/recruiter-dashboard/recruiter-edit-profile" ||
+                      pathname ===
+                        "/recruiter-dashboard/recruiter-change-password" ? (
+                        <>
+                          {/* Account Settings */}
+                          <div className="flex-1">
+                            <div className="mb-6 border-b border-white">
+                              <h3 className="text-xl font-semibold text-white text-center">
+                                Account Settings
+                              </h3>
+                            </div>
+                            <div className="flex flex-col gap-5 ml-4">
+                              <Link
+                                href="/recruiter-dashboard/recruiter-edit-profile"
+                                className={`px-4 py-3 rounded-md font-medium text-center font-inter ${
+                                  pathname ===
+                                  "/recruiter-dashboard/recruiter-edit-profile"
+                                    ? "bg-white text-[#0A1754] font-semibold shadow-md"
+                                    : "bg-white text-[#0A1754] hover:bg-gray-100 hover:shadow-md"
+                                }`}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                Profile & Account
+                              </Link>
+                              <Link
+                                href="/recruiter-dashboard/recruiter-change-password"
+                                className={`px-4 py-3 rounded font-medium text-center ${
+                                  pathname ===
+                                  "/recruiter-dashboard/recruiter-change-password"
+                                    ? "bg-white text-[#0A1754] font-semibold shadow-md"
+                                    : "bg-white text-[#0A1754] hover:bg-gray-100 hover:shadow-md"
+                                }`}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                Change Password
+                              </Link>
+                            </div>
+                          </div>
+
+                          {/* Help & Support */}
+                          <div className="pb-4 flex flex-col items-center cursor-pointer gap-3 mt-8">
+                            <Link
+                              href="/dashboard/help"
+                              className="text-white text-sm hover:underline font-inter font-semibold"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              Help & Support
+                            </Link>
+                            <p className="font-inter text-xs text-white text-center">
+                              Report an issue/Contact support
+                            </p>
+                          </div>
+                        </>
+                      ) : (
+                        // Dynamic Recruiter Navigation
+                        <div className="space-y-8">
+                          {getRecruiterNavigationItems(dashboardData).map(
+                            (section, sectionIndex) => (
+                              <div key={sectionIndex}>
+                                {/* Section Header */}
+                                <div className="mb-6 border-b border-white">
+                                  <h3 className="text-xl font-semibold text-white text-center">
+                                    {section.category}
+                                  </h3>
+                                </div>
+                                {/* Section Items */}
+                                {section.items.length > 0 ? (
+                                  <ul className="space-y-4 ml-4">
+                                    {section.items.map((item, itemIndex) => (
+                                      <li key={itemIndex} className="relative">
+                                        {section.category === "Messages" ? (
+                                          <Link
+                                            href={item.link}
+                                            onClick={handleMessageClick}
+                                            className={`block text-base transition-colors duration-200 ${
+                                              pathname === item.link
+                                                ? "text-white font-semibold"
+                                                : "text-white/90"
+                                            } hover:text-white`}
+                                          >
+                                            {item.label}
+                                            {unreadMessageCount > 0 && (
+                                              <span className="ml-2 bg-red-500 text-white rounded-full w-5 h-5 inline-flex items-center justify-center text-xs">
+                                                {unreadMessageCount > 9
+                                                  ? "9+"
+                                                  : unreadMessageCount}
+                                              </span>
+                                            )}
+                                          </Link>
+                                        ) : (
+                                          <Link
+                                            href={item.link}
+                                            className={`block text-base transition-colors duration-200 ${
+                                              pathname === item.link
+                                                ? "text-white font-semibold"
+                                                : "text-white/90"
+                                            } hover:text-white`}
+                                            onClick={() =>
+                                              setIsMobileMenuOpen(false)
+                                            }
+                                          >
+                                            {item.label}
+                                          </Link>
+                                        )}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                ) : (
+                                  <p className="text-white/70 text-sm ml-4">
+                                    {section.category === "Job Posted" &&
+                                      "No jobs posted yet"}
+                                    {section.category === "Applicants" &&
+                                      "No applicants yet"}
+                                    {section.category === "Messages" &&
+                                      "No messages"}
+                                    {section.category === "Help & Support" &&
+                                      ""}
+                                  </p>
+                                )}
+                              </div>
+                            )
+                          )}
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    // Creative/Regular User Navigation
+                    <ul className="flex flex-col gap-6 text-lg font-medium text-primary">
+                      {navigationItemsMobile.map((item, index) => {
+                        const href =
+                          item.label === "Home"
+                            ? homeLink
+                            : item.label === "Messages"
+                            ? "/chats"
+                            : item.link;
+
+                        return (
+                          <li key={index} className="relative">
+                            {item.label === "Messages" ? (
+                              <Link
+                                href="/chats"
+                                onClick={handleMessageClick}
+                                className={`block ${
+                                  pathname === "/chats"
+                                    ? "text-primary font-bold"
+                                    : "text-gray-700"
+                                }`}
+                              >
+                                {item.label}
+                                {unreadMessageCount > 0 && (
+                                  <span className="ml-2 bg-red-500 text-white rounded-full w-5 h-5 inline-flex items-center justify-center text-xs">
+                                    {unreadMessageCount > 9
+                                      ? "9+"
+                                      : unreadMessageCount}
+                                  </span>
+                                )}
+                              </Link>
+                            ) : (
+                              <Link
+                                href={href}
+                                className={`block ${
+                                  pathname === href
+                                    ? "text-primary font-bold"
+                                    : "text-gray-700"
+                                }`}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                {item.label}
+                              </Link>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </div>
+
+                {/* Auth buttons */}
+                <div className="pb-6 mb-10">
+                  {!profile && !recruiterProfile ? (
+                    <div className="flex flex-col gap-3">
+                      <Link
+                        href="/onboarding"
+                        className={`py-3 px-4 rounded-full text-sm text-center font-medium ${
+                          isRecruiter
+                            ? "bg-white text-[#0A1754] hover:bg-gray-100"
+                            : "bg-primary text-white hover:bg-primary/90"
+                        }`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Sign up
+                      </Link>
+                      <Link
+                        href="/login"
+                        className={`py-3 px-4 rounded-full text-sm text-center font-medium border ${
+                          isRecruiter
+                            ? "border-white text-white hover:bg-white/10"
+                            : "border-primary text-primary hover:bg-primary/5"
+                        }`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Log in
+                      </Link>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={handleUserLogout}
+                      className={`text-left w-full py-3 px-4 rounded-full text-sm font-medium border ${
+                        isRecruiter
+                          ? "text-red-300 border-red-500 hover:bg-red-300/10"
+                          : ""
+                      }`}
+                      disabled={isLoggingOut}
+                    >
+                      {isLoggingOut ? "Logging out..." : "Logout"}
+                    </button>
+                  )}
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       )}
     </nav>
   );

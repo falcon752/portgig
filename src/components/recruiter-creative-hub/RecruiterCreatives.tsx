@@ -7,6 +7,9 @@ import { LoadingSpinner } from "@/src/utils/util_component";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import { useAppSelector } from "@/src/redux/hooks";
+import { getUserId } from "@/src/utils/chats";
+import { createOrGetChatRoom } from "@/src/lib/firebase/chat";
 
 export type CreativesSearchFilters = {
   title?: string;
@@ -20,10 +23,17 @@ type Props = {
   searchFilters?: CreativesSearchFilters;
 };
 
-type SkillLevel = "Beginner" | "Intermediate" | "Mid-level" | "Professional" | "Expert";
+type SkillLevel =
+  | "Beginner"
+  | "Intermediate"
+  | "Mid-level"
+  | "Professional"
+  | "Expert";
 
 // Map years of experience to skill level
-const mapExperienceToSkillLevel = (yearsOfExperience: string | number): SkillLevel => {
+const mapExperienceToSkillLevel = (
+  yearsOfExperience: string | number
+): SkillLevel => {
   const years =
     typeof yearsOfExperience === "string"
       ? yearsOfExperience.match(/(\d+)/)
@@ -42,8 +52,19 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
   const router = useRouter();
   const creativesPerPage = 12;
   const [currentPage, setCurrentPage] = useState(0);
+  const { profile } = useAppSelector((state) => state.user);
+  const { recruiterProfile } = useAppSelector((state) => state.recruiter);
+  const currentUser = profile || recruiterProfile;
+  const currentUserId = currentUser ? getUserId(currentUser) : null;
+  const currentUserType = profile ? "creator" : "recruiter";
 
-  const { data: creatorsResponse, isLoading, isError, error, refetch } = useQuery({
+  const {
+    data: creatorsResponse,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
     queryKey: ["creators"],
     queryFn: fetchCreatorsApi,
   });
@@ -56,17 +77,27 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
     return creators.filter((creator: any) => {
       const matchesTitle =
         !searchFilters.title ||
-        creator.profile?.field?.toLowerCase().includes(searchFilters.title.toLowerCase()) ||
-        creator.bio_data?.full_name?.toLowerCase().includes(searchFilters.title.toLowerCase());
+        creator.profile?.field
+          ?.toLowerCase()
+          .includes(searchFilters.title.toLowerCase()) ||
+        creator.bio_data?.full_name
+          ?.toLowerCase()
+          .includes(searchFilters.title.toLowerCase());
 
       const matchesCategory =
         !searchFilters.category ||
-        creator.profile?.field?.toLowerCase().includes(searchFilters.category.toLowerCase());
+        creator.profile?.field
+          ?.toLowerCase()
+          .includes(searchFilters.category.toLowerCase());
 
       const matchesLocation =
         !searchFilters.location ||
-        creator.profile?.location?.state?.toLowerCase().includes(searchFilters.location.toLowerCase()) ||
-        creator.profile?.location?.lga?.toLowerCase().includes(searchFilters.location.toLowerCase());
+        creator.profile?.location?.state
+          ?.toLowerCase()
+          .includes(searchFilters.location.toLowerCase()) ||
+        creator.profile?.location?.lga
+          ?.toLowerCase()
+          .includes(searchFilters.location.toLowerCase());
 
       return matchesTitle && matchesCategory && matchesLocation;
     });
@@ -82,9 +113,26 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
     router.push(`/recruiter-profile-card/${creativeId}`);
   };
 
-  const handleContact = (creative: any, e: React.MouseEvent) => {
+  const handleContact = async (creative: any, e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log("Contact creative:", creative);
+    if (!creative || !currentUser || !currentUserId) return;
+
+    const creativeUserId = getUserId(creative);
+    if (!creativeUserId) return;
+
+    try {
+      const creativeUserType = "creative"; // always creative
+      const chatId = await createOrGetChatRoom(
+        currentUser,
+        creative,
+        currentUserType === "creator" ? "creative" : "recruiter",
+        creativeUserType
+      );
+      if (chatId) router.push(`/chats/${chatId}`);
+    } catch (err) {
+      console.error("Failed to start chat:", err);
+      alert("Failed to start chat. Please try again.");
+    }
   };
 
   if (isLoading)
@@ -98,8 +146,13 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
     return (
       <div className="flex items-center justify-center min-h-[300px]">
         <div className="text-center text-secondary text-lg sm:text-2xl font-semibold bg-gray-100 p-6 rounded-lg shadow-md">
-          <p className="text-red-500 mb-4">{error?.message || "An unknown error occurred."}</p>
-          <button onClick={() => refetch()} className="bg-primary text-white px-4 py-2 rounded-lg cursor-pointer">
+          <p className="text-red-500 mb-4">
+            {error?.message || "An unknown error occurred."}
+          </p>
+          <button
+            onClick={() => refetch()}
+            className="bg-primary text-white px-4 py-2 rounded-lg cursor-pointer"
+          >
             Retry
           </button>
         </div>
@@ -111,7 +164,10 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
       <div className="flex items-center justify-center min-h-[300px]">
         <div className="text-center text-secondary text-lg sm:text-2xl font-semibold bg-gray-100 p-6 rounded-lg shadow-md">
           <p className="text-gray-500 mb-4">No creatives found.</p>
-          <button onClick={() => refetch()} className="bg-primary text-white px-4 py-2 rounded-lg cursor-pointer">
+          <button
+            onClick={() => refetch()}
+            className="bg-primary text-white px-4 py-2 rounded-lg cursor-pointer"
+          >
             Retry
           </button>
         </div>
@@ -122,8 +178,12 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
     <section id="creatives-section" className="p-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
         {currentCreatives.map((creative, index) => {
-          const profilePicture = creative.profile?.profile_picture || "/assets/creative.svg";
-          const bio = creative.profile?.bio || creative.bio_data?.bio || "No introduction available";
+          const profilePicture =
+            creative.profile?.profile_picture || "/assets/creative.svg";
+          const bio =
+            creative.profile?.bio ||
+            creative.bio_data?.bio ||
+            "No introduction available";
 
           // Dark card logic
           const isDarkCard = index % 3 === 1;
@@ -139,7 +199,9 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
                 <div className="relative h-[100px] w-[100px] overflow-hidden rounded-lg bg-gray-200">
                   <Image
                     src={profilePicture}
-                    alt={`${creative.bio_data?.full_name || "Creative"} profile`}
+                    alt={`${
+                      creative.bio_data?.full_name || "Creative"
+                    } profile`}
                     fill
                     className="object-cover"
                     sizes="100px"
@@ -151,21 +213,35 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
                 </div>
                 <div
                   className={`py-1 px-5 font-ramaraja w-32 text-center ${
-                    isDarkCard ? "bg-secondary/70 text-white" : "bg-secondary/80 text-white"
+                    isDarkCard
+                      ? "bg-secondary/70 text-white"
+                      : "bg-secondary/80 text-white"
                   }`}
                 >
-                  {mapExperienceToSkillLevel(creative.profile?.years_of_experience || 0)}
+                  {mapExperienceToSkillLevel(
+                    creative.profile?.years_of_experience || 0
+                  )}
                 </div>
               </div>
 
-              <h2 className="font-bold text-sm px-5 line-clamp-1">{creative.bio_data?.full_name || "Unknown"}</h2>
-              <h3 className={`text-sm font-extralight px-5 line-clamp-1 ${isDarkCard ? "text-white" : "text-primary"}`}>
-                {creative.profile?.field || "N/A"} / {creative.profile?.location?.state || "N/A"}, {creative.profile?.location?.lga || "N/A"}
+              <h2 className="font-bold text-sm px-5 line-clamp-1">
+                {creative.bio_data?.full_name || "Unknown"}
+              </h2>
+              <h3
+                className={`text-sm font-extralight px-5 line-clamp-1 ${
+                  isDarkCard ? "text-white" : "text-primary"
+                }`}
+              >
+                {creative.profile?.field || "N/A"} /{" "}
+                {creative.profile?.location?.state || "N/A"},{" "}
+                {creative.profile?.location?.lga || "N/A"}
               </h3>
 
               <div
                 className={`h-14 p-1 border text-xs line-clamp-3 ${
-                  isDarkCard ? "bg-primary/90 text-white border-white/20" : "bg-gray-50 text-primary border-gray-100"
+                  isDarkCard
+                    ? "bg-primary/90 text-white border-white/20"
+                    : "bg-gray-50 text-primary border-gray-100"
                 }`}
               >
                 {bio}
@@ -175,7 +251,9 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
                 <button
                   onClick={(e) => handleViewProfile(creative._id, e)}
                   className={`py-2 px-3 w-fit self-end rounded-lg text-sm font-medium cursor-pointer ${
-                    isDarkCard ? "bg-white text-primary" : "bg-primary text-white"
+                    isDarkCard
+                      ? "bg-white text-primary"
+                      : "bg-primary text-white"
                   }`}
                 >
                   View Profile
@@ -183,7 +261,9 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
                 <button
                   onClick={(e) => handleContact(creative, e)}
                   className={`py-2 px-3 w-fit self-end rounded-lg text-sm font-medium cursor-pointer ${
-                    isDarkCard ? "bg-white text-primary" : "bg-primary text-white"
+                    isDarkCard
+                      ? "bg-white text-primary"
+                      : "bg-primary text-white"
                   }`}
                 >
                   Contact Me
@@ -200,16 +280,22 @@ const RecruiterCreatives = ({ searchFilters }: Props) => {
             key={index}
             onClick={() => setCurrentPage(index)}
             className={`h-10 w-10 flex items-center justify-center rounded-full font-semibold font-inter ${
-              currentPage === index ? "bg-primary text-white cursor-not-allowed" : "text-secondary hover:bg-accents"
+              currentPage === index
+                ? "bg-primary text-white cursor-not-allowed"
+                : "text-secondary hover:bg-accents"
             }`}
           >
             {index + 1}
           </button>
         ))}
         <button
-          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))}
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))
+          }
           className={`h-10 w-10 flex items-center justify-center rounded-full font-semibold border border-accents ${
-            currentPage >= totalPages - 1 ? "bg-accents cursor-not-allowed" : "text-secondary hover:bg-accents"
+            currentPage >= totalPages - 1
+              ? "bg-accents cursor-not-allowed"
+              : "text-secondary hover:bg-accents"
           }`}
           disabled={currentPage >= totalPages - 1}
         >
