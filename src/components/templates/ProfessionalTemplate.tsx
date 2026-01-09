@@ -561,7 +561,6 @@ export const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({
             </ul>
           </div>
         )}
-
       </div>
     </div>
   );
@@ -963,59 +962,9 @@ export const generateProfessionalTemplateHTML = (
               : ""
           }
 
-          <!-- Skills Section -->
-          ${
-            formData.skills && formData.skills.length > 0
-              ? `
-          <div class="section">
-            <div class="section-title">Skills</div>
-            <ul class="skills-list">
-              ${formData.skills
-                .map((skill) => `<li class="skill-item">${skill.value}</li>`)
-                .join("")}
-            </ul>
-          </div>
-          `
-              : ""
-          }
 
-          <!-- Certifications Section -->
-          ${
-            formData.certifications && formData.certifications.length > 0
-              ? `
-          <div class="section">
-            <div class="section-title">Certifications</div>
-            <ul class="certifications-list">
-              ${formData.certifications
-                .map(
-                  (cert) => `<li class="certification-item">${cert.value}</li>`
-                )
-                .join("")}
-            </ul>
-          </div>
-          `
-              : ""
-          }
 
-          <!-- Other Skills Section -->
-          ${
-            formData.other_skills && formData.other_skills.length > 0
-              ? `
-          <div class="section">
-            <div class="section-title">Other Skills</div>
-            <ul class="other-skills-list">
-              ${formData.other_skills
-                .map(
-                  (skill) => `<li class="other-skill-item">${skill.value}</li>`
-                )
-                .join("")}
-            </ul>
-          </div>
-          `
-              : ""
-          }
-
-          <!-- Education -->
+                    <!-- Education -->
           <div class="section">
             <div class="section-title">Education</div>
             ${
@@ -1065,7 +1014,7 @@ export const generateProfessionalTemplateHTML = (
             }
           </div>
 
-          <!-- Work Experience -->
+                    <!-- Work Experience -->
           <div class="section">
             <div class="section-title">Work Experience</div>
             ${
@@ -1132,6 +1081,58 @@ export const generateProfessionalTemplateHTML = (
               `
             }
           </div>
+
+          <!-- Skills Section -->
+          ${
+            formData.skills && formData.skills.length > 0
+              ? `
+          <div class="section">
+            <div class="section-title">Skills</div>
+            <ul class="skills-list">
+              ${formData.skills
+                .map((skill) => `<li class="skill-item">${skill.value}</li>`)
+                .join("")}
+            </ul>
+          </div>
+          `
+              : ""
+          }
+
+          <!-- Other Skills Section -->
+          ${
+            formData.other_skills && formData.other_skills.length > 0
+              ? `
+          <div class="section">
+            <div class="section-title">Other Skills</div>
+            <ul class="other-skills-list">
+              ${formData.other_skills
+                .map(
+                  (skill) => `<li class="other-skill-item">${skill.value}</li>`
+                )
+                .join("")}
+            </ul>
+          </div>
+          `
+              : ""
+          }
+
+          <!-- Certifications Section -->
+          ${
+            formData.certifications && formData.certifications.length > 0
+              ? `
+          <div class="section">
+            <div class="section-title">Certifications</div>
+            <ul class="certifications-list">
+              ${formData.certifications
+                .map(
+                  (cert) => `<li class="certification-item">${cert.value}</li>`
+                )
+                .join("")}
+            </ul>
+          </div>
+          `
+              : ""
+          }
         </div>
       </div>
     </body>
