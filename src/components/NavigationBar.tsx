@@ -36,7 +36,7 @@ interface MessageState {
 
 interface NavigationBarProps {
   minimal?: boolean;
-  onProfileInfoUpdate?: (profileName: string, profilePicture: string) => void;
+  // onProfileInfoUpdate?: (profileName: string, profilePicture: string) => void;
 }
 
 // Helper to get user profile image with fallback
@@ -95,8 +95,8 @@ const getRecruiterNavigationItems = (
 
 const NavigationBar = ({
   minimal,
-  onProfileInfoUpdate,
-}: NavigationBarProps) => {
+}: // onProfileInfoUpdate,
+NavigationBarProps) => {
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -129,18 +129,23 @@ const NavigationBar = ({
   const currentUser = profile || recruiterProfile;
   const currentUserId = getUserId(currentUser);
 
-  const profilePicture = getUserProfileImage(currentUser);
+  // Get profile name and picture directly from Redux
   const profileName =
+    recruiterProfile?.bio_data?.full_name ||
     profile?.bio_data?.user_name ||
-    recruiterProfile?.bio_data.full_name ||
     "User";
 
+  const profilePicture =
+    recruiterProfile?.profile?.profile_picture ||
+    profile?.profile?.profile_picture ||
+    "/assets/creative.svg";
+
   // Pass profile info to parent if needed
-  useEffect(() => {
-    if (onProfileInfoUpdate) {
-      onProfileInfoUpdate(profileName, profilePicture);
-    }
-  }, [profileName, profilePicture]);
+  // useEffect(() => {
+  //   if (onProfileInfoUpdate) {
+  //     onProfileInfoUpdate(profileName, profilePicture);
+  //   }
+  // }, [profileName, profilePicture]);
 
   const unreadMessageCount = useMemo(() => {
     return Math.max(0, messageState.totalUnread - messageState.lastViewedCount);
@@ -432,13 +437,25 @@ const NavigationBar = ({
                     onClick={handleProfileContextmenu}
                     className="bg-primary! text-white rounded-md text-center text-xs capitalize cursor-pointer px-3 py-1.5 -ml-1"
                   >
-                    {profile?.bio_data?.user_name ||
-                      recruiterProfile?.bio_data.full_name}
+                    {profileName}
                   </button>
                 </div>
 
                 {profileModal && (
                   <div className="absolute top-12 right-0 bg-white rounded-lg px-2 py-1 w-[120px] z-50 flex flex-col justify-start items-start gap-2 shadow-lg border">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const dashboardRoute =
+                          userType === "creator"
+                            ? "/creative-dashboard"
+                            : "/recruiter-dashboard";
+                        window.location.href = dashboardRoute;
+                      }}
+                      className="h-12 px-4 rounded-md w-full hover:bg-gray-200 cursor-pointer"
+                    >
+                      Visit Dashboard
+                    </button>
                     <button
                       type="button"
                       onClick={handleUserLogout}
@@ -555,9 +572,7 @@ const NavigationBar = ({
                   onClick={handleProfileContextmenu}
                   className="bg-primary! text-white rounded-md text-center text-sm capitalize cursor-pointer px-4 py-2 -ml-1"
                 >
-                  Hey,{" "}
-                  {profile?.bio_data?.user_name ||
-                    recruiterProfile?.bio_data.full_name}
+                  Hey, {profileName}
                 </button>
               </div>
 

@@ -52,7 +52,7 @@ const defaultSidebarItems: SidebarItem[] = [
     icon: Home,
     isSection: false,
   },
-    {
+  {
     title: "Creatives Hub",
     href: "/recruiter-creatives-hub",
     icon: Users,
@@ -219,13 +219,7 @@ export default function DashboardLayout({
     <>
       {/* Navigation Bar */}
       <div className="-mb-14 sm:-mb-13 md:-mb-12">
-        <NavigationBar
-          minimal={true}
-          onProfileInfoUpdate={(name, picture) => {
-            setProfileName(name);
-            setProfilePicture(picture);
-          }}
-        />
+        <NavigationBar minimal={true} />
       </div>
 
       <div className="min-h-screen bg-gray-50 pb-16 relative">
