@@ -95,15 +95,20 @@ const RecruiterDashboardHero = () => {
     window.location.href = "/recruiter-notifications";
   };
 
-  const userName =
-    profile?.bio_data?.user_name ||
-    recruiterProfile?.bio_data?.full_name ||
-    "there";
+// Determine current user type
+const isRecruiter = userType === "recruiter";
+const isCreator = userType === "creator";
 
-  const profilePicture =
-    userType === "recruiter"
-      ? recruiterProfile?.profile?.profile_picture || "/assets/creative.svg"
-      : profile?.profile?.profile_picture || "/assets/creative.svg";
+// Get name and profile picture safely
+const userName =
+  recruiterProfile?.bio_data?.full_name ||
+  profile?.bio_data?.user_name ||
+  "there";
+
+const profilePicture =
+  recruiterProfile?.profile?.profile_picture ||
+  profile?.profile?.profile_picture ||
+  "/assets/creative.svg";
 
   const links = [
     {

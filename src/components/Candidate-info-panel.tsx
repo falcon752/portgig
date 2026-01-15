@@ -70,15 +70,18 @@ const CVViewerModal = ({
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-2 sm:p-4">
-            <div className="bg-white rounded-lg w-full h-full max-w-[95vw] max-h-[95vh] sm:max-w-4xl sm:max-h-[90vh] overflow-hidden flex flex-col">
-                <div className="flex justify-between items-center p-3 sm:p-4 md:p-5 lg:p-6 border-b bg-gray-50 shrink-0">
+            <div className="bg-white rounded-lg w-full h-[70vh] max-h-[80vh] sm:max-w-4xl sm:max-h-[90vh] overflow-hidden flex flex-col relative">
+
+                {/* Floating Close Button */}
+                <button
+                    onClick={onClose}
+                    className="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4 z-50 p-1 sm:p-2 hover:bg-gray-200 rounded-full transition-colors"
+                >
+                    <X size={20} className="sm:w-6 sm:h-6 md:w-7 md:h-7" />
+                </button>
+
+                <div className="flex justify-between items-center p-3 sm:p-4 md:p-5 border-b bg-gray-50 shrink-0">
                     <h2 className="text-lg sm:text-xl md:text-2xl font-bold">CV Preview</h2>
-                    <button
-                        onClick={onClose}
-                        className="p-1 sm:p-2 hover:bg-gray-200 rounded-full transition-colors"
-                    >
-                        <X size={20} className="sm:w-6 sm:h-6 md:w-7 md:h-7" />
-                    </button>
                 </div>
 
                 <div className="flex-1 bg-gray-100 p-2 sm:p-4 md:p-6 overflow-y-auto">
@@ -497,7 +500,7 @@ export function CandidateInfoPanel({
                     <div className="border-b border-black" />
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 lg:gap-10 mb-4 sm:mb-6 md:mb-8">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 lg:gap-10 mb-4 sm:mb-6">
                     <Buttons
                         variant="primary"
                         size="lg"
