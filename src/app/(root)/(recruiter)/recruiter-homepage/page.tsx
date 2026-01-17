@@ -11,7 +11,6 @@ export type SearchData = {
   location: string;
 };
 
-// ✅ Export alias for build
 export type FilterData = SearchData;
 
 const RecruiterHomepage = () => {

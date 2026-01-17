@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import NaijaStates from "naija-state-local-government";
 import { experienceLevels } from "@/src/constants";
 import { Field, industryOptions } from "@/src/utils/industryData";
-import { FilterData } from "@/src/app/(root)/(creative)/creatives-hub/page";
+import type { FilterData } from "@/src/app/(root)/(creative)/creatives-hub/page";
 
 const nigerianStates = NaijaStates.states();
 
