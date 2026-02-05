@@ -12,7 +12,29 @@ const authRoutes = [
   "/onboarding",
 ];
 
-const publicRoutes = ["/", "/about-us", "/contact", "/portfolio/view"];
+const publicRoutes = [
+  "/", 
+  "/about-us", 
+  "/contact", 
+  "/portfolio/view",
+  "/portfolio-1",
+  "/portfolio-2", 
+  "/portfolio-3",
+  "/portfolio-4",
+  "/portfolio-5",
+  "/portfolio-6",
+  "/portfolio-7",
+];
+
+// Portfolio template routes that should be publicly accessible
+const portfolioTemplateRoutes = [
+  "/videographer-portfolio",
+  "/writer-portfolio",
+  "/developer-portfolio",
+  "/photographer-portfolio",
+  "/social-media-portfolio",
+  "/designer-portfolio",
+];
 
 const creatorRoutes = [
   "/creative-homepage",
@@ -70,14 +92,15 @@ function clearInvalidCookies(response: NextResponse) {
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
-  // Skip middleware for static assets, API routes, and public routes
+  // Skip middleware for static assets, API routes, public routes, and portfolio templates
   if (
     path.startsWith("/_next") ||
     path.startsWith("/assets/") ||
     path === "/favicon.ico" ||
     path.startsWith("/api/") ||
     publicRoutes.includes(path) ||
-    publicRoutes.some((route) => path.startsWith(route + "/"))
+    publicRoutes.some((route) => path.startsWith(route + "/")) ||
+    portfolioTemplateRoutes.some((route) => path.startsWith(route))
   ) {
     return NextResponse.next();
   }
@@ -179,7 +202,7 @@ export const config = {
     "/(login|sign-up|sign-in|recruiter-sign-in|recruiter-sign-up|welcome-onboarding|why-onboarding|onboarding)",
     "/(creative-email|recruiter-email)",
     "/auth/:path*",
-    // Catch-all for non-static, non-public routes
-    "/((?!_next|assets|api|favicon.ico|about-us|contact|portfolio/view).*)",
+    // Catch-all for non-static, non-public routes (excluding portfolio templates)
+    "/((?!_next|assets|api|favicon.ico|about-us|contact|portfolio|videographer-portfolio|writer-portfolio|developer-portfolio|photographer-portfolio|social-media-portfolio|designer-portfolio).*)",
   ],
 };

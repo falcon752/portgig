@@ -14,27 +14,47 @@ import ShareButton from "@/src/components/ShareButton";
 
 interface PageProps {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ creatorId?: string }>;
 }
 
-export default async function TemplateOnePage({ params }: PageProps) {
+export default async function TemplateOnePage({ params, searchParams }: PageProps) {
   const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
   const templateId = resolvedParams.id;
+  const publicCreatorId = resolvedSearchParams.creatorId;
 
-  const cookieStore = await cookies();
-  const userid =
-    cookieStore.get("userid")?.value || cookieStore.get("userId")?.value;
+  console.log("TemplateOnePage: Template ID from URL:", templateId);
+  console.log("TemplateOnePage: Public creator ID from query:", publicCreatorId);
 
   let portfolioData: ApiPortfolioData | null = null;
   let error: string | null = null;
+  let actualCreatorId: string | null = null;
+  let isPublicView = false;
 
-  if (!userid) {
-    error = "No user ID found. Please log in.";
-    console.warn(
-      "TemplateOnePage: No userid or userId found on server for initial load."
-    );
-  } else {
+  try {
+    let fullProfile: GetPortfolioResponse;
+
+    if (publicCreatorId) {
+      console.log("TemplateOnePage: Fetching public portfolio for shared link");
+      isPublicView = true;
+      actualCreatorId = publicCreatorId;
+      fullProfile = await getPortfolioServer(publicCreatorId);
+    } else {
+      console.log("TemplateOnePage: Fetching portfolio for logged-in user");
+      const cookieStore = await cookies();
+      const userid =
+        cookieStore.get("userid")?.value || cookieStore.get("userId")?.value;
+
+      if (!userid) {
+        throw new Error("No user ID found in cookies. User may not be logged in.");
+      }
+
+      console.log("TemplateOnePage: Found userId in cookies:", userid);
+      actualCreatorId = userid;
+      fullProfile = await getPortfolioServer(userid);
+    }
+
     try {
-      const fullProfile: GetPortfolioResponse = await getPortfolioServer(userid);
 
       const rawPortfolio =
         fullProfile?.data?.user?.data?.portfolio ??
@@ -102,6 +122,12 @@ export default async function TemplateOnePage({ params }: PageProps) {
         err instanceof Error ? err.message : "Failed to load portfolio data.";
       console.error("TemplateOnePage: Failed to fetch portfolio:", err);
     }
+  } catch (err: unknown) {
+    console.error("TemplateOnePage: Failed to fetch portfolio:", err);
+    error =
+      err instanceof Error
+        ? err.message || "Failed to load portfolio data."
+        : "An unknown error occurred while loading portfolio data.";
   }
 
   // Error state rendering
@@ -162,7 +188,7 @@ export default async function TemplateOnePage({ params }: PageProps) {
       <div className="bg-white py-8 border-t border-gray-200">
         <div className="max-w-4xl mx-auto px-4">
           <ShareButton
-            creativeId={userid || "unknown"}
+            creativeId={actualCreatorId || "unknown"}
             displayName={portfolioData.display_name || "Portfolio"}
           />
         </div>
