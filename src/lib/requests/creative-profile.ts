@@ -110,13 +110,15 @@ export const trackProfileViewApi = async ({
   viewerId, 
   recipientRole 
 }: ProfileViewRequest): Promise<ProfileViewResponse> => {
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
     
     if (!API_BASE_URL) {
       throw new Error("API base URL is not defined");
     }
     
     try {
+      console.log('🔍 Tracking profile view:', { userId, viewerId, recipientRole });
+      
       const params = new URLSearchParams({
         userId: userId,           
         viewerId: viewerId,       
@@ -124,6 +126,7 @@ export const trackProfileViewApi = async ({
       });
       
       const url = `${API_BASE_URL}/creator/profile-views/?${params.toString()}`;
+      console.log('📡 Request URL:', url);
       
       const response = await fetch(url, {
         method: 'PUT', 
@@ -134,14 +137,16 @@ export const trackProfileViewApi = async ({
   
       if (!response.ok) {
         const errorText = await response.text();
+        console.error('❌ Profile view tracking failed:', response.status, errorText);
         throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
   
       const data: ProfileViewResponse = await response.json();
+      console.log('✅ Profile view tracked successfully:', data);
       return data;
       
     } catch (error) {
-      console.error('Error tracking profile view:', error);
+      console.error('❌ Error tracking profile view:', error);
       throw error;
     }
 };

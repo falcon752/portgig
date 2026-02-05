@@ -1,4 +1,4 @@
-export const PORTGIG_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+export const PORTGIG_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const experienceOptions = [
   { label: "Beginner (0-1 years)", value: "1 years" },

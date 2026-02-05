@@ -122,21 +122,41 @@ const ProfileCard = () => {
 
     useEffect(() => {
         const trackView = async () => {
+            console.log('🔍 Profile View Check:', {
+                viewTracked,
+                currentUserId,
+                creativeId,
+                hasCreative: !!creative,
+                isOwnProfile: currentUserId === creativeId,
+                currentUserType
+            });
+            
             if (
                 viewTracked ||
                 !currentUserId ||
                 !creative ||
                 currentUserId === creativeId
-            )
+            ) {
+                console.log('⚠️ Skipping profile view tracking:', {
+                    reason: viewTracked ? 'Already tracked' 
+                        : !currentUserId ? 'No viewer ID' 
+                        : !creative ? 'No creative data' 
+                        : 'Viewing own profile'
+                });
                 return;
+            }
+            
             try {
+                console.log('📊 Attempting to track profile view...');
                 await trackProfileViewApi({
                     userId: creativeId,
                     viewerId: currentUserId,
                     recipientRole: currentUserType === "recruiter" ? "recruiter" : "creator",
                 });
                 setViewTracked(true);
-            } catch {
+                console.log('✅ Profile view tracked and state updated');
+            } catch (error) {
+                console.error('❌ Failed to track profile view:', error);
             }
         };
         if (creative && currentUserId && !viewTracked) {
