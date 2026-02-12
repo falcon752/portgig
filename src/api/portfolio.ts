@@ -70,22 +70,20 @@ export const savePortfolio = async (payload: PortfolioApiPayload): Promise<ApiRe
 
 export const getPortfolio = async (authToken: string, userId: string): Promise<GetPortfolioResponse> => {
     try {
-      const response = await fetch(`https://api.portgig.com/api/v1/creator/profile?creatorId=${userId}`, {
-        method: "GET",
+      const response = await apiClient.get(`/creator/profile?creatorId=${userId}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
-          "Content-Type": "application/json",
         },
       });
   
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      return response.data;
+    } catch (error: unknown) {
+      const apiError = error as {
+        response?: { data?: ApiError }
+        message?: string
       }
-  
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching portfolio:", error);
-      throw error;
+      console.error("Error fetching portfolio:", apiError.response?.data || apiError.message);
+      throw new Error(apiError.response?.data?.message || apiError.response?.data?.error || "Failed to fetch portfolio");
     }
   };
 

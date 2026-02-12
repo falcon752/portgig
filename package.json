@@ -4,10 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:prod": "cp .env.production .env.local && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "flowbite-react patch"
+    "postinstall": "flowbite-react patch",
+    "env:local": "rm -f .env.local && echo 'Switched to LOCAL environment (localhost:5007)'",
+    "env:prod": "cp .env.production .env.local && echo 'Switched to PRODUCTION environment (api.portgig.com)'"
   },
   "dependencies": {
     "@auth/core": "^0.34.2",

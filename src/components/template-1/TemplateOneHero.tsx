@@ -2,12 +2,13 @@
 import Image from "next/image";
 import type { TemplateOneHeroProps } from "@/types/template-one";
 import { ApiPortfolioData, EMPTY_PORTFOLIO } from "@/types/portfolio";
+import { getImageUrl } from "@/src/utils/image-url";
 
 export const TemplateOneHero = ({ portfolio }: TemplateOneHeroProps) => {
   const portfolioData: ApiPortfolioData = portfolio || EMPTY_PORTFOLIO;
 
   const name = portfolioData?.display_name || "Gracier Aftang";
-  const headShotUrl = portfolioData?.head_shot || "/placeholder.svg?height=500&width=500";
+  const headShotUrl = getImageUrl(portfolioData?.head_shot) || "/placeholder.svg?height=500&width=500";
   const tagline =
     portfolioData?.about_me ||
     "Creative Graphic & UI/UX Designer Crafting Engaging Digital Experiences";

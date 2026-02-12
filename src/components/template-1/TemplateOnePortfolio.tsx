@@ -8,6 +8,7 @@ import {
   type DesignerTemplateSpecific,
 } from "@/types/portfolio";
 import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
+import { getImageUrl } from "@/src/utils/image-url";
 
 const TemplateOnePortfolio = ({ portfolio }: TemplateOnePortfolioProps) => {
   const portfolioData = portfolio || EMPTY_PORTFOLIO;
@@ -21,7 +22,10 @@ const TemplateOnePortfolio = ({ portfolio }: TemplateOnePortfolioProps) => {
 
   const portfolioItems =
     portfolioData.files && portfolioData.files.length > 0
-      ? portfolioData.files
+      ? portfolioData.files.map(file => ({
+          ...file,
+          image: getImageUrl(file.image) || "/placeholder.svg?height=480&width=640"
+        }))
       : Array.from({ length: 6 }).map(() => ({
           title: "Portfolio Item",
           image: "/placeholder.svg?height=480&width=640",

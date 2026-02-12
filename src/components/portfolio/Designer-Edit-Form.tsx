@@ -18,6 +18,7 @@ import type {
   GetPortfolioResponse,
   PortfolioApiPayload,
 } from "@/types/portfolio";
+import { getImageUrl } from "@/src/utils/image-url";
 
 interface DesignerFormDataInput
   extends Omit<DesignerFormData, "tools" | "otherServices" | "jobsOpenTo"> {
@@ -105,7 +106,7 @@ const DesignerForm: React.FC = () => {
           const skills = designerSpecific?.skills
             ? designerSpecific.skills.map(
                 (s: { image: string; name: string }) => ({
-                  image: { previewUrl: s.image || null, file: null },
+                  image: { previewUrl: getImageUrl(s.image) || null, file: null },
                   name: s.name || "",
                 })
               )
@@ -123,7 +124,7 @@ const DesignerForm: React.FC = () => {
                 ];
 
           const portfolioFiles = (portfolioData.files ?? []).map((f) => ({
-            image: { previewUrl: f.image || null, file: null },
+            image: { previewUrl: getImageUrl(f.image) || null, file: null },
             name: f.title || "",
             link: f.link || "",
           }));
@@ -158,7 +159,7 @@ const DesignerForm: React.FC = () => {
             jobTitles: (portfolioData.job_titles ?? []).join(", ") || "",
             location: portfolioData.location ?? "",
             headShot: {
-              previewUrl: portfolioData.head_shot || null,
+              previewUrl: getImageUrl(portfolioData.head_shot) || null,
               file: null,
             },
             aboutMe: portfolioData.about_me ?? "",
