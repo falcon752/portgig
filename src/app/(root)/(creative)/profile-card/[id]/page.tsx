@@ -194,42 +194,33 @@ const ProfileCard = () => {
             return;
         }
         
-        // Map template types to their numeric IDs
-        const templateIdMap: Record<string, number> = {
-            "WRITER": 4,
-            "VIDEOGRAPHER": 3,
-            "DEVELOPER": 2,
-            "PHOTOGRAPHER": 1,
-            "SOCIAL_MEDIA_MANAGER": 5,
-            "DESIGNER": 6,
-        };
+        // Get the username (user_name) from bio_data
+        const username = creative?.bio_data?.user_name;
         
-        const templateId = templateIdMap[creativeProfile.templateType];
-        
-        if (!templateId) {
-            alert("Portfolio template not supported.");
+        if (!username) {
+            alert("Username not found for this creative.");
             return;
         }
         
         let portfolioPath = "";
         switch (creativeProfile.templateType) {
             case "WRITER":
-                portfolioPath = `/writer-portfolio/${templateId}?creatorId=${creativeId}`;
+                portfolioPath = `/writer-portfolio/${username}`;
                 break;
             case "VIDEOGRAPHER":
-                portfolioPath = `/videographer-portfolio/${templateId}?creatorId=${creativeId}`;
+                portfolioPath = `/videographer-portfolio/${username}`;
                 break;
             case "DEVELOPER":
-                portfolioPath = `/developer-portfolio/${templateId}?creatorId=${creativeId}`;
+                portfolioPath = `/developer-portfolio/${username}`;
                 break;
             case "PHOTOGRAPHER":
-                portfolioPath = `/photographer-portfolio/${templateId}?creatorId=${creativeId}`;
+                portfolioPath = `/photographer-portfolio/${username}`;
                 break;
             case "SOCIAL_MEDIA_MANAGER":
-                portfolioPath = `/social-media-portfolio/${templateId}?creatorId=${creativeId}`;
+                portfolioPath = `/social-media-portfolio/${username}`;
                 break;
             case "DESIGNER":
-                portfolioPath = `/designer-portfolio/${templateId}?creatorId=${creativeId}`;
+                portfolioPath = `/designer-portfolio/${username}`;
                 break;
             default:
                 alert("Portfolio template not supported.");

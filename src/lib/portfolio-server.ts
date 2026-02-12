@@ -138,12 +138,13 @@ export const saveDesignerPortfolio = async (
  * @returns The full profile data wrapped in GetPortfolioResponse.
  */
 export async function getPublicPortfolio(
-  creatorId: string
+  creatorIdOrUsername: string,
+  isUsername: boolean = false
 ): Promise<GetPortfolioResponse> {
   try {
-    if (!creatorId) {
-      console.error("getPublicPortfolio: No creator ID provided.");
-      throw new Error("Creator ID is required to fetch portfolio.");
+    if (!creatorIdOrUsername) {
+      console.error("getPublicPortfolio: No creator ID or username provided.");
+      throw new Error("Creator ID or username is required to fetch portfolio.");
     }
 
     const headers: Record<string, string> = {
@@ -151,7 +152,8 @@ export async function getPublicPortfolio(
       // NO Authorization header - this is a public endpoint
     };
 
-    const url = `/creator/profile?creatorId=${encodeURIComponent(creatorId)}`;
+    const queryParam = isUsername ? 'username' : 'creatorId';
+    const url = `/creator/profile?${queryParam}=${encodeURIComponent(creatorIdOrUsername)}`;
     console.log("getPublicPortfolio: Making public request to:", url);
 
     const response = await apiClient.get(url, { headers });
@@ -178,14 +180,25 @@ export async function getPublicPortfolio(
 
     if (error.response?.status === 404) {
       throw new Error(
-        "Portfolio not found. The creator ID may be invalid or the portfolio may not be public."
+        isUsername 
+          ? `Creator with username "${creatorIdOrUsername}" not found. Please check the username and try again.`
+          : "Portfolio not found. The creator ID may be invalid or the portfolio may not be public."
+      );
+    }
+
+    if (error.response?.status === 400) {
+      throw new Error(
+        error.response?.data?.message ||
+        isUsername
+          ? `Creator with username "${creatorIdOrUsername}" not found. Please check the username and try again.`
+          : "Invalid request. Please check the creator information."
       );
     }
 
     throw new Error(
       error.response?.data?.message ||
         error.response?.data?.error ||
-        "Failed to fetch portfolio"
+        "Failed to fetch portfolio. Please try again later."
     );
   }
 }
@@ -257,15 +270,18 @@ export async function getPortfolio(
 }
 
 /**
- * Server-side function that fetches portfolio data using creatorId
+ * Server-side function that fetches portfolio data using creatorId or username
  * This will be used in your Template4Page component
  */
 export async function getPortfolioServer(
-  creatorId: string
+  creatorIdOrUsername: string,
+  isUsername: boolean = false
 ): Promise<GetPortfolioResponse> {
   console.log(
-    "getPortfolioServer: Fetching portfolio for creatorId:",
-    creatorId
+    "getPortfolioServer: Fetching portfolio for",
+    isUsername ? "username" : "creatorId",
+    ":",
+    creatorIdOrUsername
   );
-  return getPublicPortfolio(creatorId);
+  return getPublicPortfolio(creatorIdOrUsername, isUsername);
 }

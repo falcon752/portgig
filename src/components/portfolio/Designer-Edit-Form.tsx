@@ -55,6 +55,7 @@ const DesignerForm: React.FC = () => {
   const [isFetching, setIsFetching] = useState(true);
   const [isUploadingMedia, setIsUploadingMedia] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
   const [authToken, setAuthToken] = useState<string | null>(null);
 
   const headShotInputRef = useRef<HTMLInputElement>(null);
@@ -81,6 +82,13 @@ const DesignerForm: React.FC = () => {
           fetchedAuthToken,
           fetchedUserId
         );
+        
+        // Get username from bio_data
+        const username = fullProfileData.data?.user?.data?.bio_data?.user_name;
+        if (username) {
+          setUserName(username);
+        }
+        
         const portfolioData =
           fullProfileData.data?.user?.data?.portfolio ??
           fullProfileData.data?.portfolio;
@@ -395,7 +403,10 @@ const DesignerForm: React.FC = () => {
       toast.success("Portfolio updated successfully!", { id: "saveToast" });
 
       await revalidateTemplateDesignerPage();
-      router.push("/designer-portfolio/1");
+      
+      // Redirect to portfolio page using username if available, otherwise fallback
+      const portfolioUrl = userName ? `/designer-portfolio/${userName}` : "/portfolio";
+      router.push(portfolioUrl);
     } catch (error) {
       console.error("DesignerForm: Error updating portfolio:", error);
       toast.error(

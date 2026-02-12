@@ -20,10 +20,10 @@ interface PageProps {
 export default async function TemplateOnePage({ params, searchParams }: PageProps) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
-  const templateId = resolvedParams.id;
+  const usernameOrTemplateId = resolvedParams.id;
   const publicCreatorId = resolvedSearchParams.creatorId;
 
-  console.log("TemplateOnePage: Template ID from URL:", templateId);
+  console.log("TemplateOnePage: Username/Template ID from URL:", usernameOrTemplateId);
   console.log("TemplateOnePage: Public creator ID from query:", publicCreatorId);
 
   let portfolioData: ApiPortfolioData | null = null;
@@ -35,10 +35,17 @@ export default async function TemplateOnePage({ params, searchParams }: PageProp
     let fullProfile: GetPortfolioResponse;
 
     if (publicCreatorId) {
-      console.log("TemplateOnePage: Fetching public portfolio for shared link");
+      // Legacy support: creatorId in query param
+      console.log("TemplateOnePage: Fetching public portfolio for shared link (legacy)");
       isPublicView = true;
       actualCreatorId = publicCreatorId;
-      fullProfile = await getPortfolioServer(publicCreatorId);
+      fullProfile = await getPortfolioServer(publicCreatorId, false);
+    } else if (usernameOrTemplateId && isNaN(Number(usernameOrTemplateId))) {
+      // New: username in URL path (if not a number)
+      console.log("TemplateOnePage: Fetching public portfolio by username:", usernameOrTemplateId);
+      isPublicView = true;
+      fullProfile = await getPortfolioServer(usernameOrTemplateId, true);
+      actualCreatorId = fullProfile?.data?.user?.data?._id || null;
     } else {
       console.log("TemplateOnePage: Fetching portfolio for logged-in user");
       const cookieStore = await cookies();
@@ -51,7 +58,7 @@ export default async function TemplateOnePage({ params, searchParams }: PageProp
 
       console.log("TemplateOnePage: Found userId in cookies:", userid);
       actualCreatorId = userid;
-      fullProfile = await getPortfolioServer(userid);
+      fullProfile = await getPortfolioServer(userid, false);
     }
 
     try {
@@ -132,6 +139,9 @@ export default async function TemplateOnePage({ params, searchParams }: PageProp
 
   // Error state rendering
   if (error || !portfolioData) {
+    const isUsernameNotFound = error?.includes("not found") || error?.includes("Not found");
+    const showEditButton = !isPublicView && !isUsernameNotFound;
+    
     return (
       <main className="flex min-h-screen items-center justify-center p-4">
         <div className="rounded-lg bg-white p-8 shadow-md text-center max-w-md mx-auto">
@@ -152,18 +162,28 @@ export default async function TemplateOnePage({ params, searchParams }: PageProp
               </svg>
             </div>
             <h1 className="text-2xl font-bold text-red-600 mb-2">
-              Error Loading Portfolio
+              {isUsernameNotFound ? "Portfolio Not Found" : "Error Loading Portfolio"}
             </h1>
             <p className="text-gray-700 mb-4 text-sm leading-relaxed">
               {error || "Your portfolio hasn't been set up yet."}
             </p>
           </div>
-          <Link
-            href="/edit-template/designer"
-            className="inline-block px-6 py-3 bg-[#0A1754] text-white rounded-lg font-medium hover:bg-[#08124A] transition-colors duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-          >
-            Go to Edit Form
-          </Link>
+          {showEditButton && (
+            <Link
+              href="/edit-template/designer"
+              className="inline-block px-6 py-3 bg-[#0A1754] text-white rounded-lg font-medium hover:bg-[#08124A] transition-colors duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            >
+              Go to Edit Form
+            </Link>
+          )}
+          {isUsernameNotFound && (
+            <Link
+              href="/"
+              className="inline-block px-6 py-3 bg-[#0A1754] text-white rounded-lg font-medium hover:bg-[#08124A] transition-colors duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            >
+              Go to Home
+            </Link>
+          )}
         </div>
       </main>
     );
