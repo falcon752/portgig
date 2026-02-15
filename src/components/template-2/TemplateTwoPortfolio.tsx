@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Buttons } from "../export_components";
 import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
+import { getImageUrl } from "@/src/utils/image-url";
 
 interface PortfolioItem {
   image: string;
@@ -46,7 +47,7 @@ const TemplateTwoPortfolio = ({
                   <div className="bg-gray100 flex flex-col gap-5 h-56 sm:h-64 md:h-72 lg:h-96 center rounded-sm overflow-hidden">
                     {item.image ? (
                       <Image
-                        src={item.image}
+                        src={getImageUrl(item.image) || item.image}
                         alt={item.title}
                         width={800}
                         height={600}

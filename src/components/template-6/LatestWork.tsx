@@ -1,6 +1,7 @@
 "use client";
 import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
 import Image from "next/image";
+import { getImageUrl } from "@/src/utils/image-url";
 import { ApiPortfolioData, EMPTY_PORTFOLIO, isPhotographerTemplateSpecific, CustomCSSProperties } from "@/types/portfolio";
 
 interface TemplatesixLatestWorkProps {
@@ -49,7 +50,7 @@ export default function TemplatesixLatestWork({ portfolioData }: TemplatesixLate
               >
                 {item.image ? (
                   <Image
-                    src={item.image}
+                    src={getImageUrl(item.image) || item.image}
                     alt={item.title || `Portfolio image ${i + 1}`}
                     width={900}
                     height={600}

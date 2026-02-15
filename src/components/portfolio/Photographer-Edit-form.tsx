@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, type ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Upload, X, Share2 } from "lucide-react";
 import Image from "next/image";
+import { getImageUrl } from "@/src/utils/image-url";
 import {
   savePhotographerPortfolio,
   getPortfolio,
@@ -96,7 +97,7 @@ export default function PhotographerForm() {
               displayName: portfolio.display_name || "",
               jobTitles: portfolio.job_titles?.join(", ") || "",
               location: portfolio.location || "",
-              headShot: { previewUrl: portfolio.head_shot || null, file: null },
+              headShot: { previewUrl: getImageUrl(portfolio.head_shot) || null, file: null },
               aboutMe: portfolio.about_me || "",
               otherServices: [
                 ...(portfolio.other_services || []),
@@ -106,7 +107,7 @@ export default function PhotographerForm() {
               ].slice(0, 6),
               myServices: [
                 ...(templateSpecific.photographer?.my_services?.map((item) => ({
-                  image: { previewUrl: item.image || null, file: null },
+                  image: { previewUrl: getImageUrl(item.image) || null, file: null },
                   name: item.name || "",
                   link: item.link || "",
                 })) || []),
@@ -124,7 +125,7 @@ export default function PhotographerForm() {
               ].slice(0, 3),
               latestWork: [
                 ...(templateSpecific.photographer?.latest_work?.map((item) => ({
-                  image: { previewUrl: item.image || null, file: null },
+                  image: { previewUrl: getImageUrl(item.image) || null, file: null },
                   title: item.title || "",
                   link: item.link || "",
                 })) || []),

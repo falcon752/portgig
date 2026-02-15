@@ -2,6 +2,7 @@
 import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
 import Image from "next/image";
 import Link from "next/link";
+import { getImageUrl } from "@/src/utils/image-url";
 import {
   ApiPortfolioData,
   EMPTY_PORTFOLIO,
@@ -87,7 +88,7 @@ export default function TemplatesixWeddingShoots({
               >
                 {"image" in section && section.image ? (
                   <Image
-                    src={section.image}
+                    src={getImageUrl(section.image) || section.image}
                     alt={section.title || section.name || `Shoot ${idx + 1}`}
                     fill
                     className="object-cover"

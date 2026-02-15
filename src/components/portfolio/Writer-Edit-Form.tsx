@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, type ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Upload, X, Share2 } from "lucide-react";
 import Image from "next/image";
+import { getImageUrl } from "@/src/utils/image-url";
 import {
     saveWriterPortfolio,
     getPortfolio,
@@ -100,7 +101,7 @@ export default function WriterFormFixed() {
                             displayName: portfolio.display_name || "",
                             jobTitles: portfolio.job_titles?.join(", ") || "",
                             location: portfolio.location || "",
-                            headShot: { previewUrl: portfolio.head_shot || null, file: null },
+                            headShot: { previewUrl: getImageUrl(portfolio.head_shot) || null, file: null },
                             aboutMe: portfolio.about_me || "",
                             otherServices: [
                                 ...(portfolio.other_services || []),
@@ -110,7 +111,7 @@ export default function WriterFormFixed() {
                             ].slice(0, 6),
                             genericPortfolioFiles: [
                                 ...(portfolio.files?.map((file) => ({
-                                    image: { previewUrl: file.image || null, file: null },
+                                    image: { previewUrl: getImageUrl(file.image) || null, file: null },
                                     name: file.title || "",
                                     link: file.link || "",
                                 })) || []),

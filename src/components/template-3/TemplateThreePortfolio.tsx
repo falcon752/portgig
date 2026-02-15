@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { getImageUrl } from "@/src/utils/image-url";
 import {
   ApiPortfolioData,
   EMPTY_PORTFOLIO,
@@ -38,7 +39,7 @@ const TemplateThreePortfolio = ({
               <div className="w-full h-56 lg:h-72 bg-white rounded-xl overflow-hidden">
                 {item.image ? (
                   <Image
-                    src={item.image}
+                    src={getImageUrl(item.image) || item.image}
                     alt={item.title}
                     width={1200}
                     height={600}

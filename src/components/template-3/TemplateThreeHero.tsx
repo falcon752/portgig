@@ -1,6 +1,7 @@
 "use client";
 import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
 import Image from "next/image";
+import { getImageUrl } from "@/src/utils/image-url";
 import { ApiPortfolioData, EMPTY_PORTFOLIO, isDeveloperTemplateSpecific } from "@/types/portfolio";
 
 interface TemplateThreeHeroProps {
@@ -15,7 +16,7 @@ const TemplateThreeHero = ({ portfolioData }: TemplateThreeHeroProps) => {
   const location = portfolio.location || "Location Not Specified";
   const formattedJobTitles =
     portfolio.job_titles?.length > 0 ? portfolio.job_titles.join(" / ") : "Developer / Designer";
-  const headShot = portfolio.head_shot || "/placeholder.svg?height=300&width=300&query=developer headshot";
+  const headShot = getImageUrl(portfolio.head_shot) || "/placeholder.svg?height=300&width=300&query=developer headshot";
   const cta = isDeveloperTemplateSpecific(portfolio.template_specific)
     ? portfolio.template_specific.developer.cta ||
       "Let's build quality products in programming and design with my services"

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
+import { getImageUrl } from "@/src/utils/image-url";
 
 interface TemplateTwoAboutMeProps {
   aboutMe?: string;
@@ -42,7 +43,7 @@ const TemplateTwoAboutMe = ({
           >
             {additionalImages[index]?.image && (
               <Image
-                src={additionalImages[index].image}
+                src={getImageUrl(additionalImages[index].image) || additionalImages[index].image}
                 alt={`Additional image ${index + 1}`}
                 width={384}
                 height={384}

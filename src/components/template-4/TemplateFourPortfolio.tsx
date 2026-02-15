@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Buttons } from "../export_components";
 import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
+import { getImageUrl } from "@/src/utils/image-url";
 
 interface PortfolioItem {
   title: string;
@@ -47,7 +48,7 @@ export function TemplateFourPortfolio({
               {item.image && (
                 <div className="relative w-full h-56">
                   <Image
-                    src={item.image}
+                    src={getImageUrl(item.image) || item.image}
                     alt={item.title || "portfolio"}
                     fill
                     className="object-cover"

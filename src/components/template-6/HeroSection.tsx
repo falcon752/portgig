@@ -1,6 +1,7 @@
 "use client";
 import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
 import Image from "next/image";
+import { getImageUrl } from "@/src/utils/image-url";
 import { ApiPortfolioData, EMPTY_PORTFOLIO } from "@/types/portfolio";
 
 interface TemplatesixHeroSectionProps {
@@ -14,7 +15,7 @@ export default function TemplatesixHeroSection({ portfolioData }: TemplatesixHer
   const displayName = portfolio.display_name || "Photographer Name";
   const formattedJobTitles = portfolio.job_titles?.length > 0 ? portfolio.job_titles.join(" / ") : "Photography / Cinematographer";
   const location = portfolio.location || "Lagos State";
-  const headShot = portfolio.head_shot || "/assets/hero.png";
+  const headShot = getImageUrl(portfolio.head_shot) || "/assets/hero.png";
 
   return (
     <section className="w-full bg-black font-montserrat">

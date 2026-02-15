@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, type ChangeEvent } from "react"
 import { useRouter } from "next/navigation"
 import { Upload, X, Share2 } from "lucide-react"
 import Image from "next/image"
+import { getImageUrl } from "@/src/utils/image-url"
 import { saveSocialMediaManagerPortfolio, getPortfolio, uploadAllMedia } from "../../api/portfolio"
 import toast from "react-hot-toast"
 import { revalidateTemplateSocialMediaManagerPage } from "@/src/app/Actions"
@@ -91,7 +92,7 @@ export default function SocialMediaForm() {
                         displayName: portfolio.display_name || "",
                         jobTitles: portfolio.job_titles?.join(", ") || "",
                         location: portfolio.location || "",
-                        headShot: { previewUrl: portfolio.head_shot || null, file: null },
+                        headShot: { previewUrl: getImageUrl(portfolio.head_shot) || null, file: null },
                         aboutMe: portfolio.about_me || "",
                         otherServices: [
                             ...(portfolio.other_services || []),
@@ -99,7 +100,7 @@ export default function SocialMediaForm() {
                         ].slice(0, 6),
                         genericPortfolioFiles: [
                             ...(portfolio.files?.map((file) => ({
-                                image: { previewUrl: file.image || null, file: null },
+                                image: { previewUrl: getImageUrl(file.image) || null, file: null },
                                 name: file.title || "",
                             })) || []),
                             ...Array(Math.max(0, 5 - (portfolio.files?.length || 0))).fill({
@@ -115,8 +116,8 @@ export default function SocialMediaForm() {
                             ? socialMediaSpecific.case_study.map((study: any) => ({
                                 brandName: study.brand_name || "",
                                 contribution: study.contribution || "",
-                                before: { previewUrl: study.before || null, file: null },
-                                after: { previewUrl: study.after || null, file: null },
+                                before: { previewUrl: getImageUrl(study.before) || null, file: null },
+                                after: { previewUrl: getImageUrl(study.after) || null, file: null },
                             }))
                             : [
                                 {
@@ -128,7 +129,7 @@ export default function SocialMediaForm() {
                             ],
                         graphicDesign: [
                             ...(socialMediaSpecific?.graphic_design?.map((img: string) => ({
-                                image: { previewUrl: img || null, file: null },
+                                image: { previewUrl: getImageUrl(img) || null, file: null },
                             })) || []),
                             ...Array(Math.max(0, 3 - (socialMediaSpecific?.graphic_design?.length || 0))).fill({
                                 image: { previewUrl: null, file: null },

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
+import { getImageUrl } from "@/src/utils/image-url";
 
 interface TemplateTwoHeroProps {
   displayName?: string;
@@ -19,6 +20,7 @@ const TemplateTwoHero = ({
   portfolioData,
 }: TemplateTwoHeroProps) => {
   const { customStyles } = usePortfolioCustomizations(portfolioData);
+  const correctedHeadShot = getImageUrl(headShot) || headShot;
 
   return (
     <section className="bg-black flex flex-col-reverse md:flex-row gap-2 md:gap-10 pt-15 md:pt-50 px-5 md:px-10">
@@ -43,7 +45,7 @@ const TemplateTwoHero = ({
         {/* Headshot container */}
         <div className="absolute bottom-0 left-[55%] md:left-auto md:right-10 -translate-x-1/2 md:translate-x-0 z-30 h-56 w-56 md:h-60 md:w-60 lg:h-72 lg:w-72 rounded-full overflow-hidden">
           <Image
-            src={headShot}
+            src={correctedHeadShot}
             alt={`${displayName}'s headshot`}
             width={384}
             height={384}

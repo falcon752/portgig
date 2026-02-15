@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { getImageUrl } from "@/src/utils/image-url";
 
 interface TemplateFiveGraphicsDesignProps {
   graphicsDesign?: string[];
@@ -23,7 +24,7 @@ export default function TemplateFiveGraphicsDesign({ graphicsDesign }: TemplateF
             >
               {imageUrl ? (
                 <Image
-                  src={imageUrl}
+                  src={getImageUrl(imageUrl) || imageUrl}
                   alt={`Graphic Design ${index + 1}`}
                   fill
                   className="object-cover"
