@@ -16,8 +16,10 @@ interface PageProps {
   searchParams: Promise<{ creatorId?: string }>;
 }
 
-export default async function Template3Page({ searchParams }: PageProps) {
+export default async function Template3Page({ params, searchParams }: PageProps) {
+  const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
+  const usernameOrTemplateId = resolvedParams.id;
   const publicCreatorId = resolvedSearchParams.creatorId;
 
   let portfolioData: ApiPortfolioData | null = null;
@@ -29,15 +31,25 @@ export default async function Template3Page({ searchParams }: PageProps) {
     let responseData;
 
     if (publicCreatorId) {
+      // Legacy support: creatorId in query param
+      console.log("Template3Page: Fetching public portfolio for shared link (legacy)");
       isPublicView = true;
       actualCreatorId = publicCreatorId;
-      responseData = await getPortfolioServer(publicCreatorId);
+      responseData = await getPortfolioServer(publicCreatorId, false);
+    } else if (usernameOrTemplateId && isNaN(Number(usernameOrTemplateId))) {
+      // New: username in URL path (if not a number)
+      console.log("Template3Page: Fetching public portfolio by username:", usernameOrTemplateId);
+      isPublicView = true;
+      responseData = await getPortfolioServer(usernameOrTemplateId, true);
+      actualCreatorId = responseData?.data?.user?.data?._id || null;
     } else {
+      // Logged-in user
+      console.log("Template3Page: Fetching portfolio for logged-in user");
       const cookieStore = await cookies();
-      const userId = cookieStore.get("userId")?.value;
+      const userId = cookieStore.get("userId")?.value || cookieStore.get("userid")?.value;
       if (!userId) throw new Error("No user ID found in cookies.");
       actualCreatorId = userId;
-      responseData = await getPortfolioServer(userId);
+      responseData = await getPortfolioServer(userId, false);
     }
 
     const rawPortfolio = responseData?.data?.user?.data.portfolio;
@@ -93,7 +105,7 @@ export default async function Template3Page({ searchParams }: PageProps) {
       </main>
     );
   }
-
+  const username = portfolioData?.display_name?.toLowerCase().replace(/\\s+/g, '-') || null;
   return (
     <main className="bg-semiBlack font-montserrat max-md:mb-20">
       <TemplateThreeHero portfolioData={portfolioData} />
@@ -103,8 +115,7 @@ export default async function Template3Page({ searchParams }: PageProps) {
       {!isPublicView && (
         <ShareButton
           creativeId={actualCreatorId || "unknown"}
-          displayName={portfolioData.display_name}
-        />
+          displayName={portfolioData.display_name}          username={username}        />
       )}
       <footer className="center px-10 py-20 bg-black">
         <Image

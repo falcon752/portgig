@@ -69,10 +69,10 @@ export default async function Template6Page({
 }: PageProps) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
-  const templateId = resolvedParams.id;
+  const usernameOrTemplateId = resolvedParams.id;
   const publicCreatorId = resolvedSearchParams.creatorId;
 
-  console.log("Template6Page: Template ID from URL:", templateId);
+  console.log("Template6Page: Username/Template ID from URL:", usernameOrTemplateId);
   console.log("Template6Page: Public creator ID from query:", publicCreatorId);
 
   let portfolioData: NormalizedPortfolioData | null = null;
@@ -84,10 +84,17 @@ export default async function Template6Page({
     let responseData: GetPortfolioResponse;
 
     if (publicCreatorId) {
-      console.log("Template6Page: Fetching public portfolio for shared link");
+      // Legacy support: creatorId in query param
+      console.log("Template6Page: Fetching public portfolio for shared link (legacy)");
       isPublicView = true;
       actualCreatorId = publicCreatorId;
-      responseData = await getPortfolioServer(publicCreatorId);
+      responseData = await getPortfolioServer(publicCreatorId, false);
+    } else if (usernameOrTemplateId && isNaN(Number(usernameOrTemplateId))) {
+      // New: username in URL path (if not a number)
+      console.log("Template6Page: Fetching public portfolio by username:", usernameOrTemplateId);
+      isPublicView = true;
+      responseData = await getPortfolioServer(usernameOrTemplateId, true);
+      actualCreatorId = responseData?.data?.user?.data?._id || null;
     } else {
       console.log("Template6Page: Fetching portfolio for logged-in user");
       const cookieStore = await cookies();
@@ -102,7 +109,7 @@ export default async function Template6Page({
 
       console.log("Template6Page: Found userId in cookies:", userId);
       actualCreatorId = userId;
-      responseData = await getPortfolioServer(userId);
+      responseData = await getPortfolioServer(userId, false);
     }
 
     console.log(
@@ -269,6 +276,8 @@ export default async function Template6Page({
   }
 
   // Success state rendering
+  const username = portfolioData?.display_name?.toLowerCase().replace(/\s+/g, '-') || null;
+  
   return (
     <div className="bg-black min-h-screen max-md:mb-20">
       <TemplatesixHeroSection portfolioData={portfolioData} />
@@ -284,6 +293,7 @@ export default async function Template6Page({
             <ShareButton
               creativeId={actualCreatorId}
               displayName={portfolioData.display_name}
+              username={username}
             />
           </div>
         </div>

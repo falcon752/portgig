@@ -19,6 +19,7 @@ export default function DeveloperForm() {
   const [isUploadingMedia, setIsUploadingMedia] = useState(false)
   const [isPreviewing, setIsPreviewing] = useState(false)
   const [isSharing, setIsSharing] = useState(false)
+  const [username, setUsername] = useState<string | null>(null)
 
   const [formData, setFormData] = useState<DeveloperFormData>({
     displayName: "",
@@ -63,6 +64,8 @@ export default function DeveloperForm() {
         const responseData: GetPortfolioResponse = await getPortfolio(clientAccessToken, userId)
 
         const portfolio = responseData?.data?.user?.data?.portfolio || responseData?.data?.portfolio || null
+        const fetchedUsername = responseData?.data?.user?.data?.bio_data?.user_name || null
+        setUsername(fetchedUsername)
 
         if (portfolio && portfolio.template_type === "DEVELOPER") {
           const templateSpecific = portfolio.template_specific
@@ -203,7 +206,15 @@ export default function DeveloperForm() {
     try {
       const cookies = new Cookies()
       const userId = cookies.get("userId") || cookies.get("userid")
-      const portfolioUrl = `${window.location.origin}/developer-portfolio/3?creatorId=${userId}`
+      let portfolioUrl: string
+      
+      // Use username-based URL if available, otherwise fallback to legacy format
+      if (username) {
+        portfolioUrl = `${window.location.origin}/developer-portfolio/${encodeURIComponent(username)}`
+      } else {
+        portfolioUrl = `${window.location.origin}/developer-portfolio/3?creatorId=${userId}`
+      }
+      
       await navigator.clipboard.writeText(portfolioUrl)
       toast.success("Portfolio URL copied to clipboard!")
     } catch {

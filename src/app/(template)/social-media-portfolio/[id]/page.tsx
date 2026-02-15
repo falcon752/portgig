@@ -48,10 +48,10 @@ export default async function Template5Page({
 }: PageProps) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
-  const templateId = resolvedParams.id;
+  const usernameOrTemplateId = resolvedParams.id;
   const publicCreatorId = resolvedSearchParams.creatorId;
 
-  console.log("Template5Page: Template ID from URL:", templateId);
+  console.log("Template5Page: Username/Template ID from URL:", usernameOrTemplateId);
   console.log("Template5Page: Public creator ID from query:", publicCreatorId);
 
   let portfolioData: ApiPortfolioData | null = null;
@@ -63,10 +63,17 @@ export default async function Template5Page({
     let responseData: GetPortfolioResponse;
 
     if (publicCreatorId) {
-      console.log("Template5Page: Fetching public portfolio for shared link");
+      // Legacy support: creatorId in query param
+      console.log("Template5Page: Fetching public portfolio for shared link (legacy)");
       isPublicView = true;
       actualCreatorId = publicCreatorId;
-      responseData = await getPortfolioServer(publicCreatorId);
+      responseData = await getPortfolioServer(publicCreatorId, false);
+    } else if (usernameOrTemplateId && isNaN(Number(usernameOrTemplateId))) {
+      // New: username in URL path (if not a number)
+      console.log("Template5Page: Fetching public portfolio by username:", usernameOrTemplateId);
+      isPublicView = true;
+      responseData = await getPortfolioServer(usernameOrTemplateId, true);
+      actualCreatorId = responseData?.data?.user?.data?._id || null;
     } else {
       console.log("Template5Page: Fetching portfolio for logged-in user");
       const cookieStore = await cookies();
@@ -81,7 +88,7 @@ export default async function Template5Page({
 
       console.log("Template5Page: Found userId in cookies:", userId);
       actualCreatorId = userId;
-      responseData = await getPortfolioServer(userId);
+      responseData = await getPortfolioServer(userId, false);
     }
 
     console.log(
@@ -264,6 +271,8 @@ export default async function Template5Page({
     after: "",
   };
 
+  const username = portfolioData?.display_name?.toLowerCase().replace(/\\s+/g, '-') || null;
+
   return (
     <div className="font-sans bg-black min-h-screen max-md:mb-20">
       <div>
@@ -323,6 +332,7 @@ export default async function Template5Page({
               <ShareButton
                 creativeId={actualCreatorId}
                 displayName={portfolioData.display_name || "Portfolio"}
+                username={username}
               />
             </div>
           </div>

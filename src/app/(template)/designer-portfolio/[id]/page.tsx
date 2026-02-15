@@ -210,6 +210,7 @@ export default async function TemplateOnePage({ params, searchParams }: PageProp
           <ShareButton
             creativeId={actualCreatorId || "unknown"}
             displayName={portfolioData.display_name || "Portfolio"}
+            username={usernameOrTemplateId && isNaN(Number(usernameOrTemplateId)) ? usernameOrTemplateId : null}
           />
         </div>
       </div>

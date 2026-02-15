@@ -27,8 +27,7 @@ export default function PhotographerForm() {
   const [isSavingForm, setIsSavingForm] = useState(false);
   const [isUploadingMedia, setIsUploadingMedia] = useState(false);
   const [isPreviewing, setIsPreviewing] = useState(false);
-  const [isSharing, setIsSharing] = useState(false);
-
+  const [isSharing, setIsSharing] = useState(false);  const [username, setUsername] = useState<string | null>(null)
   const [formData, setFormData] = useState<PhotographerFormData>({
     displayName: "",
     jobTitles: "",
@@ -88,6 +87,9 @@ export default function PhotographerForm() {
           responseData?.data?.user?.data?.portfolio ||
           responseData?.data?.portfolio ||
           null;
+
+        const fetchedUsername = responseData?.data?.user?.data?.bio_data?.user_name || null;
+        setUsername(fetchedUsername);
 
         if (portfolio && portfolio.template_type === "PHOTOGRAPHER") {
           const templateSpecific = portfolio.template_specific;
@@ -316,7 +318,14 @@ export default function PhotographerForm() {
     try {
       const cookies = new Cookies();
       const userId = cookies.get("userId") || cookies.get("userid");
-      const portfolioUrl = `${window.location.origin}/photographer-portfolio/6?creatorId=${userId}`;
+      let portfolioUrl: string;
+      
+      if (username) {
+        portfolioUrl = `${window.location.origin}/photographer-portfolio/${encodeURIComponent(username)}`;
+      } else {
+        portfolioUrl = `${window.location.origin}/photographer-portfolio/6?creatorId=${userId}`;
+      }
+      
       await navigator.clipboard.writeText(portfolioUrl);
       toast.success("Portfolio URL copied to clipboard!");
     } catch {

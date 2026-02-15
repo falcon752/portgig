@@ -28,6 +28,7 @@ export default function VideographerForm() {
     const [isUploadingMedia, setIsUploadingMedia] = useState(false);
     const [isPreviewing, setIsPreviewing] = useState(false);
     const [isSharing, setIsSharing] = useState(false);
+    const [username, setUsername] = useState<string | null>(null);
 
     const [formData, setFormData] = useState<VideographerFormData>({
         displayName: "",
@@ -88,7 +89,10 @@ export default function VideographerForm() {
                     responseData?.data?.portfolio ||
                     null;
 
-                if (portfolio && portfolio.template_type === "VIDEOGRAPHER") {
+                const fetchedUsername = responseData?.data?.user?.data?.bio_data?.user_name || null;
+                setUsername(fetchedUsername);
+
+                if (portfolio && portfolio.template_type === \"VIDEOGRAPHER\") {
                     const templateSpecific = portfolio.template_specific;
 
                     if (isVideographerTemplateSpecific(templateSpecific)) {
@@ -300,7 +304,14 @@ export default function VideographerForm() {
         try {
             const cookies = new Cookies();
             const userId = cookies.get("userId") || cookies.get("userid");
-            const portfolioUrl = `${window.location.origin}/videographer-portfolio/2?creatorId=${userId}`;
+            let portfolioUrl: string;
+            
+            if (username) {
+                portfolioUrl = `${window.location.origin}/videographer-portfolio/${encodeURIComponent(username)}`;
+            } else {
+                portfolioUrl = `${window.location.origin}/videographer-portfolio/2?creatorId=${userId}`;
+            }
+            
             await navigator.clipboard.writeText(portfolioUrl);
             toast.success("Portfolio URL copied to clipboard!");
         } catch {

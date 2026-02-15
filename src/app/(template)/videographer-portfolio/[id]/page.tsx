@@ -29,10 +29,10 @@ export default async function Template2Page({
 }: PageProps) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
-  const templateId = resolvedParams.id;
+  const usernameOrTemplateId = resolvedParams.id;
   const publicCreatorId = resolvedSearchParams.creatorId;
 
-  console.log("Template2Page: Template ID from URL:", templateId);
+  console.log("Template2Page: Username/Template ID from URL:", usernameOrTemplateId);
   console.log("Template2Page: Public creator ID from query:", publicCreatorId);
 
   let portfolio: ApiPortfolioData | null = null;
@@ -44,11 +44,19 @@ export default async function Template2Page({
     let responseData: GetPortfolioResponse;
 
     if (publicCreatorId) {
-      console.log("Template2Page: Fetching public portfolio for shared link");
+      // Legacy support: creatorId in query param
+      console.log("Template2Page: Fetching public portfolio for shared link (legacy)");
       isPublicView = true;
       actualCreatorId = publicCreatorId;
-      responseData = await getPortfolioServer(publicCreatorId);
+      responseData = await getPortfolioServer(publicCreatorId, false);
+    } else if (usernameOrTemplateId && isNaN(Number(usernameOrTemplateId))) {
+      // New: username in URL path (if not a number)
+      console.log("Template2Page: Fetching public portfolio by username:", usernameOrTemplateId);
+      isPublicView = true;
+      responseData = await getPortfolioServer(usernameOrTemplateId, true);
+      actualCreatorId = responseData?.data?.user?.data?._id || null;
     } else {
+      // Logged-in user
       console.log("Template2Page: Fetching portfolio for logged-in user");
       const cookieStore = await cookies();
       const userId =
@@ -62,7 +70,7 @@ export default async function Template2Page({
 
       console.log("Template2Page: Found userId in cookies:", userId);
       actualCreatorId = userId;
-      responseData = await getPortfolioServer(userId);
+      responseData = await getPortfolioServer(userId, false);
     }
 
     console.log(
@@ -221,6 +229,8 @@ export default async function Template2Page({
     link: item.link ?? "",
   }));
 
+  const username = portfolio?.display_name?.toLowerCase().replace(/\\s+/g, '-') || null;
+
   return (
     <main className="bg-black font-montserrat max-md:mb-20">
       <TemplateTwoHero
@@ -258,6 +268,7 @@ export default async function Template2Page({
         <ShareButton
           creativeId={actualCreatorId ?? "unknown"}
           displayName={portfolio.display_name ?? "Portfolio"}
+          username={username}
         />
       )}
       <footer className="center px-10 py-20 bg-black">

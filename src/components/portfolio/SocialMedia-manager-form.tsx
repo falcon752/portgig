@@ -22,6 +22,7 @@ export default function SocialMediaForm() {
     const [isUploadingMedia, setIsUploadingMedia] = useState(false)
     const [isPreviewing, setIsPreviewing] = useState(false)
     const [isSharing, setIsSharing] = useState(false)
+    const [username, setUsername] = useState<string | null>(null)
 
     const [formData, setFormData] = useState<SocialMediaManagerFormData>({
         displayName: "",
@@ -80,6 +81,9 @@ export default function SocialMediaForm() {
                 const responseData: GetPortfolioResponse = await getPortfolio(clientAccessToken, userId)
 
                 const portfolio = responseData?.data?.user?.data?.portfolio || responseData?.data?.portfolio || null
+
+                const fetchedUsername = responseData?.data?.user?.data?.bio_data?.user_name || null
+                setUsername(fetchedUsername)
 
                 if (portfolio && portfolio.template_type === "SOCIAL_MEDIA_MANAGER") {
                     // Type-safe access to template_specific for social media manager
@@ -305,7 +309,14 @@ export default function SocialMediaForm() {
         try {
             const cookies = new Cookies()
             const userId = cookies.get("userId") || cookies.get("userid")
-            const portfolioUrl = `${window.location.origin}/social-media-portfolio/5?creatorId=${userId}`
+            let portfolioUrl: string
+            
+            if (username) {
+                portfolioUrl = `${window.location.origin}/social-media-portfolio/${encodeURIComponent(username)}`
+            } else {
+                portfolioUrl = `${window.location.origin}/social-media-portfolio/5?creatorId=${userId}`
+            }
+            
             await navigator.clipboard.writeText(portfolioUrl)
             toast.success("Portfolio URL copied to clipboard!")
         } catch {

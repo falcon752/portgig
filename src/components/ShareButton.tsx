@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 interface ShareButtonProps {
   creativeId: string;
   displayName?: string;
+  username?: string;
 }
 
-export default function ShareButton({ creativeId }: ShareButtonProps) {
+export default function ShareButton({ creativeId, username }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
@@ -17,16 +18,22 @@ export default function ShareButton({ creativeId }: ShareButtonProps) {
   const generateProfessionalUrl = () => {
     if (!isClient) return ""; // Return empty string during SSR
 
-    // Get the current path without query parameters
-    const currentPath = window.location.pathname;
-
-    // Remove any trailing slashes and get the clean path
-    const cleanPath = currentPath.replace(/\/$/, "");
-
-    // Create the share URL with creatorId as query parameter
-    return `${
-      window.location.origin
-    }${cleanPath}?creatorId=${encodeURIComponent(creativeId)}`;
+    const originPath = window.location.pathname;
+    
+    // If username is available, use clean username-based URL
+    if (username) {
+      // Replace the current ID in path with username
+      // E.g., /developer-portfolio/john-doe
+      const pathParts = originPath.split('/');
+      if (pathParts.length > 2) {
+        pathParts[pathParts.length - 1] = encodeURIComponent(username);
+        return `${window.location.origin}${pathParts.join('/')}`;
+      }
+    }
+    
+    // Fallback to legacy creatorId query parameter
+    const cleanPath = originPath.replace(/\/$/, "");
+    return `${window.location.origin}${cleanPath}?creatorId=${encodeURIComponent(creativeId)}`;
   };
 
   const handleShare = async () => {
