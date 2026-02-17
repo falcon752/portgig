@@ -143,7 +143,7 @@ export default async function Template4Page({
     }
 
     const writerSpecificPortfolio =
-        portfolio.template_type === "WRITER\" ? portfolio : null;
+        portfolio.template_type === "WRITER" ? portfolio : null;
     const writerSpecific = writerSpecificPortfolio?.template_specific as
         | WriterTemplateSpecific
         | undefined;

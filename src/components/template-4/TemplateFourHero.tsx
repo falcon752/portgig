@@ -18,7 +18,8 @@ const TemplateFourHero = ({
   headShot,
   portfolioData,
 }: TemplateFourHeroProps) => {
-  usePortfolioCustomizations(portfolioData); // hook stays, styles don’t hijack layout  const correctedHeadShot = getImageUrl(headShot) || headShot || "/placeholder.svg";
+  usePortfolioCustomizations(portfolioData); // hook stays, styles don’t hijack layout
+  const correctedHeadShot = getImageUrl(headShot) || headShot || "/placeholder.svg";
   return (
     <section className="bg-[#faf7f3] px-5 md:px-10 lg:px-20 py-10 border-b border-[#E77C29]">
       <div className="flex items-center gap-6">
