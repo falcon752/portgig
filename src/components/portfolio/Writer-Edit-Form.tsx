@@ -234,27 +234,26 @@ export default function WriterFormFixed() {
         router.push("/edit-font");
     };
 
-    const handleShare = async () => {
-        setIsSharing(true);
-        try {
-            const cookies = new Cookies();
-            const userId = cookies.get("userId");
-            let portfolioUrl: string;
-            
-            if (username) {
-                portfolioUrl = `${window.location.origin}/writer-portfolio/${encodeURIComponent(username)}`;
-            } else {
-                portfolioUrl = `${window.location.origin}/writer-portfolio/4?creatorId=${userId}`;
-            }
-            
-            await navigator.clipboard.writeText(portfolioUrl);
-            toast.success("Portfolio URL copied to clipboard!");
-        } catch {
-            toast.error("Failed to copy portfolio URL.");
-        } finally {
-            setIsSharing(false);
-        }
-    };
+const handleShare = async () => {
+    if (!username) {
+        toast.error("Username not found. Save your portfolio first.");
+        return;
+    }
+
+    setIsSharing(true);
+
+    try {
+        const portfolioPath = `/writer-portfolio/${encodeURIComponent(username)}`;
+        const portfolioUrl = `${window.location.origin}${portfolioPath}`;
+
+        await navigator.clipboard.writeText(portfolioUrl);
+        toast.success("Portfolio URL copied to clipboard!");
+    } catch {
+        toast.error("Failed to copy portfolio URL.");
+    } finally {
+        setIsSharing(false);
+    }
+};
 
     const handleSave = async () => {
         setIsSavingForm(true);

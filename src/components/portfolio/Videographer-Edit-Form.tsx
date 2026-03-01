@@ -92,7 +92,7 @@ export default function VideographerForm() {
                 const fetchedUsername = responseData?.data?.user?.data?.bio_data?.user_name || null;
                 setUsername(fetchedUsername);
 
-                if (portfolio && portfolio.template_type === \"VIDEOGRAPHER\") {
+                if (portfolio && portfolio.template_type === "VIDEOGRAPHER") {
                     const templateSpecific = portfolio.template_specific;
 
                     if (isVideographerTemplateSpecific(templateSpecific)) {
@@ -988,4 +988,5 @@ export default function VideographerForm() {
             </div>
         </div>
     );
+
 }

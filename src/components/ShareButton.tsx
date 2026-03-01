@@ -1,90 +1,100 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useEffect, useMemo, useState } from "react";
 
 interface ShareButtonProps {
   creativeId: string;
-  displayName?: string;
-  username?: string;
+  username?: string; // ✅ account username (e.g. "doe")
+  templateType:
+    | "WRITER"
+    | "VIDEOGRAPHER"
+    | "DEVELOPER"
+    | "PHOTOGRAPHER"
+    | "SOCIAL_MEDIA_MANAGER"
+    | "DESIGNER";
 }
 
-export default function ShareButton({ creativeId, username }: ShareButtonProps) {
+const templateToBasePath: Record<ShareButtonProps["templateType"], string> = {
+  WRITER: "/writer-portfolio",
+  VIDEOGRAPHER: "/videographer-portfolio",
+  DEVELOPER: "/developer-portfolio",
+  PHOTOGRAPHER: "/photographer-portfolio",
+  SOCIAL_MEDIA_MANAGER: "/social-media-portfolio",
+  DESIGNER: "/designer-portfolio",
+};
+
+export default function ShareButton({
+  creativeId,
+  username,
+  templateType,
+}: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  useEffect(() => setIsClient(true), []);
 
-  const generateProfessionalUrl = () => {
-    if (!isClient) return ""; // Return empty string during SSR
+  const professionalUrl = useMemo(() => {
+    if (!isClient) return "";
+    const origin = window.location.origin;
 
-    const originPath = window.location.pathname;
-    
-    // If username is available, use clean username-based URL
-    if (username) {
-      // Replace the current ID in path with username
-      // E.g., /developer-portfolio/john-doe
-      const pathParts = originPath.split('/');
-      if (pathParts.length > 2) {
-        pathParts[pathParts.length - 1] = encodeURIComponent(username);
-        return `${window.location.origin}${pathParts.join('/')}`;
-      }
+    // ✅ Always prefer username-based URL
+    if (username && username.trim()) {
+      const base = templateToBasePath[templateType];
+      return `${origin}${base}/${encodeURIComponent(username.trim())}`;
     }
-    
-    // Fallback to legacy creatorId query parameter
-    const cleanPath = originPath.replace(/\/$/, "");
-    return `${window.location.origin}${cleanPath}?creatorId=${encodeURIComponent(creativeId)}`;
+
+    // ⚠️ Fallback: if username missing, still produce something usable
+    // (You said "nothing else", but without username you can't build the slug URL.
+    // This fallback prevents copying an empty string.)
+    return `${origin}${templateToBasePath[templateType]}?creatorId=${encodeURIComponent(
+      creativeId
+    )}`;
+  }, [isClient, username, templateType, creativeId]);
+
+  const copyToClipboard = async (text: string) => {
+    if (!text) return;
+
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+
+    // Older browser fallback
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-9999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
   };
 
   const handleShare = async () => {
     if (!isClient) return;
 
     try {
-      const professionalUrl = generateProfessionalUrl();
-      console.log("ShareButton: Generated URL:", professionalUrl);
-
-      // Always use clipboard copy (remove Web Share API)
-      if (navigator.clipboard) {
-        await navigator.clipboard.writeText(professionalUrl);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      } else {
-        // Fallback for older browsers
-        const textArea = document.createElement("textarea");
-        textArea.value = professionalUrl;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textArea);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      }
-    } catch (err) {
-      console.error("Failed to copy URL:", err);
-
-      // Final fallback if everything else fails
-      const professionalUrl = generateProfessionalUrl();
-      const textArea = document.createElement("textarea");
-      textArea.value = professionalUrl;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textArea);
+      await copyToClipboard(professionalUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy URL:", err);
     }
   };
 
-  // Don't render anything during SSR to avoid hydration mismatches
+  // Avoid SSR hydration mismatch
   if (!isClient) {
     return (
       <div className="text-center py-6 bg-white border-t border-gray-200">
         <div className="max-w-md mx-auto px-4">
-          <div className="h-12 bg-gray-200 animate-pulse rounded"></div>
+          <div className="h-12 bg-gray-200 animate-pulse rounded" />
         </div>
       </div>
     );
   }
+
+  const isDisabled = !username || !username.trim();
 
   return (
     <div className="text-center py-6 bg-white border-t border-gray-200">
@@ -96,16 +106,26 @@ export default function ShareButton({ creativeId, username }: ShareButtonProps) 
           Share this portfolio with clients, employers, or anyone you&rsquo;d
           like to showcase your work to.
         </p>
+
         <button
           onClick={handleShare}
+          disabled={isDisabled}
           className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
-            copied
+            isDisabled
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              : copied
               ? "bg-green-500 text-white"
               : "bg-[#0A1754] text-white hover:bg-[#0A1754]/90 cursor-pointer"
           }`}
+          title={isDisabled ? "Username not available to build link" : undefined}
         >
           {copied ? "✓ Link Copied!" : "📋 Copy Portfolio Link"}
         </button>
+
+        {/* Optional: show the exact link being copied (remove if you don't want it) */}
+        {!isDisabled && (
+          <p className="mt-3 text-xs text-gray-500 break-all">{professionalUrl}</p>
+        )}
       </div>
     </div>
   );
