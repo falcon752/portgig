@@ -79,6 +79,7 @@ export default async function Template6Page({
   let error: string | null = null;
   let actualCreatorId: string | null = null;
   let isPublicView = false;
+  let accountUsername: string | null = null;
 
   try {
     let responseData: GetPortfolioResponse;
@@ -117,7 +118,13 @@ export default async function Template6Page({
       JSON.stringify(responseData, null, 2)
     );
 
-    const rawPortfolio = responseData?.data?.user?.data?.portfolio;
+    const userData = responseData?.data?.user?.data;
+    accountUsername =
+      userData?.bio_data?.user_name ??
+      userData?.user_name ??
+      null;
+
+    const rawPortfolio = userData?.portfolio;
     console.log(
       "Template6Page: Portfolio data:",
       JSON.stringify(rawPortfolio, null, 2)
@@ -276,6 +283,7 @@ export default async function Template6Page({
   }
 
   // Success state rendering
+  // const username = portfolioData?.display_name?.toLowerCase().replace(/\s+/g, '-') || null;
   const username = portfolioData?.display_name?.toLowerCase().replace(/\s+/g, '-') || null;
   
   return (
@@ -292,8 +300,8 @@ export default async function Template6Page({
           <div className="max-w-4xl mx-auto px-4">
             <ShareButton
               creativeId={actualCreatorId}
-              displayName={portfolioData.display_name}
-              username={username}
+              username={accountUsername ?? undefined}
+              templateType={portfolioData.template_type}
             />
           </div>
         </div>

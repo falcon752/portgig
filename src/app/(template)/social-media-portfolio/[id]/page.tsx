@@ -48,8 +48,8 @@ export default async function Template5Page({
 }: PageProps) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
-  const usernameOrTemplateId = resolvedParams.id;
   const publicCreatorId = resolvedSearchParams.creatorId;
+  const usernameOrTemplateId = resolvedParams.id;
 
   console.log("Template5Page: Username/Template ID from URL:", usernameOrTemplateId);
   console.log("Template5Page: Public creator ID from query:", publicCreatorId);
@@ -58,6 +58,7 @@ export default async function Template5Page({
   let error: string | null = null;
   let actualCreatorId: string | null = null;
   let isPublicView = false;
+  let accountUsername: string | null = null;
 
   try {
     let responseData: GetPortfolioResponse;
@@ -96,7 +97,13 @@ export default async function Template5Page({
       JSON.stringify(responseData, null, 2)
     );
 
-    const rawPortfolio = responseData?.data?.user?.data?.portfolio;
+    const userData = responseData?.data?.user?.data;
+    accountUsername =
+      userData?.bio_data?.user_name ??
+      userData?.user_name ??
+      null;
+
+    const rawPortfolio = userData?.portfolio;
     console.log(
       "Template5Page: Portfolio data:",
       JSON.stringify(rawPortfolio, null, 2)
@@ -331,8 +338,8 @@ export default async function Template5Page({
             <div className="max-w-4xl mx-auto px-4">
               <ShareButton
                 creativeId={actualCreatorId}
-                displayName={portfolioData.display_name || "Portfolio"}
-                username={username}
+                username={accountUsername ?? undefined}
+                templateType={portfolioData.template_type}
               />
             </div>
           </div>

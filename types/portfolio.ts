@@ -266,6 +266,7 @@ export interface PortfolioApiPayload {
 }
 
 export interface ActualUserData {
+  user_name: string;
   _id: string;
   auth: {
     token: {

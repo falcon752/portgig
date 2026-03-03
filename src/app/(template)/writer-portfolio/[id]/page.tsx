@@ -188,8 +188,8 @@ export default async function Template4Page({ params, searchParams }: PageProps)
       {!isPublicView && (
         <ShareButton
           creativeId={actualCreatorId || "unknown"}
-          username={accountUsername ?? undefined} // ✅ account username
-          templateType={portfolio.template_type}  // ✅ WRITER here
+          username={accountUsername ?? undefined} 
+          templateType={portfolio.template_type}  
         />
       )}
 

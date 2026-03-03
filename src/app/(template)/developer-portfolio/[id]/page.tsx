@@ -26,6 +26,7 @@ export default async function Template3Page({ params, searchParams }: PageProps)
   let error: string | null = null;
   let actualCreatorId: string | null = null;
   let isPublicView = false;
+  let accountUsername: string | null = null;
 
   try {
     let responseData;
@@ -52,7 +53,13 @@ export default async function Template3Page({ params, searchParams }: PageProps)
       responseData = await getPortfolioServer(userId, false);
     }
 
-    const rawPortfolio = responseData?.data?.user?.data.portfolio;
+    const userData = responseData?.data?.user?.data;
+    accountUsername =
+      userData?.bio_data?.user_name ??
+      userData?.user_name ??
+      null;
+
+    const rawPortfolio = userData?.portfolio;
     if (rawPortfolio && rawPortfolio.template_type === "DEVELOPER") {
       portfolioData = rawPortfolio;
     } else {
@@ -105,7 +112,6 @@ export default async function Template3Page({ params, searchParams }: PageProps)
       </main>
     );
   }
-  const username = portfolioData?.display_name?.toLowerCase().replace(/\\s+/g, '-') || null;
   return (
     <main className="bg-semiBlack font-montserrat max-md:mb-20">
       <TemplateThreeHero portfolioData={portfolioData} />
@@ -115,7 +121,9 @@ export default async function Template3Page({ params, searchParams }: PageProps)
       {!isPublicView && (
         <ShareButton
           creativeId={actualCreatorId || "unknown"}
-          displayName={portfolioData.display_name}          username={username}        />
+          username={accountUsername ?? undefined}
+          templateType={portfolioData.template_type}
+        />
       )}
       <footer className="center px-10 py-20 bg-black">
         <Image

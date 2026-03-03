@@ -30,6 +30,7 @@ export default async function TemplateOnePage({ params, searchParams }: PageProp
   let error: string | null = null;
   let actualCreatorId: string | null = null;
   let isPublicView = false;
+  let accountUsername: string | null = null;
 
   try {
     let fullProfile: GetPortfolioResponse;
@@ -62,9 +63,14 @@ export default async function TemplateOnePage({ params, searchParams }: PageProp
     }
 
     try {
+      const userData = fullProfile?.data?.user?.data;
+      accountUsername =
+        userData?.bio_data?.user_name ??
+        userData?.user_name ??
+        null;
 
       const rawPortfolio =
-        fullProfile?.data?.user?.data?.portfolio ??
+        userData?.portfolio ??
         fullProfile?.data?.portfolio;
 
       if (rawPortfolio && rawPortfolio.template_type === "DESIGNER") {
@@ -209,8 +215,8 @@ export default async function TemplateOnePage({ params, searchParams }: PageProp
         <div className="max-w-4xl mx-auto px-4">
           <ShareButton
             creativeId={actualCreatorId || "unknown"}
-            displayName={portfolioData.display_name || "Portfolio"}
-            username={usernameOrTemplateId && isNaN(Number(usernameOrTemplateId)) ? usernameOrTemplateId : null}
+            username={accountUsername ?? undefined}
+            templateType={portfolioData.template_type}
           />
         </div>
       </div>

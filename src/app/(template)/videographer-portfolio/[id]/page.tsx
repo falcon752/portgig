@@ -39,6 +39,7 @@ export default async function Template2Page({
   let error: string | null = null;
   let actualCreatorId: string | null = null;
   let isPublicView = false;
+  let accountUsername: string | null = null;
 
   try {
     let responseData: GetPortfolioResponse;
@@ -78,7 +79,13 @@ export default async function Template2Page({
       JSON.stringify(responseData, null, 2)
     );
 
-    const portfolioData = responseData?.data?.user?.data?.portfolio;
+    const userData = responseData?.data?.user?.data;
+    accountUsername =
+      userData?.bio_data?.user_name ??
+      userData?.user_name ??
+      null;
+
+    const portfolioData = userData?.portfolio;
     console.log(
       "Template2Page: Portfolio data:",
       JSON.stringify(portfolioData, null, 2)
@@ -267,8 +274,8 @@ export default async function Template2Page({
       {!isPublicView && (
         <ShareButton
           creativeId={actualCreatorId ?? "unknown"}
-          displayName={portfolio.display_name ?? "Portfolio"}
-          username={username}
+          username={accountUsername ?? undefined}
+          templateType={portfolio.template_type}
         />
       )}
       <footer className="center px-10 py-20 bg-black">
