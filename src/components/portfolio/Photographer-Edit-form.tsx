@@ -14,6 +14,8 @@ import {
 import toast from "react-hot-toast";
 import { revalidateTemplatePhotographerPage } from "@/src/app/Actions";
 import Cookies from "universal-cookie";
+import { useDraft } from "@/src/hooks/useDraft";
+import DraftBanner from "@/src/components/DraftBanner";
 import type {
   PhotographerFormData,
   PortfolioApiPayload,
@@ -52,6 +54,11 @@ export default function PhotographerForm() {
 
   const isAnyLoading =
     isLoading || isSavingForm || isUploadingMedia || isPreviewing || isSharing;
+
+  const [showDraftBanner, setShowDraftBanner] = useState(false);
+  const apiLoadedRef = useRef(false);
+  const { saveDraft, saveServerSnapshot, loadDraft, clearDraft, hasMeaningfulDraft } =
+    useDraft<PhotographerFormData>("portgig_draft_photographer");
 
   const headShotInputRef = useRef<HTMLInputElement | null>(null);
   const myServicesInputRefs = useRef<(HTMLInputElement | null)[]>(
@@ -176,6 +183,24 @@ export default function PhotographerForm() {
     };
     loadPortfolioData();
   }, []);
+
+  // Detect API load completion → compare with any saved draft
+  useEffect(() => {
+    if (!isLoading && !apiLoadedRef.current) {
+      apiLoadedRef.current = true;
+      saveServerSnapshot(formData);
+      if (hasMeaningfulDraft()) setShowDraftBanner(true);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading]);
+
+  // Auto-save draft 1.5 s after the user stops editing
+  useEffect(() => {
+    if (!apiLoadedRef.current) return;
+    const timer = setTimeout(() => saveDraft(formData), 1500);
+    return () => clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData]);
 
   const handleInputChange = (
     field: keyof PhotographerFormData,
@@ -320,11 +345,10 @@ export default function PhotographerForm() {
       const userId = cookies.get("userId") || cookies.get("userid");
       let portfolioUrl: string;
       
-      if (username) {
-        portfolioUrl = `${window.location.origin}/photographer-portfolio/${encodeURIComponent(username)}`;
-      } else {
-        portfolioUrl = `${window.location.origin}/photographer-portfolio/6?creatorId=${userId}`;
-      }
+      const displayNameSlug = formData.displayName
+        ? formData.displayName.trim().toLowerCase().replace(/\s+/g, "-")
+        : (username || "portfolio");
+      portfolioUrl = `${window.location.origin}/photographer-portfolio/${encodeURIComponent(displayNameSlug)}/${encodeURIComponent(userId)}`;
       
       await navigator.clipboard.writeText(portfolioUrl);
       toast.success("Portfolio URL copied to clipboard!");
@@ -449,7 +473,9 @@ export default function PhotographerForm() {
       await savePhotographerPortfolio(payload);
       toast.success("Portfolio saved successfully!", { id: "saveToast" });
       await revalidateTemplatePhotographerPage();
-      router.push("/photographer-portfolio/6");
+      const _photoNavSlug = formData.displayName ? formData.displayName.trim().toLowerCase().replace(/\s+/g, "-") : "portfolio";
+      router.push(`/photographer-portfolio/${encodeURIComponent(_photoNavSlug)}/${encodeURIComponent(userId || "")}`);
+      clearDraft();
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error(`Failed to save portfolio: ${error.message}`, {
@@ -544,6 +570,12 @@ export default function PhotographerForm() {
 
   return (
     <div className="w-full max-w-4xl mx-auto bg-white font-inter mb-5 lg:mb-10">
+      {showDraftBanner && (
+        <DraftBanner
+          onRestore={() => { const d = loadDraft(); if (d) setFormData(d); setShowDraftBanner(false); }}
+          onDiscard={() => { clearDraft(); setShowDraftBanner(false); }}
+        />
+      )}
       <div className="bg-[#0A1754] text-white px-6 py-4 flex justify-between items-center">
         <h1 className="text-base lg:text-2xl font-semibold font-inter">
           Edit Photographer Portfolio
@@ -642,7 +674,6 @@ export default function PhotographerForm() {
                     className="w-full h-full object-cover rounded-lg"
                     width={200}
                     height={200}
-                    style={{ width: "auto", height: "auto" }}
                   />
                   <button
                     onClick={() => handleRemoveImage("headShot")}
@@ -745,7 +776,6 @@ export default function PhotographerForm() {
                         className="w-full h-full object-cover rounded-lg"
                         width={200}
                         height={200}
-                        style={{ width: "auto", height: "auto" }}
                       />
                       <button
                         onClick={() => handleRemoveImage("myServices", index)}
@@ -836,7 +866,6 @@ export default function PhotographerForm() {
                         className="w-full h-full object-cover rounded-lg"
                         width={200}
                         height={200}
-                        style={{ width: "auto", height: "auto" }}
                       />
                       <button
                         onClick={() => handleRemoveImage("latestWork", index)}

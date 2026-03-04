@@ -14,6 +14,8 @@ import {
 import toast from "react-hot-toast";
 import { revalidateTemplate4Page } from "@/src/app/Actions";
 import Cookies from "universal-cookie";
+import { useDraft } from "@/src/hooks/useDraft";
+import DraftBanner from "@/src/components/DraftBanner";
 import type {
     WriterFormData,
     PortfolioApiPayload,
@@ -56,6 +58,11 @@ export default function WriterFormFixed() {
 
     const isAnyLoading =
         isLoading || isSavingForm || isUploadingMedia || isPreviewing || isSharing;
+
+    const [showDraftBanner, setShowDraftBanner] = useState(false);
+    const apiLoadedRef = useRef(false);
+    const { saveDraft, saveServerSnapshot, loadDraft, clearDraft, hasMeaningfulDraft } =
+        useDraft<WriterFormData>("portgig_draft_writer");
 
     // Refs for file inputs
     const headShotInputRef = useRef<HTMLInputElement | null>(null);
@@ -148,6 +155,24 @@ export default function WriterFormFixed() {
         loadPortfolioData();
     }, []);
 
+    // Detect API load completion → compare with any saved draft
+    useEffect(() => {
+        if (!isLoading && !apiLoadedRef.current) {
+            apiLoadedRef.current = true;
+            saveServerSnapshot(formData);
+            if (hasMeaningfulDraft()) setShowDraftBanner(true);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLoading]);
+
+    // Auto-save draft 1.5 s after the user stops editing
+    useEffect(() => {
+        if (!apiLoadedRef.current) return;
+        const timer = setTimeout(() => saveDraft(formData), 1500);
+        return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
+
     const handleInputChange = (field: keyof WriterFormData, value: string) => {
         setFormData((prev) => ({ ...prev, [field]: value }));
     };
@@ -235,17 +260,14 @@ export default function WriterFormFixed() {
     };
 
 const handleShare = async () => {
-    if (!username) {
-        toast.error("Username not found. Save your portfolio first.");
-        return;
-    }
-
     setIsSharing(true);
-
     try {
-        const portfolioPath = `/writer-portfolio/${encodeURIComponent(username)}`;
-        const portfolioUrl = `${window.location.origin}${portfolioPath}`;
-
+        const shareCookies = new Cookies();
+        const shareUserId = shareCookies.get("userId") || shareCookies.get("userid") || "";
+        const displayNameSlug = formData.displayName
+            ? formData.displayName.trim().toLowerCase().replace(/\s+/g, "-")
+            : (username || "portfolio");
+        const portfolioUrl = `${window.location.origin}/writer-portfolio/${encodeURIComponent(displayNameSlug)}/${encodeURIComponent(shareUserId)}`;
         await navigator.clipboard.writeText(portfolioUrl);
         toast.success("Portfolio URL copied to clipboard!");
     } catch {
@@ -345,7 +367,10 @@ const handleShare = async () => {
             await saveWriterPortfolio(payload);
             toast.success("Portfolio saved successfully!", { id: "saveToast" });
             await revalidateTemplate4Page();
-            router.push("/writer-portfolio/4");
+            const _writerNavUserId = cookies.get("userId") || cookies.get("userid") || "";
+            const _writerNavSlug = formData.displayName ? formData.displayName.trim().toLowerCase().replace(/\s+/g, "-") : "portfolio";
+            router.push(`/writer-portfolio/${encodeURIComponent(_writerNavSlug)}/${encodeURIComponent(_writerNavUserId)}`);
+            clearDraft();
         } catch (error: unknown) {
             if (error instanceof Error) {
                 toast.error(`Failed to save portfolio: ${error.message}`, {
@@ -427,6 +452,12 @@ const handleShare = async () => {
 
     return (
         <div className="w-full max-w-4xl mx-auto bg-white font-inter mb-5 lg:mb-10">
+            {showDraftBanner && (
+                <DraftBanner
+                    onRestore={() => { const d = loadDraft(); if (d) setFormData(d); setShowDraftBanner(false); }}
+                    onDiscard={() => { clearDraft(); setShowDraftBanner(false); }}
+                />
+            )}
             <div className="bg-[#0A1754] text-white px-6 py-4 flex justify-between items-center">
                 <h1 className="text-base lg:text-2xl font-semibold font-inter">
                     Edit Writer Portfolio
@@ -528,7 +559,6 @@ const handleShare = async () => {
                                         className="w-full h-full object-cover rounded-lg"
                                         width={200}
                                         height={200}
-                                        style={{ width: "auto", height: "auto" }} // Fix aspect ratio warning
                                     />
                                     <button
                                         onClick={() => handleRemoveImage("headShot")}
@@ -626,7 +656,6 @@ const handleShare = async () => {
                                                 className="w-full h-full object-cover rounded-lg"
                                                 width={200}
                                                 height={200}
-                                                style={{ width: "auto", height: "auto" }} // Fix aspect ratio warning
                                             />
                                             <button
                                                 onClick={() => handleRemoveImage("portfolio", index)}

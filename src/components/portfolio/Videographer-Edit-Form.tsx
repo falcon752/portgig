@@ -14,6 +14,8 @@ import {
 import toast from "react-hot-toast";
 import { revalidateTemplateVideographerPage } from "@/src/app/Actions";
 import Cookies from "universal-cookie";
+import { useDraft } from "@/src/hooks/useDraft";
+import DraftBanner from "@/src/components/DraftBanner";
 import type {
     VideographerFormData,
     PortfolioApiPayload,
@@ -53,6 +55,11 @@ export default function VideographerForm() {
 
     const isAnyLoading =
         isLoading || isSavingForm || isUploadingMedia || isPreviewing || isSharing;
+
+    const [showDraftBanner, setShowDraftBanner] = useState(false);
+    const apiLoadedRef = useRef(false);
+    const { saveDraft, saveServerSnapshot, loadDraft, clearDraft, hasMeaningfulDraft } =
+        useDraft<VideographerFormData>("portgig_draft_videographer");
 
     const headShotInputRef = useRef<HTMLInputElement | null>(null);
     const additionalImagesInputRefs = useRef<(HTMLInputElement | null)[]>(
@@ -171,6 +178,24 @@ export default function VideographerForm() {
         };
         loadPortfolioData();
     }, []);
+
+    // Detect API load completion → compare with any saved draft
+    useEffect(() => {
+        if (!isLoading && !apiLoadedRef.current) {
+            apiLoadedRef.current = true;
+            saveServerSnapshot(formData);
+            if (hasMeaningfulDraft()) setShowDraftBanner(true);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLoading]);
+
+    // Auto-save draft 1.5 s after the user stops editing
+    useEffect(() => {
+        if (!apiLoadedRef.current) return;
+        const timer = setTimeout(() => saveDraft(formData), 1500);
+        return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const handleInputChange = (
         field: keyof VideographerFormData,
@@ -306,11 +331,10 @@ export default function VideographerForm() {
             const userId = cookies.get("userId") || cookies.get("userid");
             let portfolioUrl: string;
             
-            if (username) {
-                portfolioUrl = `${window.location.origin}/videographer-portfolio/${encodeURIComponent(username)}`;
-            } else {
-                portfolioUrl = `${window.location.origin}/videographer-portfolio/2?creatorId=${userId}`;
-            }
+            const displayNameSlug = formData.displayName
+                ? formData.displayName.trim().toLowerCase().replace(/\s+/g, "-")
+                : (username || "portfolio");
+            portfolioUrl = `${window.location.origin}/videographer-portfolio/${encodeURIComponent(displayNameSlug)}/${encodeURIComponent(userId)}`;
             
             await navigator.clipboard.writeText(portfolioUrl);
             toast.success("Portfolio URL copied to clipboard!");
@@ -427,7 +451,10 @@ export default function VideographerForm() {
             await saveVideographerPortfolio(payload);
             toast.success("Portfolio saved successfully!", { id: "saveToast" });
             await revalidateTemplateVideographerPage();
-            router.push("/videographer-portfolio/2");
+            const _vidNavUserId = cookies.get("userId") || cookies.get("userid") || "";
+            const _vidNavSlug = formData.displayName ? formData.displayName.trim().toLowerCase().replace(/\s+/g, "-") : "portfolio";
+            router.push(`/videographer-portfolio/${encodeURIComponent(_vidNavSlug)}/${encodeURIComponent(_vidNavUserId)}`);
+            clearDraft();
         } catch (error: unknown) {
             if (error instanceof Error) {
                 toast.error(`Failed to save portfolio: ${error.message}`, {
@@ -522,6 +549,12 @@ export default function VideographerForm() {
 
     return (
         <div className="w-full max-w-4xl mx-auto bg-white font-inter mb-5 lg:mb-10">
+            {showDraftBanner && (
+                <DraftBanner
+                    onRestore={() => { const d = loadDraft(); if (d) setFormData(d); setShowDraftBanner(false); }}
+                    onDiscard={() => { clearDraft(); setShowDraftBanner(false); }}
+                />
+            )}
             <div className="bg-[#0A1754] text-white px-6 py-4 flex justify-between items-center">
                 <h1 className="text-base lg:text-2xl font-semibold font-inter">
                     Edit Videographer Portfolio
@@ -623,7 +656,6 @@ export default function VideographerForm() {
                                         className="w-full h-full object-cover rounded-lg"
                                         width={200}
                                         height={200}
-                                        style={{ width: "auto", height: "auto" }}
                                     />
                                     <button
                                         onClick={() => handleRemoveImage("headShot")}
@@ -689,7 +721,6 @@ export default function VideographerForm() {
                                                     className="w-full h-full object-cover rounded-lg"
                                                     width={200}
                                                     height={200}
-                                                    style={{ width: "auto", height: "auto" }}
                                                 />
                                                 <button
                                                     onClick={() =>
@@ -845,7 +876,6 @@ export default function VideographerForm() {
                                                 className="w-full h-full object-cover rounded-lg"
                                                 width={200}
                                                 height={200}
-                                                style={{ width: "auto", height: "auto" }}
                                             />
                                             <button
                                                 onClick={() => handleRemoveImage("portfolio", index)}

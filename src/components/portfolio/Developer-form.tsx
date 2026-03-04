@@ -9,6 +9,8 @@ import { saveDeveloperPortfolio, getPortfolio, uploadAllMedia } from "../../api/
 import toast from "react-hot-toast"
 import { revalidateTemplateDeveloperPage } from "@/src/app/Actions"
 import Cookies from "universal-cookie"
+import { useDraft } from "@/src/hooks/useDraft"
+import DraftBanner from "@/src/components/DraftBanner"
 import type { DeveloperFormData, PortfolioApiPayload, GetPortfolioResponse } from "@/types/portfolio"
 import { isDeveloperTemplateSpecific } from "@/types/portfolio"
 
@@ -40,6 +42,11 @@ export default function DeveloperForm() {
   })
 
   const isAnyLoading = isLoading || isSavingForm || isUploadingMedia || isPreviewing || isSharing
+
+  const [showDraftBanner, setShowDraftBanner] = useState(false);
+  const apiLoadedRef = useRef(false);
+  const { saveDraft, saveServerSnapshot, loadDraft, clearDraft, hasMeaningfulDraft } =
+    useDraft<DeveloperFormData>("portgig_draft_developer");
 
   const headShotInputRef = useRef<HTMLInputElement | null>(null)
   const portfolioInputRefs = useRef<(HTMLInputElement | null)[]>(Array(5).fill(null))
@@ -122,6 +129,24 @@ export default function DeveloperForm() {
     }
     loadPortfolioData()
   }, [])
+
+  // Detect API load completion → compare with any saved draft
+  useEffect(() => {
+    if (!isLoading && !apiLoadedRef.current) {
+      apiLoadedRef.current = true;
+      saveServerSnapshot(formData);
+      if (hasMeaningfulDraft()) setShowDraftBanner(true);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading])
+
+  // Auto-save draft 1.5 s after the user stops editing
+  useEffect(() => {
+    if (!apiLoadedRef.current) return;
+    const timer = setTimeout(() => saveDraft(formData), 1500);
+    return () => clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData])
 
   const handleInputChange = (field: keyof DeveloperFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
@@ -208,12 +233,10 @@ export default function DeveloperForm() {
       const userId = cookies.get("userId") || cookies.get("userid")
       let portfolioUrl: string
       
-      // Use username-based URL if available, otherwise fallback to legacy format
-      if (username) {
-        portfolioUrl = `${window.location.origin}/developer-portfolio/${encodeURIComponent(username)}`
-      } else {
-        portfolioUrl = `${window.location.origin}/developer-portfolio/3?creatorId=${userId}`
-      }
+      const displayNameSlug = formData.displayName
+        ? formData.displayName.trim().toLowerCase().replace(/\s+/g, "-")
+        : (username || "portfolio");
+      portfolioUrl = `${window.location.origin}/developer-portfolio/${encodeURIComponent(displayNameSlug)}/${encodeURIComponent(userId)}`;
       
       await navigator.clipboard.writeText(portfolioUrl)
       toast.success("Portfolio URL copied to clipboard!")
@@ -298,7 +321,10 @@ export default function DeveloperForm() {
       await saveDeveloperPortfolio(payload)
       toast.success("Portfolio saved successfully!", { id: "saveToast" })
       await revalidateTemplateDeveloperPage()
-      router.push("/developer-portfolio/3")
+      const _devNavUserId = cookies.get("userId") || cookies.get("userid") || ""
+      const _devNavSlug = formData.displayName ? formData.displayName.trim().toLowerCase().replace(/\s+/g, "-") : "portfolio"
+      router.push(`/developer-portfolio/${encodeURIComponent(_devNavSlug)}/${encodeURIComponent(_devNavUserId)}`)
+      clearDraft();
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error(`Failed to save portfolio: ${error.message}`, {
@@ -378,6 +404,12 @@ export default function DeveloperForm() {
 
   return (
     <div className="w-full max-w-4xl mx-auto bg-white font-inter mb-5 lg:mb-10">
+      {showDraftBanner && (
+        <DraftBanner
+          onRestore={() => { const d = loadDraft(); if (d) setFormData(d); setShowDraftBanner(false); }}
+          onDiscard={() => { clearDraft(); setShowDraftBanner(false); }}
+        />
+      )}
       <div className="bg-[#0A1754] text-white px-6 py-4 flex justify-between items-center">
         <h1 className="text-base lg:text-2xl font-semibold font-inter">Edit Developer Portfolio</h1>
         <div className="flex gap-3">
@@ -475,7 +507,6 @@ export default function DeveloperForm() {
                     className="w-full h-full object-cover rounded-lg"
                     width={200}
                     height={200}
-                    style={{ width: "auto", height: "auto" }}
                   />
                   <button
                     onClick={() => handleRemoveImage("headShot")}
@@ -587,7 +618,6 @@ export default function DeveloperForm() {
                         className="w-full h-full object-cover rounded-lg"
                         width={200}
                         height={200}
-                        style={{ width: "auto", height: "auto" }}
                       />
                       <button
                         onClick={() => handleRemoveImage("portfolio", index)}

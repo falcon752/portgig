@@ -13,6 +13,8 @@ import {
   uploadAllMedia,
 } from "../../api/portfolio";
 import { revalidateTemplateDesignerPage } from "@/src/app/Actions";
+import { useDraft } from "@/src/hooks/useDraft";
+import DraftBanner from "@/src/components/DraftBanner";
 import type {
   DesignerFormData,
   GetPortfolioResponse,
@@ -62,6 +64,11 @@ const DesignerForm: React.FC = () => {
   const headShotInputRef = useRef<HTMLInputElement>(null);
   const skillImageInputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const portfolioImageInputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  const [showDraftBanner, setShowDraftBanner] = useState(false);
+  const apiLoadedRef = useRef(false);
+  const { saveDraft, saveServerSnapshot, loadDraft, clearDraft, hasMeaningfulDraft } =
+    useDraft<DesignerFormDataInput>("portgig_draft_designer");
 
   useEffect(() => {
     const fetchedAuthToken = cookies.get("access_token");
@@ -195,6 +202,24 @@ const DesignerForm: React.FC = () => {
 
     fetchExistingPortfolio();
   }, [router]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Detect API load completion → compare with any saved draft
+  useEffect(() => {
+    if (!isFetching && !apiLoadedRef.current) {
+      apiLoadedRef.current = true;
+      saveServerSnapshot(formData);
+      if (hasMeaningfulDraft()) setShowDraftBanner(true);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFetching]);
+
+  // Auto-save draft 1.5 s after the user stops editing
+  useEffect(() => {
+    if (!apiLoadedRef.current) return;
+    const timer = setTimeout(() => saveDraft(formData), 1500);
+    return () => clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData]);
 
   const handleInputChange = (
     key: keyof DesignerFormDataInput,
@@ -404,7 +429,9 @@ const DesignerForm: React.FC = () => {
       toast.success("Portfolio updated successfully!", { id: "saveToast" });
 
       await revalidateTemplateDesignerPage();
-      router.push("/designer-portfolio/3");
+      const _designerNavSlug = formData.displayName ? formData.displayName.trim().toLowerCase().replace(/\s+/g, "-") : "portfolio";
+      router.push(`/designer-portfolio/${encodeURIComponent(_designerNavSlug)}/${encodeURIComponent(userId || "")}`);
+      clearDraft();
     } catch (error) {
       console.error("DesignerForm: Error updating portfolio:", error);
       toast.error(
@@ -441,6 +468,12 @@ const DesignerForm: React.FC = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto bg-white shadow-md overflow-hidden">
+      {showDraftBanner && (
+        <DraftBanner
+          onRestore={() => { const d = loadDraft(); if (d) setFormData(d); setShowDraftBanner(false); }}
+          onDiscard={() => { clearDraft(); setShowDraftBanner(false); }}
+        />
+      )}
       {/* Header */}
       <div className="bg-[#0A1754] text-white px-6 py-4 flex justify-between items-center">
         <h1 className="text-base lg:text-2xl font-semibold font-inter">

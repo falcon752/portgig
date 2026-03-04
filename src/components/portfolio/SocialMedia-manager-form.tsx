@@ -9,6 +9,8 @@ import { saveSocialMediaManagerPortfolio, getPortfolio, uploadAllMedia } from ".
 import toast from "react-hot-toast"
 import { revalidateTemplateSocialMediaManagerPage } from "@/src/app/Actions"
 import Cookies from "universal-cookie"
+import { useDraft } from "@/src/hooks/useDraft"
+import DraftBanner from "@/src/components/DraftBanner"
 import {
     type SocialMediaManagerFormData,
     type PortfolioApiPayload,
@@ -54,6 +56,11 @@ export default function SocialMediaForm() {
     })
 
     const isAnyLoading = isLoading || isSavingForm || isUploadingMedia || isPreviewing || isSharing
+
+    const [showDraftBanner, setShowDraftBanner] = useState(false);
+    const apiLoadedRef = useRef(false);
+    const { saveDraft, saveServerSnapshot, loadDraft, clearDraft, hasMeaningfulDraft } =
+        useDraft<SocialMediaManagerFormData>("portgig_draft_social_media");
 
     const headShotInputRef = useRef<HTMLInputElement | null>(null)
     const caseStudyBeforeInputRef = useRef<HTMLInputElement | null>(null)
@@ -161,6 +168,24 @@ export default function SocialMediaForm() {
         }
         loadPortfolioData()
     }, [])
+
+    // Detect API load completion → compare with any saved draft
+    useEffect(() => {
+        if (!isLoading && !apiLoadedRef.current) {
+            apiLoadedRef.current = true;
+            saveServerSnapshot(formData);
+            if (hasMeaningfulDraft()) setShowDraftBanner(true);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLoading])
+
+    // Auto-save draft 1.5 s after the user stops editing
+    useEffect(() => {
+        if (!apiLoadedRef.current) return;
+        const timer = setTimeout(() => saveDraft(formData), 1500);
+        return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData])
 
     const handleInputChange = (field: keyof SocialMediaManagerFormData, value: string | string[]) => {
         setFormData((prev) => ({ ...prev, [field]: value }))
@@ -311,11 +336,10 @@ export default function SocialMediaForm() {
             const userId = cookies.get("userId") || cookies.get("userid")
             let portfolioUrl: string
             
-            if (username) {
-                portfolioUrl = `${window.location.origin}/social-media-portfolio/${encodeURIComponent(username)}`
-            } else {
-                portfolioUrl = `${window.location.origin}/social-media-portfolio/5?creatorId=${userId}`
-            }
+            const displayNameSlug = formData.displayName
+                ? formData.displayName.trim().toLowerCase().replace(/\s+/g, "-")
+                : (username || "portfolio");
+            portfolioUrl = `${window.location.origin}/social-media-portfolio/${encodeURIComponent(displayNameSlug)}/${encodeURIComponent(userId)}`;
             
             await navigator.clipboard.writeText(portfolioUrl)
             toast.success("Portfolio URL copied to clipboard!")
@@ -422,7 +446,10 @@ export default function SocialMediaForm() {
             await saveSocialMediaManagerPortfolio(payload)
             toast.success("Portfolio saved successfully!", { id: "saveToast" })
             await revalidateTemplateSocialMediaManagerPage()
-            router.push("/social-media-portfolio/5")
+            const _smNavUserId = cookies.get("userId") || cookies.get("userid") || ""
+            const _smNavSlug = formData.displayName ? formData.displayName.trim().toLowerCase().replace(/\s+/g, "-") : "portfolio"
+            router.push(`/social-media-portfolio/${encodeURIComponent(_smNavSlug)}/${encodeURIComponent(_smNavUserId)}`)
+            clearDraft()
         } catch (error: unknown) {
             toast.error(`Failed to save portfolio: ${error instanceof Error ? error.message : String(error)}`, {
                 id: "saveToast",
@@ -520,6 +547,12 @@ export default function SocialMediaForm() {
 
     return (
         <div className="w-full max-w-4xl mx-auto bg-white font-inter mb-5 lg:mb-10">
+            {showDraftBanner && (
+                <DraftBanner
+                    onRestore={() => { const d = loadDraft(); if (d) setFormData(d); setShowDraftBanner(false); }}
+                    onDiscard={() => { clearDraft(); setShowDraftBanner(false); }}
+                />
+            )}
             <div className="bg-[#0A1754] text-white px-6 py-4 flex justify-between items-center">
                 <h1 className="text-base lg:text-2xl font-semibold font-inter">Edit Social Media Manager Portfolio</h1>
                 <div className="flex gap-3">
@@ -602,7 +635,6 @@ export default function SocialMediaForm() {
                                         className="w-full h-full object-cover rounded-lg"
                                         width={200}
                                         height={250}
-                                        style={{ width: "auto", height: "auto" }}
                                     />
                                     <button
                                         onClick={() => handleRemoveImage("headShot")}
@@ -753,7 +785,6 @@ export default function SocialMediaForm() {
                                                 className="w-full h-full object-cover rounded-lg"
                                                 width={200}
                                                 height={200}
-                                                style={{ width: "auto", height: "auto" }}
                                             />
                                             <button
                                                 onClick={() => handleRemoveImage("caseStudyBefore")}
@@ -802,7 +833,6 @@ export default function SocialMediaForm() {
                                                 className="w-full h-full object-cover rounded-lg"
                                                 width={200}
                                                 height={200}
-                                                style={{ width: "auto", height: "auto" }}
                                             />
                                             <button
                                                 onClick={() => handleRemoveImage("caseStudyAfter")}
@@ -860,7 +890,6 @@ export default function SocialMediaForm() {
                                             className="w-full h-full object-cover rounded-lg"
                                             width={200}
                                             height={200}
-                                            style={{ width: "auto", height: "auto" }}
                                         />
                                         <button
                                             onClick={() => handleRemoveImage("graphicDesign", index)}
@@ -917,7 +946,6 @@ export default function SocialMediaForm() {
                                                 className="w-full h-full object-cover rounded-lg"
                                                 width={200}
                                                 height={200}
-                                                style={{ width: "auto", height: "auto" }}
                                             />
                                             <button
                                                 onClick={() => handleRemoveImage("genericPortfolio", index)}

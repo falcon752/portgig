@@ -194,33 +194,32 @@ const ProfileCard = () => {
             return;
         }
         
-        // Get the username (user_name) from bio_data
-        const username = creative?.bio_data?.user_name;
-        
-        if (!username) {
-            alert("Username not found for this creative.");
+        const rawDisplayName = creative?.portfolio?.display_name ?? creative?.bio_data?.user_name ?? null;
+        if (!rawDisplayName) {
+            alert("Portfolio display name not found for this creative.");
             return;
         }
+        const displayNameSlug = rawDisplayName.trim().toLowerCase().replace(/\s+/g, "-");
         
         let portfolioPath = "";
         switch (creativeProfile.templateType) {
             case "WRITER":
-                portfolioPath = `/writer-portfolio/${username}`;
+                portfolioPath = `/writer-portfolio/${encodeURIComponent(displayNameSlug)}/${creativeId}`;
                 break;
             case "VIDEOGRAPHER":
-                portfolioPath = `/videographer-portfolio/${username}`;
+                portfolioPath = `/videographer-portfolio/${encodeURIComponent(displayNameSlug)}/${creativeId}`;
                 break;
             case "DEVELOPER":
-                portfolioPath = `/developer-portfolio/${username}`;
+                portfolioPath = `/developer-portfolio/${encodeURIComponent(displayNameSlug)}/${creativeId}`;
                 break;
             case "PHOTOGRAPHER":
-                portfolioPath = `/photographer-portfolio/${username}`;
+                portfolioPath = `/photographer-portfolio/${encodeURIComponent(displayNameSlug)}/${creativeId}`;
                 break;
             case "SOCIAL_MEDIA_MANAGER":
-                portfolioPath = `/social-media-portfolio/${username}`;
+                portfolioPath = `/social-media-portfolio/${encodeURIComponent(displayNameSlug)}/${creativeId}`;
                 break;
             case "DESIGNER":
-                portfolioPath = `/designer-portfolio/${username}`;
+                portfolioPath = `/designer-portfolio/${encodeURIComponent(displayNameSlug)}/${creativeId}`;
                 break;
             default:
                 alert("Portfolio template not supported.");
