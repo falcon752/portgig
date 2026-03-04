@@ -80,10 +80,10 @@ export default async function Template2Page({
     );
 
     const userData = responseData?.data?.user?.data;
-    accountUsername =
-      userData?.bio_data?.user_name ??
-      userData?.user_name ??
-      null;
+    const _rawDisplayName = userData?.portfolio?.display_name ?? null;
+    accountUsername = _rawDisplayName
+      ? _rawDisplayName.trim().toLowerCase().replace(/\s+/g, "-")
+      : (userData?.bio_data?.user_name ?? userData?.user_name ?? null);
 
     const portfolioData = userData?.portfolio;
     console.log(

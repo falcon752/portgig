@@ -77,10 +77,10 @@ export default async function Template4Page({ params, searchParams }: PageProps)
 
     // ✅ pull the account username from the user object returned by the API
     const userData = responseData?.data?.user?.data;
-    accountUsername =
-      userData?.bio_data?.user_name ??
-      userData?.user_name ??
-      null;
+    const _rawDisplayName = userData?.portfolio?.display_name ?? null;
+    accountUsername = _rawDisplayName
+      ? _rawDisplayName.trim().toLowerCase().replace(/\s+/g, "-")
+      : (userData?.bio_data?.user_name ?? userData?.user_name ?? null);
 
     console.log("Template4Page: Account username:", accountUsername);
 

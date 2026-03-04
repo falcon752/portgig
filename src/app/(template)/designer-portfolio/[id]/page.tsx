@@ -64,10 +64,13 @@ export default async function TemplateOnePage({ params, searchParams }: PageProp
 
     try {
       const userData = fullProfile?.data?.user?.data;
-      accountUsername =
-        userData?.bio_data?.user_name ??
-        userData?.user_name ??
+      const _rawDisplayName =
+        userData?.portfolio?.display_name ??
+        fullProfile?.data?.portfolio?.display_name ??
         null;
+      accountUsername = _rawDisplayName
+        ? _rawDisplayName.trim().toLowerCase().replace(/\s+/g, "-")
+        : (userData?.bio_data?.user_name ?? userData?.user_name ?? null);
 
       const rawPortfolio =
         userData?.portfolio ??

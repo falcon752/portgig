@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 
 interface ShareButtonProps {
   creativeId: string;
-  username?: string; // ✅ account username (e.g. "doe")
+  username?: string; // ✅ display name slug (e.g. "john-doe")
   templateType:
     | "WRITER"
     | "VIDEOGRAPHER"
