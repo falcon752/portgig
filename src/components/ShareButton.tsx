@@ -37,10 +37,10 @@ export default function ShareButton({
     if (!isClient) return "";
     const origin = window.location.origin;
 
-    // ✅ Always prefer username-based URL
-    if (username && username.trim()) {
+    // ✅ Username + creativeId for unique, shareable URL
+    if (username && username.trim() && creativeId && creativeId !== "unknown") {
       const base = templateToBasePath[templateType];
-      return `${origin}${base}/${encodeURIComponent(username.trim())}`;
+      return `${origin}${base}/${encodeURIComponent(username.trim())}/${encodeURIComponent(creativeId)}`;
     }
 
     // ⚠️ Fallback: if username missing, still produce something usable

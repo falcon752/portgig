@@ -404,10 +404,7 @@ const DesignerForm: React.FC = () => {
       toast.success("Portfolio updated successfully!", { id: "saveToast" });
 
       await revalidateTemplateDesignerPage();
-      
-      // Redirect to portfolio page using username if available, otherwise fallback
-      const portfolioUrl = userName ? `/designer-portfolio/${userName}` : "/portfolio";
-      router.push(portfolioUrl);
+      router.push("/designer-portfolio/3");
     } catch (error) {
       console.error("DesignerForm: Error updating portfolio:", error);
       toast.error(
