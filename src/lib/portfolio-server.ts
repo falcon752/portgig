@@ -1,4 +1,3 @@
-import Cookies from "universal-cookie";
 import apiClient from "../../service/apiClient";
 import type {
   PortfolioApiPayload,
@@ -18,59 +17,25 @@ interface ApiError {
   error?: string;
 }
 
+/**
+ * Uploads multiple files to Cloudinary via the /api/upload route
+ * and returns an array of secure Cloudinary URLs.
+ */
 export const uploadAllMedia = async (
   filesToUpload: File[]
 ): Promise<string[]> => {
-  if (filesToUpload.length === 0) {
-    return [];
-  }
-  try {
-    const formData = new FormData();
-    filesToUpload.forEach((file) => {
-      if (file instanceof File) {
-        formData.append("files", file);
-      }
-    });
-    const cookies = new Cookies();
-    const token = cookies.get("access_token");
+  if (filesToUpload.length === 0) return [];
 
-    const headers: Record<string, string> = {
-      "Content-Type": "multipart/form-data",
-    };
-    if (token) {
-      headers.Authorization = `Bearer ${token}`;
-    }
+  const formData = new FormData();
+  filesToUpload.forEach((file) => formData.append("files", file));
 
-    const response = await apiClient.post(
-      "/creator/upload-portfolio-files",
-      formData,
-      {
-        headers: headers,
-      }
-    );
+  const response = await fetch("/api/upload", { method: "POST", body: formData });
+  const data = await response.json();
 
-    if (response.data && Array.isArray(response.data.files)) {
-      return response.data.files;
-    } else {
-      console.error(
-        "Unexpected response structure from batch file upload API:",
-        response.data
-      );
-      throw new Error(
-        "Batch file upload successful, but could not retrieve file URLs from response."
-      );
-    }
-  } catch (error: any) {
-    console.error(
-      "Error during batch file upload:",
-      error.response?.data || error.message
-    );
-    throw new Error(
-      error.response?.data?.message ||
-        error.response?.data?.error ||
-        "Failed to upload files"
-    );
-  }
+  if (!response.ok) throw new Error(data.error || "Failed to upload files");
+  if (!Array.isArray(data.files)) throw new Error("Upload succeeded but no URLs returned");
+
+  return data.files as string[];
 };
 
 // Generic save function for any portfolio type

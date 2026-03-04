@@ -626,7 +626,7 @@ export default function SocialMediaForm() {
                     </div>
                     <div>
                         <label className="block text-[#0A1754] font-semibold text-xl mb-3 text-center">Head Shot</label>
-                        <div className="aspect-4/5 bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative">
+                        <div className="aspect-4/5 bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative overflow-hidden">
                             {formData.headShot.previewUrl ? (
                                 <div className="relative w-full h-full">
                                     <Image
@@ -776,7 +776,7 @@ export default function SocialMediaForm() {
                         <div className="grid grid-cols-2 gap-6">
                             <div>
                                 <h3 className="text-[#0A1754] font-semibold text-lg mb-3 text-center">Before</h3>
-                                <div className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative">
+                                <div className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative overflow-hidden">
                                     {formData.caseStudy[0].before.previewUrl ? (
                                         <div className="relative w-full h-full">
                                             <Image
@@ -824,7 +824,7 @@ export default function SocialMediaForm() {
                             </div>
                             <div>
                                 <h3 className="text-[#0A1754] font-semibold text-lg mb-3 text-center">After</h3>
-                                <div className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative">
+                                <div className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative overflow-hidden">
                                     {formData.caseStudy[0].after.previewUrl ? (
                                         <div className="relative w-full h-full">
                                             <Image
@@ -880,7 +880,7 @@ export default function SocialMediaForm() {
                         {formData.graphicDesign.map((item, index) => (
                             <div
                                 key={index}
-                                className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative"
+                                className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative overflow-hidden"
                             >
                                 {item.image.previewUrl ? (
                                     <div className="relative w-full h-full">
@@ -937,7 +937,7 @@ export default function SocialMediaForm() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {formData.genericPortfolioFiles.map((item, index) => (
                             <div key={index} className="space-y-3">
-                                <div className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative">
+                                <div className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative overflow-hidden">
                                     {item.image.previewUrl ? (
                                         <div className="relative w-full h-full">
                                             <Image

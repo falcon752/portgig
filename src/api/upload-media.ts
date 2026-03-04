@@ -1,4 +1,3 @@
-import Cookies from "universal-cookie";
 import apiClient from "../../service/apiClient";
 import type {
   PortfolioApiPayload,
@@ -19,33 +18,22 @@ interface ApiError {
 }
 
 /**
- * Uploads multiple files and returns an array of string URLs.
+ * Uploads multiple files to Cloudinary via the /api/upload route
+ * and returns an array of secure Cloudinary URLs.
  */
 export const uploadAllMedia = async (filesToUpload: File[]): Promise<string[]> => {
   if (filesToUpload.length === 0) return [];
 
-  try {
-    const formData = new FormData();
-    filesToUpload.forEach((file) => formData.append("files", file));
+  const formData = new FormData();
+  filesToUpload.forEach((file) => formData.append("files", file));
 
-    const token = new Cookies().get("access_token");
+  const response = await fetch("/api/upload", { method: "POST", body: formData });
+  const data = await response.json();
 
-    const response = await apiClient.post("/creator/upload-portfolio-files", formData, {
-      headers: token
-        ? { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" }
-        : { "Content-Type": "multipart/form-data" },
-    });
+  if (!response.ok) throw new Error(data.error || "Failed to upload files");
+  if (!Array.isArray(data.files)) throw new Error("Upload succeeded but no URLs returned");
 
-    if (response.data && Array.isArray(response.data.files)) {
-      // Only return string URLs
-      return response.data.files.filter((f: any) => typeof f === "string");
-    } else {
-      throw new Error("Batch file upload succeeded but no URLs returned");
-    }
-  } catch (error: any) {
-    console.error("Error uploading media:", error.response?.data || error.message);
-    throw new Error(error.response?.data?.message || "Failed to upload files");
-  }
+  return data.files as string[];
 };
 
 

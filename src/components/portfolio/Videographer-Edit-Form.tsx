@@ -647,7 +647,7 @@ export default function VideographerForm() {
                         <label className="block text-[#0A1754] font-semibold text-xl mb-3 text-center">
                             Head Shot
                         </label>
-                        <div className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative">
+                        <div className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative overflow-hidden">
                             {formData.headShot.previewUrl ? (
                                 <div className="relative w-full h-full">
                                     <Image
@@ -712,7 +712,7 @@ export default function VideographerForm() {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {formData.additionalImages.map((item, index) => (
                                 <div key={index} className="space-y-3">
-                                    <div className="aspect-square w-48 h-48 bg-gray-100 rounded-lg flex flex-col border-2 border-dashed border-gray-300 hover:border-[#1e3a8a] transition cursor-pointer relative">
+                                    <div className="aspect-square w-48 h-48 bg-gray-100 rounded-lg flex flex-col border-2 border-dashed border-gray-300 hover:border-[#1e3a8a] transition cursor-pointer relative overflow-hidden">
                                         {item.previewUrl ? (
                                             <div className="relative w-full h-full">
                                                 <Image
@@ -867,7 +867,7 @@ export default function VideographerForm() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {formData.genericPortfolioFiles.map((item, index) => (
                             <div key={index} className="space-y-3">
-                                <div className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#1e3a8a] transition cursor-pointer relative">
+                                <div className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#1e3a8a] transition cursor-pointer relative overflow-hidden">
                                     {item.image.previewUrl ? (
                                         <div className="relative w-full h-full">
                                             <Image

@@ -665,7 +665,7 @@ export default function PhotographerForm() {
             <label className="block text-[#0A1754] font-semibold text-xl mb-3 text-center">
               Head Shot
             </label>
-            <div className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative">
+            <div className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative overflow-hidden">
               {formData.headShot.previewUrl ? (
                 <div className="relative w-full h-full">
                   <Image
@@ -767,7 +767,7 @@ export default function PhotographerForm() {
                 key={index}
                 className="grid grid-cols-1 md:grid-cols-2 gap-6"
               >
-                <div className="aspect-video bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative">
+                <div className="aspect-video bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative overflow-hidden">
                   {service.image.previewUrl ? (
                     <div className="relative w-full h-full">
                       <Image
@@ -857,7 +857,7 @@ export default function PhotographerForm() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {formData.latestWork.map((item, index) => (
               <div key={index} className="space-y-3">
-                <div className="aspect-video bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative">
+                <div className="aspect-video bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer relative overflow-hidden">
                   {item.image.previewUrl ? (
                     <div className="relative w-full h-full">
                       <Image

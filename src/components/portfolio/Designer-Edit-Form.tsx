@@ -548,7 +548,7 @@ const DesignerForm: React.FC = () => {
               Head shot
             </label>
             <div
-              className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer"
+              className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0A1754] transition cursor-pointer overflow-hidden"
               onClick={() => headShotInputRef.current?.click()}
             >
               {formData.headShot.previewUrl ? (
@@ -632,7 +632,7 @@ const DesignerForm: React.FC = () => {
             {formData.skills.map((skill, index) => (
               <div key={index} className="space-y-3">
                 <div
-                  className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#1e3a8a] transition cursor-pointer"
+                  className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#1e3a8a] transition cursor-pointer overflow-hidden"
                   onClick={() => skillImageInputRefs.current[index]?.click()}
                 >
                   {skill.image.previewUrl ? (
@@ -720,7 +720,7 @@ const DesignerForm: React.FC = () => {
             {formData.genericPortfolioFiles.map((item, index) => (
               <div key={index}>
                 <div
-                  className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#1e3a8a] transition cursor-pointer"
+                  className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#1e3a8a] transition cursor-pointer overflow-hidden"
                   onClick={() =>
                     portfolioImageInputRefs.current[index]?.click()
                   }
