@@ -12,9 +12,10 @@ import { AiOutlineClose } from "react-icons/ai";
 import { navigationItems, navigationItemsMobile } from "../constants";
 import AuthStorage from "../lib/requests/auth.new";
 import { NotificationService } from "../lib/requests/notifications";
-import { fetchRecruiterProfile } from "../redux/features/user/recruiterSlice";
-import { fetchUserProfile } from "../redux/features/user/userSlice";
+import { fetchRecruiterProfile, clearProfile as clearRecruiterProfile } from "../redux/features/user/recruiterSlice";
+import { fetchUserProfile, clearProfile as clearUserProfile } from "../redux/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { persistor } from "../redux/store";
 import NavLink from "./NavLink";
 import {
   getRecruiterDashboard,
@@ -162,6 +163,11 @@ NavigationBarProps) => {
     setIsLoggingOut(true);
     toast.success("Logging out...");
     AuthStorage.clearAuth();
+
+    // Clear Redux store so stale profile data is not persisted for the next user
+    dispatch(clearUserProfile());
+    dispatch(clearRecruiterProfile());
+    persistor.purge();
 
     setNotificationState({
       totalCount: 0,

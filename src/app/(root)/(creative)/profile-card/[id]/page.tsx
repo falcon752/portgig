@@ -194,9 +194,9 @@ const ProfileCard = () => {
             return;
         }
         
-        const rawDisplayName = creative?.portfolio?.display_name ?? creative?.bio_data?.user_name ?? null;
+        const rawDisplayName = creative?.portfolio?.display_name ?? null;
         if (!rawDisplayName) {
-            alert("Portfolio display name not found for this creative.");
+            alert("Portfolio link could not be built — display name not found.");
             return;
         }
         const displayNameSlug = rawDisplayName.trim().toLowerCase().replace(/\s+/g, "-");

@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useAppSelector } from "@/src/redux/hooks";
+import Cookies from "universal-cookie";
 
 const templates = [
   {
@@ -95,10 +97,36 @@ const templates = [
   },
 ];
 
+const TEMPLATE_BASE_PATHS: Record<string, string> = {
+  WRITER: "writer-portfolio",
+  VIDEOGRAPHER: "videographer-portfolio",
+  DEVELOPER: "developer-portfolio",
+  PHOTOGRAPHER: "photographer-portfolio",
+  SOCIAL_MEDIA_MANAGER: "social-media-portfolio",
+  DESIGNER: "designer-portfolio",
+};
+
 const TemplatesGrid = () => {
-  const [editingTemplateId, setEditingTemplateId] = useState<string | null>(
-    null
-  );
+  const [editingTemplateId, setEditingTemplateId] = useState<string | null>(null);
+  const { profile } = useAppSelector((state) => state.user);
+
+  const templateType = profile?.portfolio?.template_type ?? null;
+  const basePath = templateType ? TEMPLATE_BASE_PATHS[templateType] : null;
+
+  const displayName = profile?.portfolio?.display_name ?? null;
+  const usernameSlug = displayName
+    ? displayName.trim().toLowerCase().replace(/\s+/g, "-")
+    : null;
+
+  const userId =
+    typeof window !== "undefined"
+      ? new Cookies().get("userId") || localStorage.getItem("userId")
+      : null;
+
+  const portfolioUrl =
+    basePath && usernameSlug && userId
+      ? `/${basePath}/${encodeURIComponent(usernameSlug)}/${encodeURIComponent(userId)}`
+      : null;
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -118,6 +146,25 @@ const TemplatesGrid = () => {
 
   return (
     <div className="bg-[#F2F2F2] py-10 px-4 sm:px-6 md:px-8 lg:px-12 font-urbanist">
+      {/* View existing portfolio button */}
+      <div className="flex justify-start max-w-[1280px] mx-auto mb-6">
+        {portfolioUrl ? (
+          <Link href={portfolioUrl}>
+            <button className="cursor-pointer bg-[#0A1754] text-white rounded-lg px-10 py-4 text-base font-semibold shadow-md hover:bg-[#08124A] transition">
+              View My Portfolio
+            </button>
+          </Link>
+        ) : (
+          <button
+            disabled
+            className="bg-[#0A1754] text-white rounded-lg px-10 py-4 text-base font-semibold opacity-40 cursor-not-allowed"
+            title="You don't have a portfolio yet. Pick a template below to get started."
+          >
+            View My Portfolio
+          </button>
+        )}
+      </div>
+
       <div
         className="
       grid
