@@ -28,11 +28,7 @@ const TemplateTwoAboutMe = ({
   return (
     <section
       className="py-8 lg:py-20 px-5 md:px-10 flex flex-col gap-10 bg-black"
-      style={{
-        fontFamily:
-          portfolioData?.fonts?.body_font ||
-          "Instrument Sans, sans-serif",
-      }}
+      style={{ fontFamily: getBodyStyle().fontFamily }}
     >
       {/* Image boxes – stacked vertically (matches static) */}
       <div className="flex flex-col gap-5">
@@ -57,10 +53,10 @@ const TemplateTwoAboutMe = ({
       {/* About Me text */}
       <div className="flex flex-col gap-5">
           <h2
-            className="font-next font-bold text-xl md:text-3xl text-white"
-            // style={getHeadingStyle()}
+            className="font-next font-bold text-xl md:text-3xl"
+            style={getHeadingStyle()}
           >
-            ABOUT <span className="text-gold">ME</span>
+            ABOUT <span style={{ color: getHeadingStyle().color }}>ME</span>
           </h2>
 
         <p

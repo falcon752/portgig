@@ -24,13 +24,10 @@ const TemplateTwoService = ({
     <section className="bg-black py-12 px-4 md:px-10 text-white">
       {/* Heading */}
       <h2
-        className="font-bold text-xl md:text-3xl mb-8 text-white"
-        // style={{
-        //   ...getHeadingStyle(),
-        //   color: "#ffffff",
-        // }}
+        className="font-bold text-xl md:text-3xl mb-8"
+        style={getHeadingStyle()}
       >
-        MY <span className="text-yellowGold">SERVICES</span>
+        MY <span>SERVICES</span>
       </h2>
 
       {/* Services */}
@@ -54,8 +51,8 @@ const TemplateTwoService = ({
         videoEditingSkills.length > 0) && (
         <>
           <h2
-            className="font-bold text-xl md:text-3xl mt-14 mb-8 text-yellowGold"
-            // style={getHeadingStyle()}
+            className="font-bold text-xl md:text-3xl mt-14 mb-8"
+            style={getHeadingStyle()}
           >
             TOOLS
           </h2>

@@ -65,7 +65,7 @@ const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
                   height={40}
                 />
 
-                <h3 className="text-cyan-400 font-bold text-lg">
+                <h3 className="font-bold text-lg" style={getHeadingStyle()}>
                   {service.name}
                 </h3>
 

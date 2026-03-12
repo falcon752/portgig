@@ -3,9 +3,11 @@ import Image from "next/image";
 import type { TemplateOneHeroProps } from "@/types/template-one";
 import { ApiPortfolioData, EMPTY_PORTFOLIO } from "@/types/portfolio";
 import { getImageUrl } from "@/src/utils/image-url";
+import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
 
 export const TemplateOneHero = ({ portfolio }: TemplateOneHeroProps) => {
   const portfolioData: ApiPortfolioData = portfolio || EMPTY_PORTFOLIO;
+  const { getHeadingStyle, getAccentStyle } = usePortfolioCustomizations(portfolioData);
 
   const name = portfolioData?.display_name || "Gracier Aftang";
   const headShotUrl = getImageUrl(portfolioData?.head_shot) || "/placeholder.svg?height=500&width=500";
@@ -36,8 +38,8 @@ export const TemplateOneHero = ({ portfolio }: TemplateOneHeroProps) => {
 
         {/* Text */}
         <div className="flex flex-col gap-3">
-          <h1 className="text-white text-3xl font-bold">{name}</h1>
-          <p className="text-purple-500 text-base leading-relaxed">
+          <h1 className="text-3xl font-bold" style={getHeadingStyle()}>{name}</h1>
+          <p className="text-base leading-relaxed" style={getAccentStyle()}>
             {jobTitles}
             {/* <span className="sm:block lg:inline"> {tagline}</span> */}
           </p>
@@ -63,8 +65,8 @@ export const TemplateOneHero = ({ portfolio }: TemplateOneHeroProps) => {
 
           {/* Text */}
           <div className="flex flex-col gap-3 mt-[150px]">
-            <h1 className="text-white text-4xl font-bold">{name}</h1>
-            <p className="text-purple-500 text-lg max-w-md leading-relaxed">
+            <h1 className="text-4xl font-bold" style={getHeadingStyle()}>{name}</h1>
+            <p className="text-lg max-w-md leading-relaxed" style={getAccentStyle()}>
               {jobTitles}
               <br />
               {/* {tagline} */}

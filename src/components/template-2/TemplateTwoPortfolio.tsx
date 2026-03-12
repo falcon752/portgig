@@ -32,10 +32,10 @@ const TemplateTwoPortfolio = ({
       <section className="flex flex-col gap-8 md:gap-10 py-8 md:py-14 lg:py-20 px-4 md:px-10">
         {/* Heading */}
         <h2
-          className="font-next text-xl md:text-3xl mb-8 font-normal text-white"
-          // style={getHeadingStyle()}
+          className="font-next text-xl md:text-3xl mb-8 font-normal"
+          style={getHeadingStyle()}
         >
-          My <span className="text-gold">Portfolio</span>
+          My <span style={{ color: getHeadingStyle().color }}>Portfolio</span>
         </h2>
 
         {/* Portfolio Grid */}

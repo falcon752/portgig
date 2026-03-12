@@ -154,6 +154,7 @@ export default async function SocialMediaPortfolioByCreatorIdPage({ params }: Pa
         graphicsDesign={
           socialMediaManagerSpecific.social_media_manager.graphic_design || []
         }
+        portfolioData={portfolioData}
       />
       <TemplateFiveTools
         toolsIUse={socialMediaManagerSpecific.social_media_manager.tools || []}

@@ -13,7 +13,7 @@ export default function Tools({
   whyWorkWithMe,
   portfolioData,
 }: TemplateFiveToolsProps) {
-  const { customStyles } = usePortfolioCustomizations(portfolioData);
+  const { customStyles, getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
 
   return (
     <section
@@ -21,7 +21,7 @@ export default function Tools({
       style={{ ...customStyles }}
     >
       {/* Tools I Use */}
-      <h3 className="text-4xl font-black font-[MuseoSansRounded] text-[#0A1754] leading-none tracking-normal mb-8 text-center">
+      <h3 className="text-4xl font-black font-[MuseoSansRounded] leading-none tracking-normal mb-8 text-center" style={getHeadingStyle()}>
         Tools I Use
       </h3>
 
@@ -59,7 +59,7 @@ export default function Tools({
       </div>
 
       {/* Why Work With Me */}
-      <h3 className="text-4xl font-black font-[MuseoSansRounded] text-[#0A1754] leading-none tracking-normal mb-6 mt-16 text-center">
+      <h3 className="text-4xl font-black font-[MuseoSansRounded] leading-none tracking-normal mb-6 mt-16 text-center" style={getHeadingStyle()}>
         Why You Should Work With Me
       </h3>
 

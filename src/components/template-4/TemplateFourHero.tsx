@@ -18,7 +18,7 @@ const TemplateFourHero = ({
   headShot,
   portfolioData,
 }: TemplateFourHeroProps) => {
-  usePortfolioCustomizations(portfolioData); // hook stays, styles don’t hijack layout
+  const { getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
   const correctedHeadShot = getImageUrl(headShot) || headShot || "/placeholder.svg";
   return (
     <section className="bg-[#faf7f3] px-5 md:px-10 lg:px-20 py-10 border-b border-[#E77C29]">
@@ -36,11 +36,11 @@ const TemplateFourHero = ({
 
         {/* TEXT */}
         <div className="flex flex-col gap-1">
-          <h1 className="text-lg md:text-xl font-semibold text-blue-900">
+          <h1 className="text-lg md:text-xl font-semibold" style={getHeadingStyle()}>
             {displayName || "Your Name"}
           </h1>
 
-          <p className="text-sm text-blue-700">
+          <p className="text-sm" style={getBodyStyle()}>
             {[...(jobTitles || []), location].filter(Boolean).join(", ") ||
               "Your role, Location"}
           </p>

@@ -53,7 +53,7 @@ const TemplateThreePortfolio = ({
               </div>
 
               {/* TITLE */}
-              <h3 className="text-white font-bold text-lg lg:text-xl">
+              <h3 className="font-bold text-lg lg:text-xl" style={getHeadingStyle()}>
                 {item.title}
               </h3>
 

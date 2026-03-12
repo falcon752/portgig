@@ -1,3 +1,4 @@
+"use client";
 // import { useMemo } from 'react';
 // import { ApiPortfolioData } from '@/types/portfolio'; 
 
@@ -359,7 +360,7 @@
 
 
 
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { CSSProperties } from 'react';
 import { ApiPortfolioData, EMPTY_PORTFOLIO, CustomCSSProperties } from '@/types/portfolio';
 
@@ -479,8 +480,8 @@ export const generateCustomCSS = (customizations: PortfolioCustomizations): Cust
     '--accent-color': customizations.accentColor,
     '--bg-color': customizations.backgroundColor,
     '--text-color': customizations.textColor,
-    backgroundColor: customizations.backgroundColor,
-    color: customizations.textColor,
+    // NOTE: do NOT set backgroundColor/color here — that would override every
+    // template section's intentional background. Individual components opt-in.
   };
 };
 
@@ -558,27 +559,50 @@ export const usePortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
   const customizations = useMemo(() => getPortfolioCustomizations(portfolioData), [portfolioData]);
   const customStyles = useMemo(() => generateCustomCSS(customizations), [customizations]);
 
+  // Dynamically inject Google Fonts <link> for whichever fonts the user selected
+  useEffect(() => {
+    const fontsToLoad = [...new Set([customizations.headingFont, customizations.bodyFont])]
+      .filter((f) => f && /^[A-Za-z0-9 \-]+$/.test(f));
+
+    if (fontsToLoad.length === 0) return;
+
+    const fontQuery = fontsToLoad
+      .map((f) => `family=${encodeURIComponent(f)}:wght@400;500;600;700`)
+      .join('&');
+    const href = `https://fonts.googleapis.com/css2?${fontQuery}&display=swap`;
+
+    const LINK_ID = 'portfolio-custom-fonts';
+    let link = document.getElementById(LINK_ID) as HTMLLinkElement | null;
+    if (!link) {
+      link = document.createElement('link');
+      link.id = LINK_ID;
+      link.rel = 'stylesheet';
+      document.head.appendChild(link);
+    }
+    link.href = href;
+  }, [customizations.headingFont, customizations.bodyFont]);
+
   const getHeadingStyle = (additionalStyles: CSSProperties = {}): CSSProperties => ({
-    fontFamily: 'var(--heading-font)',
-    color: 'var(--primary-color)',
+    fontFamily: customizations.headingFont,
+    color: customizations.primaryColor,
     ...additionalStyles,
   });
 
   const getBodyStyle = (additionalStyles: CSSProperties = {}): CSSProperties => ({
-    fontFamily: 'var(--body-font)',
-    color: 'var(--text-color)',
+    fontFamily: customizations.bodyFont,
+    color: customizations.textColor,
     ...additionalStyles,
   });
 
   const getAccentStyle = (additionalStyles: CSSProperties = {}): CSSProperties => ({
-    color: 'var(--accent-color)',
+    color: customizations.accentColor,
     ...additionalStyles,
   });
 
   const getButtonStyle = (additionalStyles: CSSProperties = {}): CSSProperties => ({
-    backgroundColor: 'var(--primary-color)',
-    color: 'var(--bg-color)',
-    fontFamily: 'var(--body-font)',
+    backgroundColor: customizations.primaryColor,
+    color: customizations.backgroundColor,
+    fontFamily: customizations.bodyFont,
     border: 'none',
     cursor: 'pointer',
     transition: 'all 0.2s ease',
@@ -586,16 +610,16 @@ export const usePortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
   });
 
   const getCardStyle = (additionalStyles: CSSProperties = {}): CSSProperties => ({
-    backgroundColor: 'var(--bg-color)',
-    color: 'var(--text-color)',
+    backgroundColor: customizations.backgroundColor,
+    color: customizations.textColor,
     fontFamily: 'var(--body-font)',
     border: `1px solid ${customizations.primaryColor}20`, // 20% opacity
     ...additionalStyles,
   });
 
   const getLinkStyle = (additionalStyles: CSSProperties = {}): CSSProperties => ({
-    color: 'var(--accent-color)',
-    fontFamily: 'var(--body-font)',
+    color: customizations.accentColor,
+    fontFamily: customizations.bodyFont,
     textDecoration: 'none',
     transition: 'all 0.2s ease',
     ...additionalStyles,

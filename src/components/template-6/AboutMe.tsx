@@ -10,7 +10,7 @@ interface TemplatesixAboutMeProps {
 
 export default function TemplatesixAboutMe({ portfolioData }: TemplatesixAboutMeProps) {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { getBodyStyle } = usePortfolioCustomizations(portfolio);
+  const { getBodyStyle, getHeadingStyle } = usePortfolioCustomizations(portfolio);
   const aboutMe = portfolio.about_me || "Tell us about yourself! Add a description in your portfolio settings.";
 
   return (
@@ -34,7 +34,7 @@ export default function TemplatesixAboutMe({ portfolioData }: TemplatesixAboutMe
       <div className="relative z-10 mx-auto max-w-[1450px] px-2 sm:px-4 lg:px-12">
 
         {/* Title */}
-        <h2 className="text-center text-2xl sm:text-3xl lg:text-4xl font-bold text-[#FCC92F] mb-8">
+        <h2 className="text-center text-2xl sm:text-3xl lg:text-4xl font-bold mb-8" style={getHeadingStyle()}>
           ABOUT ME
         </h2>
 
@@ -42,10 +42,7 @@ export default function TemplatesixAboutMe({ portfolioData }: TemplatesixAboutMe
         <div className="mx-auto w-full lg:max-w-5xl">
           <p
             className="text-center text-white leading-relaxed"
-            // style={{
-            //   fontSize: "clamp(13px, 3.2vw, 18px)",
-            //   ...getBodyStyle(),
-            // }}
+            style={{ fontSize: "clamp(13px, 3.2vw, 18px)", ...getBodyStyle() }}
           >
             {aboutMe}
           </p>

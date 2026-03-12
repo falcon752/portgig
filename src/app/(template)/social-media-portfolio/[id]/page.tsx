@@ -300,26 +300,31 @@ export default async function Template5Page({
               .my_approach_to_strategy_content || ""
           }
           mission={portfolioData.mission || ""}
+          portfolioData={portfolioData}
         />
         <TemplateFiveSkills
           mySkillSet={
             socialMediaManagerSpecific.social_media_manager.skills || []
           }
+          portfolioData={portfolioData}
         />
         <TemplateFiveServices
           otherServices={portfolioData.other_services || []}
+          portfolioData={portfolioData}
         />
         <TemplateFiveHealthcareCaseStudy
           brandName={caseStudy.brand_name || ""}
           howYouHelp={caseStudy.contribution || ""}
           before={caseStudy.before || ""}
           after={caseStudy.after || ""}
+          portfolioData={portfolioData}
         />
         {/* <TemplateFivePortfolio /> */}
         <TemplateFiveGraphicsDesign
           graphicsDesign={
             socialMediaManagerSpecific.social_media_manager.graphic_design || []
           }
+          portfolioData={portfolioData}
         />
         {/* <TemplateFiveVideoEditing
           videoEditing={
@@ -332,6 +337,7 @@ export default async function Template5Page({
             socialMediaManagerSpecific.social_media_manager.tools || []
           }
           whyWorkWithMe={portfolioData.what_you_get_working_with_me || ""}
+          portfolioData={portfolioData}
         />
         {!isPublicView && (
           <div className="bg-black py-8 border-t border-gray-800">

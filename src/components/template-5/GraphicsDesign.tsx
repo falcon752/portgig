@@ -1,16 +1,19 @@
 "use client";
 import Image from "next/image";
 import { getImageUrl } from "@/src/utils/image-url";
+import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
 
 interface TemplateFiveGraphicsDesignProps {
   graphicsDesign?: string[];
+  portfolioData?: any;
 }
 
-export default function TemplateFiveGraphicsDesign({ graphicsDesign }: TemplateFiveGraphicsDesignProps) {
+export default function TemplateFiveGraphicsDesign({ graphicsDesign, portfolioData }: TemplateFiveGraphicsDesignProps) {
+  const { getHeadingStyle } = usePortfolioCustomizations(portfolioData);
   return (
     <section className="bg-[#f9f9f9] px-6 py-12 text-center">
       {/* Section Title */}
-      <h3 className="text-4xl font-black font-[MuseoSansRounded] text-[#0A1754] leading-none tracking-normal mb-6">
+      <h3 className="text-4xl font-black font-[MuseoSansRounded] leading-none tracking-normal mb-6" style={getHeadingStyle()}>
         Graphics Design
       </h3>
 

@@ -19,7 +19,7 @@ const TemplateTwoHero = ({
   headShot = "/assets/template2.png",
   portfolioData,
 }: TemplateTwoHeroProps) => {
-  const { customStyles } = usePortfolioCustomizations(portfolioData);
+  const { customStyles, getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
   const correctedHeadShot = getImageUrl(headShot) || headShot;
 
   return (
@@ -29,10 +29,10 @@ const TemplateTwoHero = ({
         className="flex flex-col font-bold mb-4 md:mb-0 md:w-1/2 justify-center text-center md:text-left md:-translate-y-10"
         style={{ fontFamily: "The Next Font, sans-serif", fontStyle: "normal" }}
       >
-        <h2 className="text-5xl sm:text-6xl md:text-6xl lg:text-7xl font-black text-white">
+        <h2 className="text-5xl sm:text-6xl md:text-6xl lg:text-7xl font-black" style={getHeadingStyle()}>
           {displayName}
         </h2>
-        <h2 className="text-xs md:text-base mt-1 text-white">
+        <h2 className="text-xs md:text-base mt-1" style={getBodyStyle()}>
           {jobTitles.join(" / ")}, <span>{location}</span>
         </h2>
       </div>

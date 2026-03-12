@@ -75,7 +75,7 @@ export const TemplateOneAboutme = ({ portfolio }: TemplateOneAboutmeProps) => {
         </div>
 
         {/* Mission */}
-        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-purple-500 text-left">
+        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-left" style={getHeadingStyle()}>
           Mission and Design Philosophy
         </h2>
         <div className={cardStyle}>
@@ -88,7 +88,7 @@ export const TemplateOneAboutme = ({ portfolio }: TemplateOneAboutmeProps) => {
         </div>
 
         {/* Skills */}
-        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-purple-500 text-left">
+        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-left" style={getHeadingStyle()}>
           Skills
         </h2>
         <div className={skillsGridContainerStyle}>
@@ -126,8 +126,8 @@ export const TemplateOneAboutme = ({ portfolio }: TemplateOneAboutmeProps) => {
 
       {/* Tools / Software */}
       <div className="px-4 sm:px-6 md:px-8 lg:px-10 pt-10 pb-5 flex flex-col gap-6">
-        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-purple-500 text-left">
-          <span className="text-purple-500">Tool /</span> Software
+        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-left" style={getHeadingStyle()}>
+          <span>Tool /</span> Software
         </h2>
         <div className={`${cardStyle} items-start`}>
           {toolsSoftwareText.split(", ").map((tool, index) => (

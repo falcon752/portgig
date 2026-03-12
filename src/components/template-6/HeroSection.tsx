@@ -25,8 +25,8 @@ export default function TemplatesixHeroSection({ portfolioData }: TemplatesixHer
         <div className="hidden lg:flex flex-row items-center justify-between gap-16">
           <div className="text-white lg:w-1/2 w-full text-left">
             <h1
-              className="text-white text-[96px] 2xl:text-[96px] xl:text-[72px] lg:text-[60px] font-extrabold leading-tight whitespace-nowrap"
-              // style={{ color: "white", ...getHeadingStyle() }}
+              className="text-[96px] 2xl:text-[96px] xl:text-[72px] lg:text-[60px] font-extrabold leading-tight whitespace-nowrap"
+              style={getHeadingStyle()}
             >
               {displayName.toUpperCase()}
             </h1>
@@ -66,8 +66,8 @@ export default function TemplatesixHeroSection({ portfolioData }: TemplatesixHer
         </div>
 
         <h1
-          className="text-white text-5xl sm:text-6xl font-extrabold mb-2 leading-tight whitespace-nowrap"
-          // style={{ color: "white", ...getHeadingStyle() }}
+          className="text-5xl sm:text-6xl font-extrabold mb-2 leading-tight whitespace-nowrap"
+          style={getHeadingStyle()}
         >
           {displayName.toUpperCase()}
         </h1>
