@@ -17,7 +17,8 @@ export function TemplateFourAboutMe({
     usePortfolioCustomizations(portfolioData);
 
   return (
-    <section className="bg-[#faf7f3] px-5 md:px-10 lg:px-20 py-10 font-inter">
+    <section className="bg-[#faf7f3] py-10 font-inter">
+      <div className="max-w-[1400px] mx-auto px-5 md:px-10 lg:px-20">
       
       {/* ABOUT ME */}
       <div className="flex flex-col gap-4 mb-10">
@@ -66,6 +67,7 @@ export function TemplateFourAboutMe({
             </div>
           )}
         </div>
+      </div>
       </div>
 
     </section>

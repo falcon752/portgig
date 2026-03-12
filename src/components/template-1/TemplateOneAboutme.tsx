@@ -63,8 +63,8 @@ export const TemplateOneAboutme = ({ portfolio }: TemplateOneAboutmeProps) => {
 
   return (
     <section className="h-fit bg-black">
-      <div className="px-4 sm:px-6 md:px-8 lg:px-10 pt-10 pb-5 flex flex-col gap-6">
-        {/* About Me */}
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 pt-10 pb-5 flex flex-col gap-6">
+        {/* About Me */}}
         <div className={cardStyle}>
           <p
             className={`${responsiveTextStyle} text-[12px] sm:text-[16px] md:text-[16px] lg:text-[16px] leading-[140%] sm:leading-[140%] text-center max-w-3xl`}
@@ -125,7 +125,7 @@ export const TemplateOneAboutme = ({ portfolio }: TemplateOneAboutmeProps) => {
       </div>
 
       {/* Tools / Software */}
-      <div className="px-4 sm:px-6 md:px-8 lg:px-10 pt-10 pb-5 flex flex-col gap-6">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 pt-10 pb-5 flex flex-col gap-6">
         <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-left" style={getHeadingStyle()}>
           <span>Tool /</span> Software
         </h2>

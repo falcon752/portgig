@@ -22,7 +22,8 @@ export default function Skills({ mySkillSet, portfolioData }: TemplateFiveSkills
   ];
 
   return (
-    <section className="bg-[#f9f9f9] px-6 py-12 text-[#0A1754]">
+    <section className="bg-[#f9f9f9] py-12 text-[#0A1754]">
+      <div className="max-w-[1400px] mx-auto px-6">
       {/* Section Title */}
       <h3
         className="text-4xl font-black font-[MuseoSansRounded] leading-none tracking-normal mb-6 text-center"
@@ -56,6 +57,7 @@ export default function Skills({ mySkillSet, portfolioData }: TemplateFiveSkills
             {skill}
           </div>
         ))}
+      </div>
       </div>
     </section>
   );

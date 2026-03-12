@@ -23,7 +23,7 @@ export default function TemplatesixSkills({ portfolioData }: TemplatesixSkillsPr
       style={{ color: (customStyles as CustomCSSProperties)["--text-color"] || "#FFF" }}
     >
       {/* Section Title */}
-      <h2 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold text-[#FCC92F] mb-12" style={getHeadingStyle()}>
+      <h2 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold mb-12" style={getHeadingStyle()}>
         MY SKILLS
       </h2>
 
@@ -50,7 +50,7 @@ export default function TemplatesixSkills({ portfolioData }: TemplatesixSkillsPr
       {/* Photographer Services (optional, below skills) */}
       {/* {photographerServices.length > 0 && (
         <div className="w-full max-w-[1450px] mx-auto px-6 md:px-16 mt-16">
-          <h3 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold text-[#FCC92F] mb-8" style={getHeadingStyle()}>
+          <h3 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold mb-8" style={getHeadingStyle()}>
             MY SERVICES
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">

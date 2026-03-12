@@ -27,7 +27,8 @@ const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
     : [];
 
   return (
-    <section className="px-5 lg:px-12 py-16 flex flex-col gap-10 bg-black text-white">
+    <section className="bg-black text-white py-16">
+      <div className="max-w-[1400px] mx-auto px-5 lg:px-12 flex flex-col gap-10">
       {/* ABOUT ME */}
       <div>
         <h2
@@ -103,6 +104,7 @@ const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
         ) : (
           <p className="text-white">No skills to display.</p>
         )}
+      </div>
       </div>
     </section>
   );

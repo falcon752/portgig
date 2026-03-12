@@ -21,7 +21,8 @@ const TemplateTwoService = ({
     usePortfolioCustomizations(portfolioData);
 
   return (
-    <section className="bg-black py-12 px-4 md:px-10 text-white">
+    <section className="bg-black text-white">
+      <div className="max-w-[1400px] mx-auto py-12 px-4 md:px-10">
       {/* Heading */}
       <h2
         className="font-bold text-xl md:text-3xl mb-8"
@@ -78,6 +79,7 @@ const TemplateTwoService = ({
           </ul>
         </>
       )}
+      </div>
     </section>
   );
 };

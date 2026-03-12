@@ -1,3 +1,4 @@
+"use client";
 import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
 import React from "react";
 

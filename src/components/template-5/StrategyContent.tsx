@@ -17,7 +17,8 @@ export default function TemplateFiveStrategyContent({
     usePortfolioCustomizations(portfolioData);
 
   return (
-    <section className="bg-[#f9f9f9] px-6 py-12 text-center text-[#0A1754] space-y-12">
+    <section className="bg-[#f9f9f9] py-12 text-[#0A1754]">
+      <div className="max-w-[1400px] mx-auto px-6 text-center space-y-12">
       
       {/* My Approach to Strategy Content */}
       <div className="space-y-6">
@@ -62,6 +63,7 @@ export default function TemplateFiveStrategyContent({
         </div>
       </div>
 
+      </div>
     </section>
   );
 }

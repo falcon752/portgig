@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { Buttons } from "../export_components";
@@ -23,19 +24,19 @@ const TemplateTwoPortfolio = ({
   jobsOpenTo,
   portfolioData,
 }: TemplateTwoPortfolioProps) => {
-  const { getHeadingStyle, getBodyStyle } =
+  const { getHeadingStyle, getBodyStyle, getAccentStyle } =
     usePortfolioCustomizations(portfolioData);
 
   return (
     <>
       {/* MAIN SECTION */}
-      <section className="flex flex-col gap-8 md:gap-10 py-8 md:py-14 lg:py-20 px-4 md:px-10">
+      <section className="flex flex-col gap-8 md:gap-10 py-8 md:py-14 lg:py-20">
+        <div className="max-w-[1400px] mx-auto px-4 md:px-10">
         {/* Heading */}
         <h2
-          className="font-next text-xl md:text-3xl mb-8 font-normal"
-          style={getHeadingStyle()}
-        >
-          My <span style={{ color: getHeadingStyle().color }}>Portfolio</span>
+            className="font-next text-xl md:text-3xl mb-8 font-black"
+            style={getHeadingStyle()}
+          >
         </h2>
 
         {/* Portfolio Grid */}
@@ -77,15 +78,15 @@ const TemplateTwoPortfolio = ({
         {/* JOBS OPEN TO */}
         <div className="mt-14">
           <h2
-            className="font-next text-xl md:text-3xl mb-6 font-normal text-white"
-            // style={getHeadingStyle()}
+            className="font-next text-xl md:text-3xl mb-6 font-black"
+            style={getHeadingStyle()}
           >
-            Open to <span className="text-gold">all kinds of gigs</span>
+            Open to <span style={getAccentStyle()}>all kinds of gigs</span>
           </h2>
 
           <ul
-            className="space-y-4 md:space-y-5 list-disc list-inside text-sm md:text-base lg:text-xl font-bold text-white leading-relaxed md:leading-loose"
-            // style={getBodyStyle()}
+            className="space-y-4 md:space-y-5 list-disc list-inside text-sm md:text-base lg:text-xl font-bold leading-relaxed md:leading-loose"
+            style={getBodyStyle()}
           >
             {jobsOpenTo
               .split("\n")
@@ -99,10 +100,10 @@ const TemplateTwoPortfolio = ({
         {/* WHY WORK WITH ME */}
         <div className="flex flex-col gap-5 mt-8 md:mt-12 lg:mt-20">
           <h2
-            className="font-bold text-xl md:text-3xl text-white"
-            // style={getHeadingStyle()}
+            className="font-bold text-xl md:text-3xl"
+            style={getHeadingStyle()}
           >
-            WHY YOU <span className="text-gold">SHOULD WORK WITH ME</span>
+            WHY YOU <span style={getAccentStyle()}>SHOULD WORK WITH ME</span>
           </h2>
 
           <div className="text-white w-full">
@@ -113,6 +114,7 @@ const TemplateTwoPortfolio = ({
               {whyWorkWithMe}
             </h2>
           </div>
+        </div>
         </div>
       </section>
 

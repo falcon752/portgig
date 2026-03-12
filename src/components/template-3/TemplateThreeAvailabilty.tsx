@@ -26,7 +26,8 @@ const TemplateThreeAvailability = ({
     "I bring a unique blend of technical expertise and creative problem-solving to every project.";
 
   return (
-    <section className="px-5 lg:px-12 py-20 bg-black space-y-16 text-white">
+    <section className="bg-black text-white py-20">
+      <div className="max-w-[1400px] mx-auto px-5 lg:px-12 space-y-16">
       {/* AVAILABILITY */}
       <div className="space-y-4">
         <h2 className="text-lg lg:text-2xl font-bold" style={getHeadingStyle()}>
@@ -51,6 +52,7 @@ const TemplateThreeAvailability = ({
             {whyWorkWithMe}
           </p>
         </div>
+      </div>
       </div>
     </section>
   );

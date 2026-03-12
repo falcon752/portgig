@@ -251,7 +251,10 @@ export default async function Template2Page({
         aboutMe={portfolio.about_me}
         portfolioData={portfolio}
       />
-      <TemplateTwoEvent portfolioData={videographerSpecific.videographer.types ?? []} />
+      <TemplateTwoEvent
+        portfolioData={portfolio}
+        types={videographerSpecific.videographer.types ?? []}
+      />
       <TemplateTwoService
         videographyTypes={videographerSpecific.videographer.types ?? []}
         services={portfolio.other_services as string[]}

@@ -21,7 +21,8 @@ const TemplateThreePortfolio = ({
   const portfolioItems = portfolio.files || [];
 
   return (
-    <section className="px-5 lg:px-12 py-20 bg-black text-white">
+    <section className="bg-black text-white py-20">
+      <div className="max-w-[1400px] mx-auto px-5 lg:px-12">
       {/* SECTION TITLE */}
       <h2
         className="text-xl lg:text-2xl font-bold mb-10 text-white"
@@ -71,6 +72,7 @@ const TemplateThreePortfolio = ({
         ) : (
           <p className="text-white">No portfolio items to display.</p>
         )}
+      </div>
       </div>
     </section>
   );

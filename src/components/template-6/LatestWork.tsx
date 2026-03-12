@@ -29,7 +29,7 @@ export default function TemplatesixLatestWork({ portfolioData }: TemplatesixLate
           <p className="text-white mb-2 text-base sm:text-lg md:text-xl font-inter" style={getBodyStyle()}>
             My Portfolio
           </p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#FCC92F]" style={getHeadingStyle()}>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold" style={getHeadingStyle()}>
             LATEST WORK
           </h2>
         </div>

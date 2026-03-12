@@ -35,10 +35,11 @@ export default function TemplatesixJobs({
     "As a passionate and detail-oriented photographer, I bring creativity, precision, and storytelling into every shot. Whether it’s capturing the essence of a brand, the emotions of an event, or the artistry of a product, I ensure every image tells a compelling story.";
 
   return (
-    <section className="bg-black text-white py-24 px-6">
+    <section className="bg-black text-white py-24">
+      <div className="max-w-[1400px] mx-auto px-6">
       {/* OPEN TO ALL KINDS OF GIGS */}
       <h2
-        className="text-center text-3xl md:text-4xl font-bold text-[#FCC92F] mb-16"
+        className="text-center text-3xl md:text-4xl font-bold mb-16"
         style={getHeadingStyle()}
       >
         OPEN TO ALL KINDS OF GIGS
@@ -64,7 +65,7 @@ export default function TemplatesixJobs({
 
       {/* WHY YOU SHOULD WORK WITH ME */}
       <h2
-        className="text-center text-3xl md:text-4xl font-bold text-[#FCC92F] mb-10"
+        className="text-center text-3xl md:text-4xl font-bold mb-10"
         style={getHeadingStyle()}
       >
         WHY YOU SHOULD WORK WITH ME
@@ -77,6 +78,7 @@ export default function TemplatesixJobs({
       <p className="text-center text-lg md:text-xl font-semibold mt-10 text-gray-300">
         Looking forward to working with you
       </p>
+      </div>
     </section>
   );
 }

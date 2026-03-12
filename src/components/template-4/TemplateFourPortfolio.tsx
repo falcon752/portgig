@@ -34,7 +34,8 @@ export function TemplateFourPortfolio({
     portfolioItems?.filter((i) => i.title || i.link || i.image) || [];
 
   return (
-    <section className="bg-[#faf7f3] px-5 md:px-10 lg:px-20 py-10 space-y-12 font-istokWeb">
+    <section className="bg-[#faf7f3] py-10 font-istokWeb">
+      <div className="max-w-[1400px] mx-auto px-5 md:px-10 lg:px-20 space-y-12">
       {/* PORTFOLIO */}
       {items.length > 0 && (
         <div className="space-y-8">
@@ -163,6 +164,7 @@ export function TemplateFourPortfolio({
           </div>
         </div>
       )}
+      </div>
     </section>
   );
 }

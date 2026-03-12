@@ -19,11 +19,12 @@ const TemplateTwoHero = ({
   headShot = "/assets/template2.png",
   portfolioData,
 }: TemplateTwoHeroProps) => {
-  const { customStyles, getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
+  const { customStyles, getHeadingStyle, getBodyStyle, getAccentStyle } = usePortfolioCustomizations(portfolioData);
   const correctedHeadShot = getImageUrl(headShot) || headShot;
 
   return (
-    <section className="bg-black flex flex-col-reverse md:flex-row gap-2 md:gap-10 pt-15 md:pt-50 px-5 md:px-10">
+    <section className="bg-black">
+      <div className="max-w-[1400px] mx-auto flex flex-col-reverse md:flex-row gap-2 md:gap-10 pt-15 md:pt-50 px-5 md:px-10">
       {/* Text */}
       <div
         className="flex flex-col font-bold mb-4 md:mb-0 md:w-1/2 justify-center text-center md:text-left md:-translate-y-10"
@@ -40,7 +41,7 @@ const TemplateTwoHero = ({
       {/* Image */}
       <div className="relative flex justify-center items-end md:w-1/2 h-64 md:h-auto mb-6 md:mb-0">
         {/* Background circle */}
-        <div className="absolute bottom-0 left-[45%] md:left-auto md:right-20 -translate-x-1/2 md:translate-x-0 z-20 h-56 w-56 md:h-60 md:w-60 lg:h-72 lg:w-72 bg-yellowGold rounded-full" />
+        <div className="absolute bottom-0 left-[45%] md:left-auto md:right-20 -translate-x-1/2 md:translate-x-0 z-20 h-56 w-56 md:h-60 md:w-60 lg:h-72 lg:w-72 rounded-full" style={{ backgroundColor: getAccentStyle().color }} />
 
         {/* Headshot container */}
         <div className="absolute bottom-0 left-[55%] md:left-auto md:right-10 -translate-x-1/2 md:translate-x-0 z-30 h-56 w-56 md:h-60 md:w-60 lg:h-72 lg:w-72 rounded-full overflow-hidden">
@@ -52,6 +53,7 @@ const TemplateTwoHero = ({
             className="object-cover w-full h-full"
           />
         </div>
+      </div>
       </div>
     </section>
   );

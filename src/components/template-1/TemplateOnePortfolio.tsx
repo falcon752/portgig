@@ -59,7 +59,7 @@ const TemplateOnePortfolio = ({ portfolio }: TemplateOnePortfolioProps) => {
   return (
     <div style={customStyles}>
       <section className="h-fit bg-black">
-        <div className="px-4 sm:px-6 md:px-8 lg:px-10 py-10 flex flex-col gap-10">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-10 flex flex-col gap-10">
           {/* Header */}
           <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl" style={getHeadingStyle()}>
             My <span>Portfolio</span>

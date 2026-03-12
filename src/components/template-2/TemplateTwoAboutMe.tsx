@@ -27,9 +27,10 @@ const TemplateTwoAboutMe = ({
 
   return (
     <section
-      className="py-8 lg:py-20 px-5 md:px-10 flex flex-col gap-10 bg-black"
+      className="bg-black"
       style={{ fontFamily: getBodyStyle().fontFamily }}
     >
+      <div className="max-w-[1400px] mx-auto py-8 lg:py-20 px-5 md:px-10 flex flex-col gap-10">
       {/* Image boxes – stacked vertically (matches static) */}
       <div className="flex flex-col gap-5">
         {Array.from({ length: 3 }).map((_, index) => (
@@ -69,6 +70,7 @@ const TemplateTwoAboutMe = ({
           {aboutMe ||
             "Creative and detail-oriented Graphic Designer with [X] years of experience in brand identity, social media design, and marketing visuals. Adept at transforming concepts into compelling visuals that enhance brand presence. Proficient in Adobe Creative Suite, Canva, and Figma, with a strong understanding of design principles and user experience. Passionate about delivering high-quality designs that resonate with audiences and drive engagement."}
         </p>
+      </div>
       </div>
     </section>
   );

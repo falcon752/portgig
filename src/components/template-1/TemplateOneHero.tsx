@@ -23,7 +23,8 @@ export const TemplateOneHero = ({ portfolio }: TemplateOneHeroProps) => {
   return (
     <>
       {/* MOBILE – image on top, text below */}
-      <section className={`lg:hidden bg-black ${responsivePadding} pt-6 pb-14`}>
+      <section className="lg:hidden bg-black pt-6 pb-14">
+        <div className={`max-w-[1400px] mx-auto ${responsivePadding}`}>
         {/* Image */}
         <div className="w-full h-[300px] rounded-2xl overflow-hidden mb-6">
           <Image
@@ -44,11 +45,12 @@ export const TemplateOneHero = ({ portfolio }: TemplateOneHeroProps) => {
             {/* <span className="sm:block lg:inline"> {tagline}</span> */}
           </p>
         </div>
+        </div>
       </section>
 
       {/* DESKTOP – image + text side by side */}
-      <section className="hidden lg:flex bg-black items-start pt-8 pb-20 px-[55px]">
-        <div className="flex gap-24">
+      <section className="hidden lg:flex bg-black items-start justify-center pt-8 pb-20">
+        <div className="max-w-[1400px] w-full px-[55px] flex gap-24">
           {/* Image */}
           <div className="flex-shrink-0">
             <div className="w-[640px] h-[420px] rounded-2xl overflow-hidden">

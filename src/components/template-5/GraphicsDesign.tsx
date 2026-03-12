@@ -11,7 +11,8 @@ interface TemplateFiveGraphicsDesignProps {
 export default function TemplateFiveGraphicsDesign({ graphicsDesign, portfolioData }: TemplateFiveGraphicsDesignProps) {
   const { getHeadingStyle } = usePortfolioCustomizations(portfolioData);
   return (
-    <section className="bg-[#f9f9f9] px-6 py-12 text-center">
+    <section className="bg-[#f9f9f9] py-12">
+      <div className="max-w-[1400px] mx-auto px-6 text-center">
       {/* Section Title */}
       <h3 className="text-4xl font-black font-[MuseoSansRounded] leading-none tracking-normal mb-6" style={getHeadingStyle()}>
         Graphics Design
@@ -45,6 +46,7 @@ export default function TemplateFiveGraphicsDesign({ graphicsDesign, portfolioDa
           No graphic design examples to display.
         </p>
       )}
+      </div>
     </section>
   );
 }

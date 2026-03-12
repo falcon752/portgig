@@ -15,7 +15,8 @@ export default function TemplateFiveAboutMe({
     usePortfolioCustomizations(portfolioData);
 
   return (
-    <section className="bg-[#f9f9f9] px-6 py-12 text-center text-[#0A1754]">
+    <section className="bg-[#f9f9f9] py-12 text-[#0A1754]">
+      <div className="max-w-[1400px] mx-auto px-6 text-center">
       {/* Section Title */}
       <h3
         className="text-4xl font-black font-[MuseoSansRounded] leading-none tracking-normal mb-3"
@@ -37,6 +38,7 @@ export default function TemplateFiveAboutMe({
           strong understanding of design principles and user experience.
           Passionate about delivering high-quality designs that resonate with
           audiences and drive engagement.`}
+      </div>
       </div>
     </section>
   );
