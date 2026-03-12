@@ -18,7 +18,7 @@ export default function TemplatesixWeddingShoots({
   portfolioData,
 }: TemplatesixWeddingShootsProps) {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { colorUtils, customStyles, getBodyStyle } =
+  const { colorUtils, customStyles, getBodyStyle, getHeadingStyle } =
     usePortfolioCustomizations(portfolio);
   const latestWork = isPhotographerTemplateSpecific(portfolio.template_specific)
     ? portfolio.template_specific.photographer.latest_work || []
@@ -99,7 +99,7 @@ export default function TemplatesixWeddingShoots({
               </div>
             </div>
             <div className="md:w-1/2 md:pl-8 flex flex-col items-start">
-              <h2 className="text-3xl font-bold mb-6">
+              <h2 className="text-3xl font-bold mb-6" style={getHeadingStyle()}>
                 {(
                   section.title ||
                   section.name ||

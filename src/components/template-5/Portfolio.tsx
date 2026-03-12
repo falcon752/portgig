@@ -35,8 +35,8 @@ export default function TemplateFivePortfolio() {
             My Content Creation
           </h1>
           <h2
-            className="text-3xl md:text-6xl font-bold text-yellow-400"
-            // style={{ ...getHeadingStyle(), color: (customStyles as Record<string, string>)['--accent-color'] }}
+            className="text-3xl md:text-6xl font-bold"
+            style={getHeadingStyle()}
           >
             Portfolio
           </h2>

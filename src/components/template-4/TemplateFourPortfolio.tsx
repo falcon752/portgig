@@ -28,7 +28,7 @@ export function TemplateFourPortfolio({
   portfolioData,
   whyWorkWithMe,
 }: TemplateFourPortfolioProps) {
-  const { getBodyStyle } = usePortfolioCustomizations(portfolioData);
+  const { getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
 
   const items =
     portfolioItems?.filter((i) => i.title || i.link || i.image) || [];
@@ -39,7 +39,7 @@ export function TemplateFourPortfolio({
       {/* PORTFOLIO */}
       {items.length > 0 && (
         <div className="space-y-8">
-          <h2 className="text-darkBlue font-bold text-lg">My Portfolio</h2>
+          <h2 className="font-bold text-lg" style={getHeadingStyle()}>My Portfolio</h2>
 
           {items.map((item, index) => (
             <div
@@ -59,7 +59,7 @@ export function TemplateFourPortfolio({
               )}
 
               <div className="px-6 py-8 space-y-6 text-center">
-                <h3 className="font-bold text-darkBlue text-base">
+                <h3 className="font-bold text-base" style={getHeadingStyle()}>
                   {item.title || "Untitled work"}
                 </h3>
 
@@ -93,7 +93,7 @@ export function TemplateFourPortfolio({
       {/* CASE STUDY */}
       {caseStudyContent && caseStudyContent.trim() && (
         <div className="space-y-6">
-          <h2 className="text-darkBlue font-bold text-lg">Case Study</h2>
+          <h2 className="font-bold text-lg" style={getHeadingStyle()}>Case Study</h2>
 
           <div className="bg-white border border-gray-200 rounded-lg p-6 text-sm lg:text-base text-gray-600 leading-relaxed">
             <p style={getBodyStyle({})}>{caseStudyContent}</p>
@@ -104,7 +104,7 @@ export function TemplateFourPortfolio({
       {/* SOCIAL LINKS */}
       {(linkedinLink || mediumLink) && (
         <div className="space-y-6">
-          <h2 className="text-darkBlue font-bold text-lg">
+          <h2 className="font-bold text-lg" style={getHeadingStyle()}>
             Social & Writing Platform Links
           </h2>
 
@@ -155,7 +155,7 @@ export function TemplateFourPortfolio({
       {/* WHY WORK WITH ME */}
       {whyWorkWithMe && (
         <div className="space-y-6">
-          <h2 className="text-darkBlue font-bold text-lg">
+          <h2 className="font-bold text-lg" style={getHeadingStyle()}>
             Why you should work with me?
           </h2>
 
