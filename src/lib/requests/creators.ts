@@ -60,6 +60,7 @@ export interface Creator {
   rating: number;
   portfolio: {
     template_type: string;
+    display_name?: string;
   };
   profile: {
     profile_picture: string;
