@@ -14,7 +14,7 @@ interface TemplateThreeAboutMeProps {
 
 const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { getHeadingStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
+  const { getHeadingStyle, customBackgroundColor, customPrimaryColor } = usePortfolioCustomizations(portfolio);
 
   const aboutMe =
     portfolio.about_me ||
@@ -49,7 +49,7 @@ const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
           className="text-xl lg:text-2xl font-bold mb-6 text-white"
           style={getHeadingStyle()}
         >
-          Services I <span className="text-cyan-400">Offer</span>
+          Services I <span className="text-cyan-400" style={customPrimaryColor ? { color: customPrimaryColor } : undefined}>Offer</span>
         </h2>
 
         {services.length > 0 ? (
@@ -87,7 +87,7 @@ const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
           className="text-xl lg:text-2xl font-bold mb-6 text-white"
           style={getHeadingStyle()}
         >
-          Skills / <span className="text-cyan-400">Language</span>
+          Skills / <span className="text-cyan-400" style={customPrimaryColor ? { color: customPrimaryColor } : undefined}>Language</span>
         </h2>
 
         {skills.length > 0 ? (

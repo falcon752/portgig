@@ -584,6 +584,19 @@ export const usePortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
     return null;
   }, [portfolioData]);
 
+  // Resolves to the explicitly-saved primary color, or null if none was saved.
+  // Use this on spans inside headings so they follow the user-chosen heading color.
+  const customPrimaryColor: string | null = useMemo(() => {
+    const templateType = portfolioData?.template_type?.toUpperCase() || '';
+    if (portfolioData?.template_fonts && templateType && portfolioData.template_fonts[templateType]) {
+      const primary = portfolioData.template_fonts[templateType]?.colors?.primary;
+      if (primary && primary.trim() !== '') return primary;
+    }
+    const primary = portfolioData?.fonts?.colors?.primary;
+    if (primary && primary.trim() !== '') return primary;
+    return null;
+  }, [portfolioData]);
+
   // Dynamically inject Google Fonts <link> for whichever fonts the user selected
   useEffect(() => {
     const fontsToLoad = [...new Set([customizations.headingFont, customizations.bodyFont])]
@@ -654,6 +667,7 @@ export const usePortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
     customizations,
     customStyles,
     customBackgroundColor,
+    customPrimaryColor,
     hasCustomizations: hasCustomizations(portfolioData),
     templateType: portfolioData?.template_type,
     // Styling helpers
