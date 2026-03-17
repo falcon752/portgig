@@ -385,25 +385,37 @@ const DEFAULT_CUSTOMIZATIONS: PortfolioCustomizations = {
 
 // Template-specific default customizations
 const TEMPLATE_DEFAULTS: Record<string, Partial<PortfolioCustomizations>> = {
+  // Dark-background templates → white body text so it's readable on black sections
   VIDEOGRAPHER: {
     primaryColor: '#dc2626', // Red
-    accentColor: '#ea580c', // Orange
+    accentColor: '#ea580c',  // Orange
+    textColor: '#ffffff',    // White text on dark bg
   },
   PHOTOGRAPHER: {
-    primaryColor: '#6b7280', // Gray
-    accentColor: '#9333ea', // Purple
+    primaryColor: '#FCC92F', // Gold (matches template's accent)
+    accentColor: '#9333ea',  // Purple
+    textColor: '#ffffff',    // White text on dark bg
   },
   DEVELOPER: {
-    primaryColor: '#1e3a8a', // Blue
-    accentColor: '#0d9488', // Teal
+    primaryColor: '#60a5fa', // Light blue (was dark navy #1e3a8a — invisible on black)
+    accentColor: '#0d9488',  // Teal
+    textColor: '#ffffff',    // White text on dark bg
   },
   DESIGNER: {
     primaryColor: '#9333ea', // Purple
-    accentColor: '#dc2626', // Red
+    accentColor: '#dc2626',  // Red
+    textColor: '#ffffff',    // White text on dark bg
   },
+  // Light-background templates → dark text (global default #000000 applies)
   SOCIAL_MEDIA_MANAGER: {
     primaryColor: '#16a34a', // Green
-    accentColor: '#ea580c', // Orange
+    accentColor: '#ea580c',  // Orange
+    // textColor intentionally omitted → falls back to global default #000000
+  },
+  WRITER: {
+    primaryColor: '#1e3a8a', // Dark blue — readable on cream bg
+    accentColor: '#E77C29',  // Orange (matches template border accent)
+    // textColor intentionally omitted → falls back to global default #000000
   },
 };
 
