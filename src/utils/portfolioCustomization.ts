@@ -385,26 +385,26 @@ const DEFAULT_CUSTOMIZATIONS: PortfolioCustomizations = {
 
 // Template-specific default customizations
 const TEMPLATE_DEFAULTS: Record<string, Partial<PortfolioCustomizations>> = {
-  // Dark-background templates → white body text so it's readable on black sections
+  // Dark-background templates → white heading + body text
   VIDEOGRAPHER: {
-    primaryColor: '#dc2626', // Red
+    primaryColor: '#ffffff', // White headings on dark bg
     accentColor: '#ea580c',  // Orange
-    textColor: '#ffffff',    // White text on dark bg
+    textColor: '#ffffff',    // White body text on dark bg
   },
   PHOTOGRAPHER: {
-    primaryColor: '#FCC92F', // Gold (matches template's accent)
-    accentColor: '#9333ea',  // Purple
-    textColor: '#ffffff',    // White text on dark bg
+    primaryColor: '#ffffff', // White headings on dark bg
+    accentColor: '#FCC92F',  // Gold (matches template's accent)
+    textColor: '#ffffff',    // White body text on dark bg
   },
   DEVELOPER: {
-    primaryColor: '#60a5fa', // Light blue (was dark navy #1e3a8a — invisible on black)
+    primaryColor: '#ffffff', // White headings on dark bg
     accentColor: '#0d9488',  // Teal
-    textColor: '#ffffff',    // White text on dark bg
+    textColor: '#ffffff',    // White body text on dark bg
   },
   DESIGNER: {
-    primaryColor: '#9333ea', // Purple
+    primaryColor: '#ffffff', // White headings on dark bg
     accentColor: '#dc2626',  // Red
-    textColor: '#ffffff',    // White text on dark bg
+    textColor: '#ffffff',    // White body text on dark bg
   },
   // Light-background templates → dark text (global default #000000 applies)
   SOCIAL_MEDIA_MANAGER: {
