@@ -14,11 +14,6 @@ const teamMembers = [
     name: "Blessing Omobolanle",
     role: "UI/UX Designer/Digital Marketing Strategist",
   },
-  {
-    image: "samuel.png",
-    name: "Samuel Ajewole",
-    role: "Business Strategist/Data Analyist",
-  },
   // { image: "sharon.png", name: "Sharon Lamebri ", role: "Product Manager" },
   // { image: "bukky.png", name: "Bukky", role: "Operations Manager" },
   // {
