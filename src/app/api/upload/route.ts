@@ -1,26 +1,35 @@
 import { NextRequest, NextResponse } from "next/server";
-import { v2 as cloudinary } from "cloudinary";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+const s3 = new S3Client({
+  endpoint: process.env.SPACES_ENDPOINT!,
+  region: process.env.SPACES_REGION ?? "sfo3",
+  credentials: {
+    accessKeyId: process.env.SPACES_KEY!,
+    secretAccessKey: process.env.SPACES_SECRET!,
+  },
+  forcePathStyle: false,
 });
 
-/**
- * Upload a single Buffer to Cloudinary and return the secure URL.
- */
-function uploadToCloudinary(buffer: Buffer, folder: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      { folder, resource_type: "auto" },
-      (error, result) => {
-        if (error || !result) return reject(error ?? new Error("Upload failed"));
-        resolve(result.secure_url);
-      }
-    );
-    stream.end(buffer);
-  });
+const BUCKET = process.env.SPACES_BUCKET ?? "portgig";
+const SPACES_PUBLIC_BASE = `https://${BUCKET}.sfo3.digitaloceanspaces.com`;
+
+async function uploadToSpaces(
+  buffer: Buffer,
+  filename: string,
+  contentType: string
+): Promise<string> {
+  const key = `portfolio/${filename}`;
+  await s3.send(
+    new PutObjectCommand({
+      Bucket: BUCKET,
+      Key: key,
+      Body: buffer,
+      ContentType: contentType,
+      ACL: "public-read",
+    })
+  );
+  return `${SPACES_PUBLIC_BASE}/${key}`;
 }
 
 export async function POST(request: NextRequest) {
@@ -35,7 +44,9 @@ export async function POST(request: NextRequest) {
     const uploadPromises = files.map(async (file) => {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
-      return uploadToCloudinary(buffer, "portfolio");
+      const ext = file.name.split(".").pop() ?? "bin";
+      const filename = `${crypto.randomUUID()}.${ext}`;
+      return uploadToSpaces(buffer, filename, file.type || "application/octet-stream");
     });
 
     const urls = await Promise.all(uploadPromises);
