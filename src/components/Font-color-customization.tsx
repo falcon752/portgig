@@ -329,6 +329,24 @@ export default function FontColorCustomization() {
         router.back()
     }
 
+    const handleReset = async () => {
+        const empty: CustomizationSettings = {
+            headingFont: "",
+            bodyFont: "",
+            primaryColor: "",
+            accentColor: "",
+            backgroundColor: "",
+            textColor: "",
+        }
+        setSettings(empty)
+        setColorPickerType(null)
+        setOpenDropdown(null)
+        const success = await updatePortfolioFonts(empty)
+        if (success) {
+            toast.success('Customizations cleared — templates will use their default styles.')
+        }
+    }
+
     const handlePreviewToggle = () => {
         setShowPreview(!showPreview)
     }
@@ -380,6 +398,13 @@ export default function FontColorCustomization() {
                         disabled={saving}
                     >
                         Back to Portfolio
+                    </button>
+                    <button
+                        onClick={handleReset}
+                        className="py-2 px-4 border border-red-300 text-red-200 rounded text-sm hover:bg-red-500/20 transition disabled:opacity-50 cursor-pointer"
+                        disabled={saving}
+                    >
+                        Reset to Default
                     </button>
                     <button
                         onClick={handleSave}
@@ -531,21 +556,30 @@ export default function FontColorCustomization() {
                 </div>
             </div>
 
-            <div className="bg-[#0A1754] px-6 py-4 flex justify-end gap-4">
+            <div className="bg-[#0A1754] px-6 py-4 flex justify-between items-center">
                 <button
-                    onClick={handleCancel}
-                    className="px-6 py-2 border border-white text-white rounded hover:bg-white/10 transition disabled:opacity-50 cursor-pointer"
+                    onClick={handleReset}
+                    className="px-6 py-2 border border-red-300 text-red-200 rounded hover:bg-red-500/20 transition disabled:opacity-50 cursor-pointer"
                     disabled={saving}
                 >
-                    Cancel
+                    Reset to Default
                 </button>
-                <button
-                    onClick={handleSave}
-                    className="px-8 py-2 bg-white text-[#0A1754] rounded font-medium hover:bg-gray-100 transition disabled:opacity-50 cursor-pointer"
-                    disabled={saving}
-                >
-                    {saving ? 'Saving...' : 'Save'}
-                </button>
+                <div className="flex gap-4">
+                    <button
+                        onClick={handleCancel}
+                        className="px-6 py-2 border border-white text-white rounded hover:bg-white/10 transition disabled:opacity-50 cursor-pointer"
+                        disabled={saving}
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        onClick={handleSave}
+                        className="px-8 py-2 bg-white text-[#0A1754] rounded font-medium hover:bg-gray-100 transition disabled:opacity-50 cursor-pointer"
+                        disabled={saving}
+                    >
+                        {saving ? 'Saving...' : 'Save'}
+                    </button>
+                </div>
             </div>
         </div>
     )
