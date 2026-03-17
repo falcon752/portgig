@@ -99,8 +99,14 @@ const ChatInterface = ({ chatId, otherParticipant }: ChatInterfaceProps) => {
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files?.[0]) {
-            setSelectedFile(e.target.files[0]);
+        const file = e.target.files?.[0];
+        if (file) {
+            if (file.size > 10 * 1024 * 1024) {
+                toast.error("File must be 10MB or less.");
+                e.target.value = "";
+                return;
+            }
+            setSelectedFile(file);
         }
     };
 
