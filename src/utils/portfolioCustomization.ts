@@ -462,20 +462,31 @@ export const getPortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
 
   // Try to get template-specific customizations first
   if (portfolioData?.template_fonts && templateType && portfolioData.template_fonts[templateType]) {
-    const templateFonts = portfolioData.template_fonts[templateType];
-    const templateCustomizations = transformApiToComponent(templateFonts);
-    return {
-      ...customizations,
-      ...templateCustomizations,
-    };
+    const raw = portfolioData.template_fonts[templateType];
+    // Only override fields that are actually saved (non-empty) so TEMPLATE_DEFAULTS
+    // are preserved for any fields the user hasn't explicitly set.
+    const overrides: Partial<PortfolioCustomizations> = {};
+    if (raw.heading_font?.trim()) overrides.headingFont = raw.heading_font;
+    if (raw.body_font?.trim()) overrides.bodyFont = raw.body_font;
+    if (raw.colors?.primary?.trim()) overrides.primaryColor = raw.colors.primary;
+    if (raw.colors?.accent?.trim()) overrides.accentColor = raw.colors.accent;
+    if (raw.colors?.background?.trim()) overrides.backgroundColor = raw.colors.background;
+    if (raw.colors?.text?.trim()) overrides.textColor = raw.colors.text;
+    return { ...customizations, ...overrides };
   }
 
   if (portfolioData?.fonts) {
-    const generalCustomizations = transformApiToComponent(portfolioData.fonts);
-    return {
-      ...customizations,
-      ...generalCustomizations,
-    };
+    const raw = portfolioData.fonts;
+    // Only override fields that are actually saved (non-empty) so TEMPLATE_DEFAULTS
+    // are preserved for any fields the user hasn't explicitly set.
+    const overrides: Partial<PortfolioCustomizations> = {};
+    if (raw.heading_font?.trim()) overrides.headingFont = raw.heading_font;
+    if (raw.body_font?.trim()) overrides.bodyFont = raw.body_font;
+    if (raw.colors?.primary?.trim()) overrides.primaryColor = raw.colors.primary;
+    if (raw.colors?.accent?.trim()) overrides.accentColor = raw.colors.accent;
+    if (raw.colors?.background?.trim()) overrides.backgroundColor = raw.colors.background;
+    if (raw.colors?.text?.trim()) overrides.textColor = raw.colors.text;
+    return { ...customizations, ...overrides };
   }
 
   return customizations;
