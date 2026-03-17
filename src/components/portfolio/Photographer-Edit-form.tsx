@@ -263,6 +263,11 @@ export default function PhotographerForm() {
     index?: number
   ) => {
     const file = event.target.files?.[0];
+    if (file && file.size > 10 * 1024 * 1024) {
+      toast.error("Image must be 10MB or less.");
+      event.target.value = "";
+      return;
+    }
     if (file && file.type === "image/png") {
       const reader = new FileReader();
       reader.onloadend = () => {
