@@ -16,7 +16,7 @@ export default function TemplatesixAboutMe({ portfolioData }: TemplatesixAboutMe
   return (
     <section className="relative w-full py-20 font-montserrat bg-black" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
 
-      {/* Background image + overlay */}}
+      {/* Background image + overlay */}
       <div className="absolute inset-0 flex justify-center overflow-hidden">
         <div className="w-full max-w-[1450px] relative">
           <Image
