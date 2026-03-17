@@ -16,12 +16,12 @@ const TemplateThreePortfolio = ({
   portfolioData,
 }: TemplateThreePortfolioProps) => {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { getHeadingStyle } = usePortfolioCustomizations(portfolio);
+  const { getHeadingStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
 
   const portfolioItems = portfolio.files || [];
 
   return (
-    <section className="bg-black text-white py-20">
+    <section className="bg-black text-white py-20" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto px-5 lg:px-12">
       {/* SECTION TITLE */}
       <h2

@@ -17,11 +17,11 @@ const TemplateTwoService = ({
   videoEditingSkills,
   portfolioData,
 }: TemplateTwoServiceProps) => {
-  const { getHeadingStyle, getBodyStyle } =
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor } =
     usePortfolioCustomizations(portfolioData);
 
   return (
-    <section className="bg-black text-white">
+    <section className="bg-black text-white" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto py-12 px-4 md:px-10">
       {/* Heading */}
       <h2

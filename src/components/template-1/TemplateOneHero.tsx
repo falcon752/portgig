@@ -7,7 +7,7 @@ import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
 
 export const TemplateOneHero = ({ portfolio }: TemplateOneHeroProps) => {
   const portfolioData: ApiPortfolioData = portfolio || EMPTY_PORTFOLIO;
-  const { getHeadingStyle, getAccentStyle } = usePortfolioCustomizations(portfolioData);
+  const { getHeadingStyle, getAccentStyle, customBackgroundColor } = usePortfolioCustomizations(portfolioData);
 
   const name = portfolioData?.display_name || "Gracier Aftang";
   const headShotUrl = getImageUrl(portfolioData?.head_shot) || "/placeholder.svg?height=500&width=500";
@@ -23,7 +23,7 @@ export const TemplateOneHero = ({ portfolio }: TemplateOneHeroProps) => {
   return (
     <>
       {/* MOBILE – image on top, text below */}
-      <section className="lg:hidden bg-black pt-6 pb-14">
+      <section className="lg:hidden bg-black pt-6 pb-14" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
         <div className={`max-w-[1400px] mx-auto ${responsivePadding}`}>
         {/* Image */}
         <div className="w-full h-[300px] rounded-2xl overflow-hidden mb-6">
@@ -49,7 +49,7 @@ export const TemplateOneHero = ({ portfolio }: TemplateOneHeroProps) => {
       </section>
 
       {/* DESKTOP – image + text side by side */}
-      <section className="hidden lg:flex bg-black items-start justify-center pt-8 pb-20">
+      <section className="hidden lg:flex bg-black items-start justify-center pt-8 pb-20" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
         <div className="max-w-[1400px] w-full px-[55px] flex gap-24">
           {/* Image */}
           <div className="flex-shrink-0">

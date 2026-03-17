@@ -19,11 +19,11 @@ const TemplateTwoHero = ({
   headShot = "/assets/template2.png",
   portfolioData,
 }: TemplateTwoHeroProps) => {
-  const { customStyles, getHeadingStyle, getBodyStyle, getAccentStyle } = usePortfolioCustomizations(portfolioData);
+  const { customStyles, getHeadingStyle, getBodyStyle, getAccentStyle, customBackgroundColor } = usePortfolioCustomizations(portfolioData);
   const correctedHeadShot = getImageUrl(headShot) || headShot;
 
   return (
-    <section className="bg-black">
+    <section className="bg-black" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto flex flex-col-reverse md:flex-row gap-2 md:gap-10 pt-15 md:pt-50 px-5 md:px-10">
       {/* Text */}
       <div

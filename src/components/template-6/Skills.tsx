@@ -10,7 +10,7 @@ interface TemplatesixSkillsProps {
 
 export default function TemplatesixSkills({ portfolioData }: TemplatesixSkillsProps) {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { colorUtils, customStyles, getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolio);
+  const { colorUtils, customStyles, getHeadingStyle, getBodyStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
 
   const skills = portfolio.other_services || [];
   const photographerServices = isPhotographerTemplateSpecific(portfolio.template_specific)
@@ -20,7 +20,7 @@ export default function TemplatesixSkills({ portfolioData }: TemplatesixSkillsPr
   return (
     <section
       className="w-full py-20 bg-black font-montserrat text-white"
-      style={{ color: (customStyles as CustomCSSProperties)["--text-color"] || "#FFF" }}
+      style={{ color: (customStyles as CustomCSSProperties)["--text-color"] || "#FFF", ...(customBackgroundColor ? { backgroundColor: customBackgroundColor } : {}) }}
     >
       {/* Section Title */}
       <h2 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold mb-12" style={getHeadingStyle()}>

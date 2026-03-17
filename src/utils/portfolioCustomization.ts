@@ -559,6 +559,19 @@ export const usePortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
   const customizations = useMemo(() => getPortfolioCustomizations(portfolioData), [portfolioData]);
   const customStyles = useMemo(() => generateCustomCSS(customizations), [customizations]);
 
+  // Resolves to the explicitly-saved background color, or null if none was saved.
+  // Use this to optionally override a template's hardcoded background.
+  const customBackgroundColor: string | null = useMemo(() => {
+    const templateType = portfolioData?.template_type?.toUpperCase() || '';
+    if (portfolioData?.template_fonts && templateType && portfolioData.template_fonts[templateType]) {
+      const bg = portfolioData.template_fonts[templateType]?.colors?.background;
+      if (bg && bg.trim() !== '') return bg;
+    }
+    const bg = portfolioData?.fonts?.colors?.background;
+    if (bg && bg.trim() !== '') return bg;
+    return null;
+  }, [portfolioData]);
+
   // Dynamically inject Google Fonts <link> for whichever fonts the user selected
   useEffect(() => {
     const fontsToLoad = [...new Set([customizations.headingFont, customizations.bodyFont])]
@@ -628,6 +641,7 @@ export const usePortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
   return {
     customizations,
     customStyles,
+    customBackgroundColor,
     hasCustomizations: hasCustomizations(portfolioData),
     templateType: portfolioData?.template_type,
     // Styling helpers

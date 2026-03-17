@@ -3,10 +3,10 @@ import Image from "next/image";
 import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
 
 export default function TemplateFivePortfolio() {
-  const { customStyles, getHeadingStyle } = usePortfolioCustomizations();
+  const { customStyles, getHeadingStyle, customBackgroundColor } = usePortfolioCustomizations();
 
   return (
-    <div className="bg-black py-12 md:py-20" style={{ backgroundColor: (customStyles as Record<string, string>)['--bg-color'] }}>
+    <div className="bg-black py-12 md:py-20" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="relative max-w-6xl mx-auto px-4 md:px-10">
         {/* Decorative Elements */}
         <div className="absolute -left-10 md:-left-20 top-1/4 transform -translate-y-1/2 hidden md:block">

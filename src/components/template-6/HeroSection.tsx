@@ -10,7 +10,7 @@ interface TemplatesixHeroSectionProps {
 
 export default function TemplatesixHeroSection({ portfolioData }: TemplatesixHeroSectionProps) {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { getHeadingStyle } = usePortfolioCustomizations(portfolio);
+  const { getHeadingStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
 
   const displayName = portfolio.display_name || "Photographer Name";
   const formattedJobTitles = portfolio.job_titles?.length > 0 ? portfolio.job_titles.join(" / ") : "Photography / Cinematographer";
@@ -18,7 +18,7 @@ export default function TemplatesixHeroSection({ portfolioData }: TemplatesixHer
   const headShot = getImageUrl(portfolio.head_shot) || "/assets/hero.png";
 
   return (
-    <section className="w-full bg-black font-montserrat">
+    <section className="w-full bg-black font-montserrat" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
 
       {/* ================= DESKTOP HERO ================= */}
       <div className="container mx-auto px-6 lg:px-12 py-16 md:py-20">

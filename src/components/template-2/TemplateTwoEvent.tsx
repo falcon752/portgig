@@ -8,14 +8,14 @@ interface TemplateTwoEventProps {
 }
 
 const TemplateTwoEvent = ({ portfolioData, types = [] }: TemplateTwoEventProps) => {
-  const {colorUtils, customStyles, getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
+  const {colorUtils, customStyles, getHeadingStyle, getBodyStyle, customBackgroundColor } = usePortfolioCustomizations(portfolioData);
   
   if (!types || types.length === 0) {
     return null;
   }
 
   return (
-    <section className="bg-brownLight py-10 px-10 center" style={{backgroundColor: colorUtils.darken((customStyles as Record<string, string>)['--bg-color'])}}>
+    <section className="bg-brownLight py-10 px-10 center" style={customBackgroundColor ? {backgroundColor: colorUtils.darken(customBackgroundColor)} : undefined}>
       <div className="grid grid-cols-2 gap-x-10 gap-5 w-10/12 mx-auto">
         {types.map((type, index) => (
           <div key={index} className="flex flex-col gap-2 text-white" style={getBodyStyle()}>

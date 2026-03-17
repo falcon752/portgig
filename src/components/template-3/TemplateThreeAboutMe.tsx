@@ -14,7 +14,7 @@ interface TemplateThreeAboutMeProps {
 
 const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { getHeadingStyle } = usePortfolioCustomizations(portfolio);
+  const { getHeadingStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
 
   const aboutMe =
     portfolio.about_me ||
@@ -27,7 +27,7 @@ const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
     : [];
 
   return (
-    <section className="bg-black text-white py-16">
+    <section className="bg-black text-white py-16" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto px-5 lg:px-12 flex flex-col gap-10">
       {/* ABOUT ME */}
       <div>

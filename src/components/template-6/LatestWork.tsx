@@ -10,7 +10,7 @@ interface TemplatesixLatestWorkProps {
 
 export default function TemplatesixLatestWork({ portfolioData }: TemplatesixLatestWorkProps) {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { colorUtils, customStyles, getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolio);
+  const { colorUtils, customStyles, getHeadingStyle, getBodyStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
 
   // Get latest work from photographer-specific template data
   const latestWork = isPhotographerTemplateSpecific(portfolio.template_specific)
@@ -20,7 +20,7 @@ export default function TemplatesixLatestWork({ portfolioData }: TemplatesixLate
   return (
     <section
       className="bg-black text-white py-10"
-      style={{ color: (customStyles as CustomCSSProperties)["--text-color"] || "#FFF" }}
+      style={{ color: (customStyles as CustomCSSProperties)["--text-color"] || "#FFF", ...(customBackgroundColor ? { backgroundColor: customBackgroundColor } : {}) }}
     >
       <div className="mx-auto max-w-[1450px] px-3 sm:px-6 md:px-8">
 

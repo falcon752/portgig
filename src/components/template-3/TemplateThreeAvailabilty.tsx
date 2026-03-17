@@ -14,7 +14,7 @@ const TemplateThreeAvailability = ({
   portfolioData,
 }: TemplateThreeAvailabilityProps) => {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { getHeadingStyle, getAccentStyle } = usePortfolioCustomizations(portfolio);
+  const { getHeadingStyle, getAccentStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
 
   const availability = isDeveloperTemplateSpecific(portfolio.template_specific)
     ? portfolio.template_specific.developer.availability ||
@@ -26,7 +26,7 @@ const TemplateThreeAvailability = ({
     "I bring a unique blend of technical expertise and creative problem-solving to every project.";
 
   return (
-    <section className="bg-black text-white py-20">
+    <section className="bg-black text-white py-20" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto px-5 lg:px-12 space-y-16">
       {/* AVAILABILITY */}
       <div className="space-y-4">

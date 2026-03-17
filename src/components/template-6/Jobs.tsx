@@ -15,7 +15,7 @@ export default function TemplatesixJobs({
   portfolioData,
 }: TemplatesixJobsProps) {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { getHeadingStyle } = usePortfolioCustomizations(portfolio);
+  const { getHeadingStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
 
   const jobsOpenTo = isPhotographerTemplateSpecific(
     portfolio.template_specific
@@ -35,7 +35,7 @@ export default function TemplatesixJobs({
     "As a passionate and detail-oriented photographer, I bring creativity, precision, and storytelling into every shot. Whether it’s capturing the essence of a brand, the emotions of an event, or the artistry of a product, I ensure every image tells a compelling story.";
 
   return (
-    <section className="bg-black text-white py-24">
+    <section className="bg-black text-white py-24" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto px-6">
       {/* OPEN TO ALL KINDS OF GIGS */}
       <h2

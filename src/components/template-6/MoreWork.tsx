@@ -16,7 +16,7 @@ export default function TemplatesixMoreWork({
   portfolioData,
 }: TemplatesixMoreWorkProps) {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { customStyles, getHeadingStyle } =
+  const { customStyles, getHeadingStyle, customBackgroundColor } =
     usePortfolioCustomizations(portfolio);
 
   const moreWork = isPhotographerTemplateSpecific(
@@ -31,6 +31,7 @@ export default function TemplatesixMoreWork({
       style={{
         color:
           (customStyles as CustomCSSProperties)["--primary"] || "#FFF",
+        ...(customBackgroundColor ? { backgroundColor: customBackgroundColor } : {}),
       }}
     >
       {/* Title */}

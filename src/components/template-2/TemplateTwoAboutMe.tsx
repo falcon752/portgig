@@ -13,7 +13,7 @@ const TemplateTwoAboutMe = ({
   aboutMe,
   portfolioData,
 }: TemplateTwoAboutMeProps) => {
-  const { getHeadingStyle, getBodyStyle } =
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor } =
     usePortfolioCustomizations(portfolioData);
 
   // Take first 3 images without title/link
@@ -28,7 +28,7 @@ const TemplateTwoAboutMe = ({
   return (
     <section
       className="bg-black"
-      style={{ fontFamily: getBodyStyle().fontFamily }}
+      style={{ fontFamily: getBodyStyle().fontFamily, ...(customBackgroundColor ? { backgroundColor: customBackgroundColor } : {}) }}
     >
       <div className="max-w-[1400px] mx-auto py-8 lg:py-20 px-5 md:px-10 flex flex-col gap-10">
       {/* Image boxes – stacked vertically (matches static) */}

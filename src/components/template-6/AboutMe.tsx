@@ -10,13 +10,13 @@ interface TemplatesixAboutMeProps {
 
 export default function TemplatesixAboutMe({ portfolioData }: TemplatesixAboutMeProps) {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { getBodyStyle, getHeadingStyle } = usePortfolioCustomizations(portfolio);
+  const { getBodyStyle, getHeadingStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
   const aboutMe = portfolio.about_me || "Tell us about yourself! Add a description in your portfolio settings.";
 
   return (
-    <section className="relative w-full py-20 font-montserrat bg-black">
+    <section className="relative w-full py-20 font-montserrat bg-black" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
 
-      {/* Background image + overlay */}
+      {/* Background image + overlay */}}
       <div className="absolute inset-0 flex justify-center overflow-hidden">
         <div className="w-full max-w-[1450px] relative">
           <Image

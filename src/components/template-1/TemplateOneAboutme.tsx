@@ -13,7 +13,7 @@ import { Key } from "react";
 export const TemplateOneAboutme = ({ portfolio }: TemplateOneAboutmeProps) => {
   const portfolioData: ApiPortfolioData = portfolio || EMPTY_PORTFOLIO;
 
-  const { customStyles, getHeadingStyle, getBodyStyle } =
+  const { customStyles, getHeadingStyle, getBodyStyle, customBackgroundColor } =
     usePortfolioCustomizations(portfolioData);
 
   const aboutMeText =
@@ -62,7 +62,7 @@ export const TemplateOneAboutme = ({ portfolio }: TemplateOneAboutmeProps) => {
   const borderColor = "#FFFFFF";
 
   return (
-    <section className="h-fit bg-black">
+    <section className="h-fit bg-black" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 pt-10 pb-5 flex flex-col gap-6">
         {/* About Me */}}
         <div className={cardStyle}>

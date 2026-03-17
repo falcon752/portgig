@@ -18,7 +18,7 @@ export default function TemplatesixWeddingShoots({
   portfolioData,
 }: TemplatesixWeddingShootsProps) {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { colorUtils, customStyles, getBodyStyle, getHeadingStyle } =
+  const { colorUtils, customStyles, getBodyStyle, getHeadingStyle, customBackgroundColor } =
     usePortfolioCustomizations(portfolio);
   const latestWork = isPhotographerTemplateSpecific(portfolio.template_specific)
     ? portfolio.template_specific.photographer.latest_work || []
@@ -50,9 +50,7 @@ export default function TemplatesixWeddingShoots({
         className="bg-gray-900 text-white py-12 text-center"
         style={{
           color: (customStyles as CustomCSSProperties)["--primary"] || "#FFF",
-          backgroundColor: colorUtils.darken(
-            (customStyles as CustomCSSProperties)["--bg-color"] || "#000"
-          ),
+          ...(customBackgroundColor ? { backgroundColor: colorUtils.darken(customBackgroundColor) } : {}),
         }}
       >
         <p className="text-lg text-gray-400" style={getBodyStyle()}>
@@ -67,9 +65,7 @@ export default function TemplatesixWeddingShoots({
       className="bg-gray-900 text-white py-12 space-y-12"
       style={{
         color: (customStyles as CustomCSSProperties)["--primary"] || "#FFF",
-        backgroundColor: colorUtils.darken(
-          (customStyles as CustomCSSProperties)["--bg-color"] || "#000"
-        ),
+        ...(customBackgroundColor ? { backgroundColor: colorUtils.darken(customBackgroundColor) } : {}),
       }}
     >
       {sectionsToRender.map((section, idx) => (

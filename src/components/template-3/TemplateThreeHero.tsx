@@ -10,7 +10,7 @@ interface TemplateThreeHeroProps {
 
 const TemplateThreeHero = ({ portfolioData }: TemplateThreeHeroProps) => {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolio);
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
 
   const displayName = portfolio.display_name || "Developer Name";
   const location = portfolio.location || "Location Not Specified";
@@ -23,7 +23,7 @@ const TemplateThreeHero = ({ portfolioData }: TemplateThreeHeroProps) => {
     : "Let's build quality products in programming and design with my services";
 
   return (
-    <section className="w-full bg-black text-white px-6 sm:px-10 lg:px-16 py-16">
+    <section className="w-full bg-black text-white px-6 sm:px-10 lg:px-16 py-16" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
         {/* LEFT CONTENT */}
         <div className="w-full lg:w-1/2 flex flex-col justify-center lg:justify-start">
