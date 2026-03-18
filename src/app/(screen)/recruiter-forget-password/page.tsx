@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { requestPasswordReset } from "@/src/lib/requests/creator-reset-password";
+import { requestPasswordReset } from "@/src/lib/requests/recruiter-reset-password";
 
 export default function ForgetPasswordPage() {
   const [email, setEmail] = useState("")
@@ -25,7 +25,7 @@ export default function ForgetPasswordPage() {
         text: "OTP sent to your email. Please check your inbox.",
       })
       localStorage.setItem("resetEmail", email)
-      router.push("/creative-forget-password/otp") 
+      router.push("/recruiter-forget-password/otp")
     } catch (error: any) {
       setMessage({
         type: "error",

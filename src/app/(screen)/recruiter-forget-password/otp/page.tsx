@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { verifyOtp } from "@/src/lib/requests/creator-reset-password";
+import { verifyOtp } from "@/src/lib/requests/recruiter-reset-password";
 
 export default function OtpInputPage() {
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""))
@@ -19,7 +19,7 @@ export default function OtpInputPage() {
     if (storedEmail) {
       setEmail(storedEmail)
     } else {
-      router.push("/creative-forget-password")
+      router.push("/recruiter-forget-password")
     }
   }, [router])
 
@@ -79,7 +79,7 @@ export default function OtpInputPage() {
         text: "Email not found. Please restart the password reset process.",
       })
       setLoading(false)
-      router.push("/forget-password")
+      router.push("/recruiter-forget-password")
       return
     }
 
@@ -90,7 +90,7 @@ export default function OtpInputPage() {
         text: "OTP verified successfully.",
       })
       localStorage.setItem("verifiedOtp", fullOtp) 
-      router.push("/forget-password/new-password")
+      router.push("/recruiter-forget-password/new-password")
     } catch (error: any) {
       setMessage({
         type: "error",

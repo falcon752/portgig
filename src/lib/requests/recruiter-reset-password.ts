@@ -1,8 +1,8 @@
 export const requestPasswordReset = async (email: string) => {
-  const url = "https://api.portgig.com/api/v1/creator/request-password-reset"
+  const url = "https://api.portgig.com/api/v1/recruiter/request-password-reset"
   try {
     const response = await fetch(url, {
-      method: "PUT", 
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -15,13 +15,12 @@ export const requestPasswordReset = async (email: string) => {
     const data = await response.json()
 
     if (!response.ok) {
-     
       throw new Error(data.message || data.error || "Failed to request password reset")
     }
 
     return data
   } catch (error: any) {
-    console.error("Error requesting password reset (direct fetch):", error)
+    console.error("Error requesting password reset:", error)
     throw new Error(error.message || "An unexpected error occurred during password reset request.")
   }
 }
@@ -34,11 +33,10 @@ export const verifyOtp = async (_email: string, otp: string): Promise<{ message:
 }
 
 export const resetPassword = async (email: string, password: string, otp: string) => {
-  const url = "https://api.portgig.com/api/v1/creator/reset-password"
+  const url = "https://api.portgig.com/api/v1/recruiter/reset-password"
   try {
-   
     const response = await fetch(url, {
-      method: "PUT", // As per your curl command
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -57,7 +55,7 @@ export const resetPassword = async (email: string, password: string, otp: string
 
     return data
   } catch (error: any) {
-    console.error("Error resetting password (direct fetch):", error)
+    console.error("Error resetting password:", error)
     throw new Error(error.message || "An unexpected error occurred during password reset.")
   }
 }

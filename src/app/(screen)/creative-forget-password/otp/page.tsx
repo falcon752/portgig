@@ -79,7 +79,7 @@ export default function OtpInputPage() {
         text: "Email not found. Please restart the password reset process.",
       })
       setLoading(false)
-      router.push("/forget-password")
+      router.push("/creative-forget-password")
       return
     }
 
@@ -90,7 +90,7 @@ export default function OtpInputPage() {
         text: "OTP verified successfully.",
       })
       localStorage.setItem("verifiedOtp", fullOtp) 
-      router.push("/forget-password/new-password")
+      router.push("/creative-forget-password/new-password")
     } catch (error: any) {
       setMessage({
         type: "error",

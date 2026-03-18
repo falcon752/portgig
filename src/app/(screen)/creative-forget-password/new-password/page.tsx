@@ -29,7 +29,7 @@ export default function CreateNewPasswordPage() {
         type: "error",
         text: "Please complete the previous steps to reset your password.",
       })
-      router.push("/forget-password")
+      router.push("/creative-forget-password")
     }
   }, [router])
 
@@ -62,7 +62,7 @@ export default function CreateNewPasswordPage() {
         text: "Missing email or OTP. Please restart the process.",
       })
       setLoading(false)
-      router.push("/forget-password")
+      router.push("/creative-forget-password")
       return
     }
 
@@ -74,7 +74,7 @@ export default function CreateNewPasswordPage() {
       })
       localStorage.removeItem("resetEmail") // Clear stored data
       localStorage.removeItem("verifiedOtp")
-      router.push("/forget-password/success")
+      router.push("/creative-forget-password/success")
     } catch (error: any) {
       setMessage({
         type: "error",

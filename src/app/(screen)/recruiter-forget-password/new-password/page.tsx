@@ -5,7 +5,7 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { EyeIcon, EyeOffIcon } from "lucide-react"
-import { resetPassword } from "@/src/lib/requests/creator-reset-password" 
+import { resetPassword } from "@/src/lib/requests/recruiter-reset-password"
 
 export default function CreateNewPasswordPage() {
   const [password, setPassword] = useState("")
@@ -28,7 +28,7 @@ export default function CreateNewPasswordPage() {
         type: "error",
         text: "Please complete the previous steps to reset your password.",
       })
-      router.push("/forget-password")
+      router.push("/recruiter-forget-password")
     }
   }, [router])
 
@@ -61,7 +61,7 @@ export default function CreateNewPasswordPage() {
         text: "Missing email or OTP. Please restart the process.",
       })
       setLoading(false)
-      router.push("/forget-password")
+      router.push("/recruiter-forget-password")
       return
     }
 
@@ -73,7 +73,7 @@ export default function CreateNewPasswordPage() {
       })
       localStorage.removeItem("resetEmail") 
       localStorage.removeItem("verifiedOtp")
-      router.push("/forget-password/success")
+      router.push("/recruiter-forget-password/success")
     } catch (error: any) {
       setMessage({
         type: "error",
