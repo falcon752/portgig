@@ -32,6 +32,14 @@ async function uploadToSpaces(
   return `${SPACES_PUBLIC_BASE}/${key}`;
 }
 
+const ALLOWED_EXTS = new Set(["jpg", "jpeg", "png", "gif", "webp", "pdf", "doc", "docx"]);
+const ALLOWED_MIME = new Set([
+  "image/jpeg", "image/png", "image/gif", "image/webp",
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+]);
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
@@ -42,11 +50,14 @@ export async function POST(request: NextRequest) {
     }
 
     const uploadPromises = files.map(async (file) => {
+      const rawExt = file.name.split(".").pop()?.toLowerCase() ?? "";
+      if (!ALLOWED_EXTS.has(rawExt) || !ALLOWED_MIME.has(file.type)) {
+        throw new Error(`File type not allowed: ${file.name}`);
+      }
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
-      const ext = file.name.split(".").pop() ?? "bin";
-      const filename = `${crypto.randomUUID()}.${ext}`;
-      return uploadToSpaces(buffer, filename, file.type || "application/octet-stream");
+      const filename = `${crypto.randomUUID()}.${rawExt}`;
+      return uploadToSpaces(buffer, filename, file.type);
     });
 
     const urls = await Promise.all(uploadPromises);
