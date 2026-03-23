@@ -91,10 +91,9 @@ const defaultSidebarItems: SidebarItem[] = [
 
 {
   title: "Shortlisted Candidates",
+  href: "/recruiter-dashboard/shortlisted-candidates",
   icon: Users,
-  isSection: true,
-  children: [],
-  fallbackText: "No shortlisted applicants yet",
+  isSection: false,
 },
 
 
@@ -220,15 +219,6 @@ return defaultSidebarItems.map((item) => {
       href: generateJobHref(jobTitle),
     }));
     return { ...item, children: jobPostedChildren };
-  }
-
-  // Duplicate the same logic for Shortlisted Applicants
-  if (item.title === "Shortlisted Candidates") {
-    const shortlistedChildren = dashboardData.job_titles.map((jobTitle) => ({
-      title: jobTitle,
-      href: generateJobHref(jobTitle),
-    }));
-    return { ...item, children: shortlistedChildren };
   }
 
   return item;
