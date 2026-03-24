@@ -137,18 +137,22 @@ export default async function SocialMediaPortfolioByCreatorIdPage({ params }: Pa
           socialMediaManagerSpecific.social_media_manager.my_approach_to_strategy_content || ""
         }
         mission={portfolioData.mission || ""}
+        portfolioData={portfolioData}
       />
       <TemplateFiveSkills
         mySkillSet={socialMediaManagerSpecific.social_media_manager.skills || []}
+        portfolioData={portfolioData}
       />
       <TemplateFiveServices
         otherServices={portfolioData.other_services || []}
+        portfolioData={portfolioData}
       />
       <TemplateFiveHealthcareCaseStudy
         brandName={caseStudy.brand_name || ""}
         howYouHelp={caseStudy.contribution || ""}
         before={caseStudy.before || ""}
         after={caseStudy.after || ""}
+        portfolioData={portfolioData}
       />
       <TemplateFiveGraphicsDesign
         graphicsDesign={
@@ -159,6 +163,7 @@ export default async function SocialMediaPortfolioByCreatorIdPage({ params }: Pa
       <TemplateFiveTools
         toolsIUse={socialMediaManagerSpecific.social_media_manager.tools || []}
         whyWorkWithMe={portfolioData.what_you_get_working_with_me || ""}
+        portfolioData={portfolioData}
       />
       <footer className="center px-10 py-20 bg-black">
         <Image src="/assets/madeByPortgig.svg" height={200} width={1000} alt="Made by Portgig" className="mx-auto" />
