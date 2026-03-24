@@ -62,13 +62,13 @@ export default function TemplateFiveHealthcareCaseStudy({
                 src={before}
                 alt={`${displayBrand} Before`}
                 fill
-                className="object-cover rounded-lg"
+                className="object-contain sm:object-cover rounded-lg"
               />
             )}
           </div>
         </div>
 
-        {/* After */}
+        {/* After */}}
         <div className="space-y-3 text-center">
           <h3
             className="text-sm font-bold text-[#1E2A5A]"
@@ -82,7 +82,7 @@ export default function TemplateFiveHealthcareCaseStudy({
                 src={after}
                 alt={`${displayBrand} After`}
                 fill
-                className="object-cover rounded-lg"
+                className="object-contain sm:object-cover rounded-lg"
               />
             )}
           </div>

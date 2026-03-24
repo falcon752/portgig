@@ -78,7 +78,7 @@ const TemplateOnePortfolio = ({ portfolio }: TemplateOnePortfolioProps) => {
                     alt={item.title || "Portfolio item"}
                     width={640}
                     height={420}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain sm:object-cover"
                   />
                 </div>
 

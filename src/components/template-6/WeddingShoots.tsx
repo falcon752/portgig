@@ -87,7 +87,7 @@ export default function TemplatesixWeddingShoots({
                     src={getImageUrl(section.image) || section.image}
                     alt={section.title || section.name || `Shoot ${idx + 1}`}
                     fill
-                    className="object-cover"
+                    className="object-contain sm:object-cover"
                   />
                 ) : (
                   <p className="text-gray-400 text-sm">No Image</p>

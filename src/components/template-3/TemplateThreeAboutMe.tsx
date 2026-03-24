@@ -14,7 +14,7 @@ interface TemplateThreeAboutMeProps {
 
 const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { getHeadingStyle, getBodyStyle, customBackgroundColor, customPrimaryColor } = usePortfolioCustomizations(portfolio);
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor, customAccentColor, customPrimaryColor } = usePortfolioCustomizations(portfolio);
 
   const aboutMe =
     portfolio.about_me ||
@@ -38,7 +38,7 @@ const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
           About Me
         </h2>
 
-        <div className="border border-cyan-400 rounded-xl px-6 py-6 lg:px-10 lg:py-8 text-sm lg:text-lg text-center text-white leading-relaxed bg-[#0d0d0d]" style={getBodyStyle()}>
+        <div className="border border-cyan-400 rounded-xl px-6 py-6 lg:px-10 lg:py-8 text-sm lg:text-lg text-center text-white leading-relaxed bg-[#0d0d0d]" style={{ ...getBodyStyle(), ...(customAccentColor ? { backgroundColor: customAccentColor } : {}) }}>
           {aboutMe}
         </div>
       </div>
@@ -58,6 +58,7 @@ const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
               <div
                 key={index}
                 className="border border-cyan-400 rounded-xl bg-[#0d0d0d] px-8 py-10 flex flex-col items-center gap-4 text-center text-white"
+                style={customAccentColor ? { backgroundColor: customAccentColor } : undefined}
               >
                 <Image
                   src="/assets/square-logo.svg"
@@ -96,7 +97,7 @@ const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
               <div
                 key={index}
                 className="border border-cyan-400 rounded-md px-6 py-3 text-white bg-[#0d0d0d]"
-                style={getBodyStyle()}
+                style={{ ...getBodyStyle(), ...(customAccentColor ? { backgroundColor: customAccentColor } : {}) }}
               >
                 {skill}
               </div>

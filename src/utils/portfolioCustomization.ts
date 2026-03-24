@@ -595,6 +595,19 @@ export const usePortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
     return null;
   }, [portfolioData]);
 
+  // Resolves to the explicitly-saved accent color, or null if none was saved.
+  // Use this to optionally override a template's hardcoded accent-colored elements.
+  const customAccentColor: string | null = useMemo(() => {
+    const templateType = portfolioData?.template_type?.toUpperCase() || '';
+    if (portfolioData?.template_fonts && templateType && portfolioData.template_fonts[templateType]) {
+      const accent = portfolioData.template_fonts[templateType]?.colors?.accent;
+      if (accent && accent.trim() !== '') return accent;
+    }
+    const accent = portfolioData?.fonts?.colors?.accent;
+    if (accent && accent.trim() !== '') return accent;
+    return null;
+  }, [portfolioData]);
+
   // Resolves to the explicitly-saved primary color, or null if none was saved.
   // Use this on spans inside headings so they follow the user-chosen heading color.
   const customPrimaryColor: string | null = useMemo(() => {
@@ -678,6 +691,7 @@ export const usePortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
     customizations,
     customStyles,
     customBackgroundColor,
+    customAccentColor,
     customPrimaryColor,
     hasCustomizations: hasCustomizations(portfolioData),
     templateType: portfolioData?.template_type,

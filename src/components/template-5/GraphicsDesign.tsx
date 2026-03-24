@@ -31,7 +31,7 @@ export default function TemplateFiveGraphicsDesign({ graphicsDesign, portfolioDa
                   src={getImageUrl(imageUrl) || imageUrl}
                   alt={`Graphic Design ${index + 1}`}
                   fill
-                  className="object-cover"
+                  className="object-contain sm:object-cover"
                 />
               ) : (
                 <div className="flex items-center justify-center h-full text-gray-700 text-sm">

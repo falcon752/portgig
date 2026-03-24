@@ -44,7 +44,7 @@ const TemplateThreePortfolio = ({
                     alt={item.title}
                     width={1200}
                     height={600}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain sm:object-cover"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-black text-sm">
