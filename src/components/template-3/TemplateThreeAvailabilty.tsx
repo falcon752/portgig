@@ -14,7 +14,7 @@ const TemplateThreeAvailability = ({
   portfolioData,
 }: TemplateThreeAvailabilityProps) => {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { getHeadingStyle, getAccentStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
+  const { getHeadingStyle, getBodyStyle, getAccentStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
 
   const availability = isDeveloperTemplateSpecific(portfolio.template_specific)
     ? portfolio.template_specific.developer.availability ||
@@ -35,7 +35,7 @@ const TemplateThreeAvailability = ({
         </h2>
 
         <div className="border border-cyan-400 rounded-xl px-6 py-8 lg:px-10 lg:py-10 bg-gradient-to-br from-[#0d0d0d] to-[#151515]">
-          <p className="text-sm md:text-lg lg:text-xl text-white text-center leading-relaxed">
+          <p className="text-sm md:text-lg lg:text-xl text-white text-center leading-relaxed" style={getBodyStyle()}>
             {availability}
           </p>
         </div>
@@ -48,7 +48,7 @@ const TemplateThreeAvailability = ({
         </h2>
 
         <div className="border border-cyan-400 rounded-xl px-6 py-8 lg:px-10 lg:py-10 bg-gradient-to-br from-[#0d0d0d] to-[#151515]">
-          <p className="text-sm md:text-lg lg:text-xl text-white text-center leading-relaxed">
+          <p className="text-sm md:text-lg lg:text-xl text-white text-center leading-relaxed" style={getBodyStyle()}>
             {whyWorkWithMe}
           </p>
         </div>

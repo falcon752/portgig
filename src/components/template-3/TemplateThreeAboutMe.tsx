@@ -14,7 +14,7 @@ interface TemplateThreeAboutMeProps {
 
 const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { getHeadingStyle, customBackgroundColor, customPrimaryColor } = usePortfolioCustomizations(portfolio);
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor, customPrimaryColor } = usePortfolioCustomizations(portfolio);
 
   const aboutMe =
     portfolio.about_me ||
@@ -38,7 +38,7 @@ const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
           About Me
         </h2>
 
-        <div className="border border-cyan-400 rounded-xl px-6 py-6 lg:px-10 lg:py-8 text-sm lg:text-lg text-center text-white leading-relaxed bg-[#0d0d0d]">
+        <div className="border border-cyan-400 rounded-xl px-6 py-6 lg:px-10 lg:py-8 text-sm lg:text-lg text-center text-white leading-relaxed bg-[#0d0d0d]" style={getBodyStyle()}>
           {aboutMe}
         </div>
       </div>
@@ -70,14 +70,14 @@ const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
                   {service.name}
                 </h3>
 
-                <p className="text-xs lg:text-sm text-gray-300">
+                <p className="text-xs lg:text-sm text-gray-300" style={getBodyStyle()}>
                   {service.description}
                 </p>
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-white">No services to display.</p>
+          <p className="text-white" style={getBodyStyle()}>No services to display.</p>
         )}
       </div>
 
@@ -96,13 +96,14 @@ const TemplateThreeAboutMe = ({ portfolioData }: TemplateThreeAboutMeProps) => {
               <div
                 key={index}
                 className="border border-cyan-400 rounded-md px-6 py-3 text-white bg-[#0d0d0d]"
+                style={getBodyStyle()}
               >
                 {skill}
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-white">No skills to display.</p>
+          <p className="text-white" style={getBodyStyle()}>No skills to display.</p>
         )}
       </div>
       </div>

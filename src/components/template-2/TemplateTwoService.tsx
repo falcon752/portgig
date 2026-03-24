@@ -35,10 +35,7 @@ const TemplateTwoService = ({
       {services?.length > 0 && (
         <ul
           className="space-y-4 md:space-y-5 list-disc list-inside text-sm md:text-base font-bold leading-relaxed md:leading-loose"
-          style={{
-            ...getBodyStyle(),
-            color: "#ffffff",
-          }}
+          style={getBodyStyle()}
         >
           {services.map((service, index) => (
             <li key={index}>{service}</li>
@@ -60,10 +57,7 @@ const TemplateTwoService = ({
 
           <ul
             className="space-y-4 md:space-y-5 list-disc list-inside text-sm md:text-base font-bold leading-relaxed md:leading-loose"
-            style={{
-              ...getBodyStyle(),
-              color: "#ffffff",
-            }}
+            style={getBodyStyle()}
           >
             {videographyTypes.map((item, index) => (
               <li key={`type-${index}`}>{item}</li>

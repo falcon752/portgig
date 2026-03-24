@@ -12,7 +12,7 @@ import { getImageUrl } from "@/src/utils/image-url";
 
 const TemplateOnePortfolio = ({ portfolio }: TemplateOnePortfolioProps) => {
   const portfolioData = portfolio || EMPTY_PORTFOLIO;
-  const { customStyles, getHeadingStyle, customBackgroundColor } = usePortfolioCustomizations(portfolioData);
+  const { customStyles, getHeadingStyle, getBodyStyle, customBackgroundColor } = usePortfolioCustomizations(portfolioData);
 
   const designerSpecific =
     portfolioData.template_type === "DESIGNER" &&
@@ -120,12 +120,13 @@ const TemplateOnePortfolio = ({ portfolio }: TemplateOnePortfolioProps) => {
                   <p
                     key={i}
                     className="font-semibold text-[12px] sm:text-[16px] leading-7 sm:leading-8"
+                    style={getBodyStyle()}
                   >
                     {otherServices.slice(i * 3, i * 3 + 3).join(", ")}
                   </p>
                 ))
               ) : (
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-gray-400" style={getBodyStyle()}>
                   No other services listed.
                 </p>
               )}
@@ -140,7 +141,7 @@ const TemplateOnePortfolio = ({ portfolio }: TemplateOnePortfolioProps) => {
             </h2>
 
             <div className={sectionCardStyle}>
-              <p className="text-center text-[12px] sm:text-[16px] leading-[140%]">
+              <p className="text-center text-[12px] sm:text-[16px] leading-[140%]" style={getBodyStyle()}>
                 {whatYouGetText}
               </p>
             </div>

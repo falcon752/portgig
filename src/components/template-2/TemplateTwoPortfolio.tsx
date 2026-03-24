@@ -120,7 +120,7 @@ const TemplateTwoPortfolio = ({
 
       {/* FOOTER */}
       <section className="center py-6 md:py-8 lg:py-10">
-        <p className="text-center font-bold text-sm md:text-base lg:text-xl px-4 sm:px-6 md:px-8 lg:px-30 text-white">
+        <p className="text-center font-bold text-sm md:text-base lg:text-xl px-4 sm:px-6 md:px-8 lg:px-30 text-white" style={getBodyStyle()}>
           Looking forward to working with you
         </p>
       </section>

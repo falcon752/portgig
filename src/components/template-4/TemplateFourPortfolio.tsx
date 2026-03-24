@@ -28,13 +28,13 @@ export function TemplateFourPortfolio({
   portfolioData,
   whyWorkWithMe,
 }: TemplateFourPortfolioProps) {
-  const { getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor } = usePortfolioCustomizations(portfolioData);
 
   const items =
     portfolioItems?.filter((i) => i.title || i.link || i.image) || [];
 
   return (
-    <section className="bg-[#faf7f3] py-10 font-istokWeb">
+    <section className="bg-[#faf7f3] py-10 font-istokWeb" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto px-5 md:px-10 lg:px-20 space-y-12">
       {/* PORTFOLIO */}
       {items.length > 0 && (
@@ -111,7 +111,7 @@ export function TemplateFourPortfolio({
           <div className="flex flex-col gap-10">
             {linkedinLink && (
               <div className="space-y-3 text-center">
-                <p className="font-bold text-darkBlue">LinkedIn</p>
+                <p className="font-bold text-darkBlue" style={getBodyStyle()}>LinkedIn</p>
                 <Link href={linkedinLink} target="_blank">
                   <Buttons
                     label="Click here"
@@ -131,7 +131,7 @@ export function TemplateFourPortfolio({
 
             {mediumLink && (
               <div className="space-y-3 text-center">
-                <p className="font-bold text-darkBlue">Medium</p>
+                <p className="font-bold text-darkBlue" style={getBodyStyle()}>Medium</p>
                 <Link href={mediumLink} target="_blank">
                   <Buttons
                     label="Click here"

@@ -18,10 +18,10 @@ const TemplateFourHero = ({
   headShot,
   portfolioData,
 }: TemplateFourHeroProps) => {
-  const { getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor } = usePortfolioCustomizations(portfolioData);
   const correctedHeadShot = getImageUrl(headShot) || headShot || "/placeholder.svg";
   return (
-    <section className="bg-[#faf7f3] py-10 border-b border-[#E77C29]">
+    <section className="bg-[#faf7f3] py-10 border-b border-[#E77C29]" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto px-5 md:px-10 lg:px-20 flex items-center gap-6">
         {/* AVATAR */}
         <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gray-300 overflow-hidden flex-shrink-0">

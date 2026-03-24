@@ -62,10 +62,7 @@ const TemplateTwoAboutMe = ({
 
         <p
           className="text-white text-base leading-relaxed"
-          style={{
-            ...getBodyStyle(),
-            color: "#ffffff",
-          }}
+          style={getBodyStyle()}
         >
           {aboutMe ||
             "Creative and detail-oriented Graphic Designer with [X] years of experience in brand identity, social media design, and marketing visuals. Adept at transforming concepts into compelling visuals that enhance brand presence. Proficient in Adobe Creative Suite, Canva, and Figma, with a strong understanding of design principles and user experience. Passionate about delivering high-quality designs that resonate with audiences and drive engagement."}

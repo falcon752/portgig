@@ -9,7 +9,7 @@ interface TemplateFiveGraphicsDesignProps {
 }
 
 export default function TemplateFiveGraphicsDesign({ graphicsDesign, portfolioData }: TemplateFiveGraphicsDesignProps) {
-  const { getHeadingStyle } = usePortfolioCustomizations(portfolioData);
+  const { getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
   return (
     <section className="bg-[#f9f9f9] py-12">
       <div className="max-w-[1400px] mx-auto px-6 text-center">
@@ -42,7 +42,7 @@ export default function TemplateFiveGraphicsDesign({ graphicsDesign, portfolioDa
           ))}
         </div>
       ) : (
-        <p className="text-gray-400 text-lg mt-6">
+        <p className="text-gray-400 text-lg mt-6" style={getBodyStyle()}>
           No graphic design examples to display.
         </p>
       )}

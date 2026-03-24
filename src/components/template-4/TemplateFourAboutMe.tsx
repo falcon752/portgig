@@ -13,11 +13,11 @@ export function TemplateFourAboutMe({
   services,
   portfolioData,
 }: TemplateFourAboutMeProps) {
-  const { getHeadingStyle, getBodyStyle } =
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor } =
     usePortfolioCustomizations(portfolioData);
 
   return (
-    <section className="bg-[#faf7f3] py-10 font-inter">
+    <section className="bg-[#faf7f3] py-10 font-inter" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto px-5 md:px-10 lg:px-20">
       
       {/* ABOUT ME */}
@@ -57,6 +57,7 @@ export function TemplateFourAboutMe({
                 <div
                   key={index}
                   className="bg-white border border-gray-200 rounded-md px-4 py-4 text-xs md:text-sm font-bold text-gray-700 font-istokWeb"
+                  style={getBodyStyle()}
                 >
                   {service}
                 </div>

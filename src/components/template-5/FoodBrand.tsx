@@ -2,7 +2,7 @@
 import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
 
 export default function FoodBrand({ portfolioData }: { portfolioData?: any }) {
-  const { getHeadingStyle } = usePortfolioCustomizations(portfolioData);
+  const { getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
   return (
     <div className="border-y border-[#F9C221] mt-14">
       <div className="bg-[#0F172A] text-[#E2E8F0] px-4 py-12 md:px-10">
@@ -12,7 +12,7 @@ export default function FoodBrand({ portfolioData }: { portfolioData?: any }) {
 
           {/* Description Card */}
           <div className="border-2 border-white bg-[#1E293B] text-[#E2E8F0] px-4 py-20 rounded-lg mb-10 shadow-lg">
-            <p className="text-center text-sm sm:text-base leading-relaxed">
+            <p className="text-center text-sm sm:text-base leading-relaxed" style={getBodyStyle()}>
               Creative and detail-oriented Graphic Designer with [X] years of
               experience in brand identity, social media design, and marketing
               visuals. Adept at transforming concepts into compelling visuals

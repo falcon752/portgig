@@ -313,7 +313,7 @@ export default function FontColorCustomization() {
 
     const handleSave = async () => {
         // Basic validation: Check contrast (simple heuristic, e.g., text != background)
-        if (settings.textColor === settings.backgroundColor) {
+        if (settings.textColor && settings.backgroundColor && settings.textColor === settings.backgroundColor) {
             toast.error('Text and background colors cannot be the same for readability.')
             return
         }
