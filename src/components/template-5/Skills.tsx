@@ -8,7 +8,7 @@ interface TemplateFiveSkillsProps {
 }
 
 export default function Skills({ mySkillSet, portfolioData }: TemplateFiveSkillsProps) {
-  const { getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor } = usePortfolioCustomizations(portfolioData);
 
   // Default skills if none provided
   const skills = mySkillSet && mySkillSet.length > 0 ? mySkillSet : [
@@ -22,7 +22,7 @@ export default function Skills({ mySkillSet, portfolioData }: TemplateFiveSkills
   ];
 
   return (
-    <section className="bg-[#f9f9f9] py-12 text-[#0A1754]">
+    <section className="bg-[#f9f9f9] py-12 text-[#0A1754]" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto px-6">
       {/* Section Title */}
       <h3

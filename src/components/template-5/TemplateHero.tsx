@@ -18,7 +18,7 @@ export default function TemplateHero({
   headShot,
   portfolioData,
 }: TemplateFiveHeroProps) {
-  const { getHeadingStyle, getBodyStyle } =
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor } =
     usePortfolioCustomizations(portfolioData);
 
   const formattedJobTitles =
@@ -27,7 +27,7 @@ export default function TemplateHero({
       : "Strategic Social Media Manager";
 
   return (
-    <section className="bg-[#f9f9f9] py-10">
+    <section className="bg-[#f9f9f9] py-10" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto flex flex-col items-center px-6 text-center">
       
       {/* Avatar */}

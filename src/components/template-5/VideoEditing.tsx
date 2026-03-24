@@ -8,14 +8,14 @@ interface TemplateFiveVideoEditingProps {
 }
 
 export default function VideoEditing({ videoEditing, portfolioData }: TemplateFiveVideoEditingProps) {
-  const {  } = usePortfolioCustomizations(portfolioData)
+  const { customBackgroundColor } = usePortfolioCustomizations(portfolioData)
   const colors = portfolioData?.fonts?.colors || {}
 
   return (
     <div 
       className="flex flex-col items-center px-4 py-10"
       style={{ 
-        backgroundColor: colors.primary,
+        backgroundColor: customBackgroundColor || colors.primary,
         fontFamily: portfolioData?.fonts?.body_font
       }}
     >

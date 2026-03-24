@@ -2,10 +2,10 @@
 import { usePortfolioCustomizations } from "@/src/utils/portfolioCustomization";
 
 export default function FashionBrand({ portfolioData }: { portfolioData?: any }) {
-  const { getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor } = usePortfolioCustomizations(portfolioData);
   return (
     <div className="border-y border-[#F9C221] mt-14">
-      <div className="bg-[#0F172A] text-[#E2E8F0] px-4 py-12 md:px-10">
+      <div className="bg-[#0F172A] text-[#E2E8F0] px-4 py-12 md:px-10" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
         <div className="max-w-6xl mx-auto">
           {/* Title */}
           <h2 className="text-2xl md:text-3xl font-bold mb-6" style={getHeadingStyle()}>Fashion Brand</h2>

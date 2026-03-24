@@ -9,9 +9,9 @@ interface TemplateFiveGraphicsDesignProps {
 }
 
 export default function TemplateFiveGraphicsDesign({ graphicsDesign, portfolioData }: TemplateFiveGraphicsDesignProps) {
-  const { getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor } = usePortfolioCustomizations(portfolioData);
   return (
-    <section className="bg-[#f9f9f9] py-12">
+    <section className="bg-[#f9f9f9] py-12" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto px-6 text-center">
       {/* Section Title */}
       <h3 className="text-4xl font-black font-[MuseoSansRounded] leading-none tracking-normal mb-6" style={getHeadingStyle()}>

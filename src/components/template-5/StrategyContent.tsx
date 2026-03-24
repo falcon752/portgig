@@ -13,11 +13,11 @@ export default function TemplateFiveStrategyContent({
   mission,
   portfolioData,
 }: TemplateFiveStrategyContentProps) {
-  const { getHeadingStyle, getBodyStyle } =
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor } =
     usePortfolioCustomizations(portfolioData);
 
   return (
-    <section className="bg-[#f9f9f9] py-12 text-[#0A1754]">
+    <section className="bg-[#f9f9f9] py-12 text-[#0A1754]" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto px-6 text-center space-y-12">
       
       {/* My Approach to Strategy Content */}

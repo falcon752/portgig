@@ -8,7 +8,7 @@ interface TemplateFiveServicesProps {
 }
 
 export default function Services({ otherServices, portfolioData }: TemplateFiveServicesProps) {
-  const { getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor } = usePortfolioCustomizations(portfolioData);
 
   // Default services if none provided
   const services = otherServices && otherServices.length > 0 ? otherServices : [
@@ -20,7 +20,7 @@ export default function Services({ otherServices, portfolioData }: TemplateFiveS
   ];
 
   return (
-    <section className="bg-[#f9f9f9] py-12 text-[#0A1754]">
+    <section className="bg-[#f9f9f9] py-12 text-[#0A1754]" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto px-6">
       {/* Section Title */}
       <h3

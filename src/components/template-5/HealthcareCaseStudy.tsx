@@ -18,7 +18,7 @@ export default function TemplateFiveHealthcareCaseStudy({
   after,
   portfolioData,
 }: TemplateFiveHealthcareCaseStudyProps) {
-  const { getHeadingStyle, getBodyStyle } =
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor } =
     usePortfolioCustomizations(portfolioData);
 
   // Default content if no data provided
@@ -28,7 +28,7 @@ export default function TemplateFiveHealthcareCaseStudy({
     `Creative and detail-oriented Graphic Designer with years of experience in brand identity, social media design, and marketing visuals. Adept at transforming concepts into compelling visuals that enhance brand presence. Proficient in Adobe Creative Suite, Canva, and Figma, with a strong understanding of design principles and user experience. Passionate about delivering high-quality designs that resonate with audiences and drive engagement.`;
 
   return (
-    <section className="bg-[#f9f9f9] py-16 text-[#1E2A5A]">
+    <section className="bg-[#f9f9f9] py-16 text-[#1E2A5A]" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto px-6 space-y-10">
       {/* Brand Title */}
       <div

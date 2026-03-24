@@ -13,12 +13,12 @@ export default function Tools({
   whyWorkWithMe,
   portfolioData,
 }: TemplateFiveToolsProps) {
-  const { customStyles, getHeadingStyle, getBodyStyle } = usePortfolioCustomizations(portfolioData);
+  const { customStyles, getHeadingStyle, getBodyStyle, customBackgroundColor } = usePortfolioCustomizations(portfolioData);
 
   return (
     <section
       className="bg-[#f9f9f9] px-6 py-12"
-      style={{ ...customStyles }}
+      style={{ ...customStyles, ...(customBackgroundColor ? { backgroundColor: customBackgroundColor } : {}) }}
     >
       {/* Tools I Use */}
       <h3 className="text-4xl font-black font-[MuseoSansRounded] leading-none tracking-normal mb-8 text-center" style={getHeadingStyle()}>

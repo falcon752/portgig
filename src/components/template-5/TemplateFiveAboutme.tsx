@@ -11,11 +11,11 @@ export default function TemplateFiveAboutMe({
   aboutMe,
   portfolioData,
 }: TemplateFiveAboutMeProps) {
-  const { getHeadingStyle, getBodyStyle } =
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor } =
     usePortfolioCustomizations(portfolioData);
 
   return (
-    <section className="bg-[#f9f9f9] py-12 text-[#0A1754]">
+    <section className="bg-[#f9f9f9] py-12 text-[#0A1754]" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto px-6 text-center">
       {/* Section Title */}
       <h3
