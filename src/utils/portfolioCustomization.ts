@@ -460,6 +460,17 @@ export const getPortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
     };
   }
 
+  // For dark-bg templates, these were old stale defaults that should not
+  // override the template's native white text / black background.
+  const DARK_TEMPLATES = new Set(['DESIGNER', 'PHOTOGRAPHER', 'DEVELOPER', 'VIDEOGRAPHER']);
+  const isDark = DARK_TEMPLATES.has(templateType);
+  const isStaleTextBlack = (v: string) => isDark && v.trim().toLowerCase() === '#000000';
+  const isStaleBackgroundWhite = (v: string) => isDark && v.trim().toLowerCase() === '#ffffff';
+  // Old UI defaults for primary/accent that were stored in the DB before dark-template
+  // defaults were set to white. Treat these as "not set" so TEMPLATE_DEFAULTS (white) applies.
+  const STALE_PRIMARY_VALUES = new Set(['#0a1754', '#1e3a8a']);
+  const isStalePrimary = (v: string) => isDark && STALE_PRIMARY_VALUES.has(v.trim().toLowerCase());
+
   // Try to get template-specific customizations first
   if (portfolioData?.template_fonts && templateType && portfolioData.template_fonts[templateType]) {
     const raw = portfolioData.template_fonts[templateType];
@@ -468,10 +479,10 @@ export const getPortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
     const overrides: Partial<PortfolioCustomizations> = {};
     if (raw.heading_font?.trim()) overrides.headingFont = raw.heading_font;
     if (raw.body_font?.trim()) overrides.bodyFont = raw.body_font;
-    if (raw.colors?.primary?.trim()) overrides.primaryColor = raw.colors.primary;
+    if (raw.colors?.primary?.trim() && !isStalePrimary(raw.colors.primary)) overrides.primaryColor = raw.colors.primary;
     if (raw.colors?.accent?.trim()) overrides.accentColor = raw.colors.accent;
-    if (raw.colors?.background?.trim()) overrides.backgroundColor = raw.colors.background;
-    if (raw.colors?.text?.trim()) overrides.textColor = raw.colors.text;
+    if (raw.colors?.background?.trim() && !isStaleBackgroundWhite(raw.colors.background)) overrides.backgroundColor = raw.colors.background;
+    if (raw.colors?.text?.trim() && !isStaleTextBlack(raw.colors.text)) overrides.textColor = raw.colors.text;
     return { ...customizations, ...overrides };
   }
 
@@ -482,10 +493,10 @@ export const getPortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
     const overrides: Partial<PortfolioCustomizations> = {};
     if (raw.heading_font?.trim()) overrides.headingFont = raw.heading_font;
     if (raw.body_font?.trim()) overrides.bodyFont = raw.body_font;
-    if (raw.colors?.primary?.trim()) overrides.primaryColor = raw.colors.primary;
+    if (raw.colors?.primary?.trim() && !isStalePrimary(raw.colors.primary)) overrides.primaryColor = raw.colors.primary;
     if (raw.colors?.accent?.trim()) overrides.accentColor = raw.colors.accent;
-    if (raw.colors?.background?.trim()) overrides.backgroundColor = raw.colors.background;
-    if (raw.colors?.text?.trim()) overrides.textColor = raw.colors.text;
+    if (raw.colors?.background?.trim() && !isStaleBackgroundWhite(raw.colors.background)) overrides.backgroundColor = raw.colors.background;
+    if (raw.colors?.text?.trim() && !isStaleTextBlack(raw.colors.text)) overrides.textColor = raw.colors.text;
     return { ...customizations, ...overrides };
   }
 
@@ -586,12 +597,20 @@ export const usePortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
   // Use this to optionally override a template's hardcoded background.
   const customBackgroundColor: string | null = useMemo(() => {
     const templateType = portfolioData?.template_type?.toUpperCase() || '';
+
+    // Dark-themed templates use bg-black by default. Treat stored "#ffffff" as
+    // "no customization" so that resetting (or an old stale white default in the DB)
+    // never overrides the template's native dark background.
+    const DARK_TEMPLATES = new Set(['DESIGNER', 'PHOTOGRAPHER', 'DEVELOPER', 'VIDEOGRAPHER']);
+    const isStaleWhite = (color: string) =>
+      DARK_TEMPLATES.has(templateType) && color.trim().toLowerCase() === '#ffffff';
+
     if (portfolioData?.template_fonts && templateType && portfolioData.template_fonts[templateType]) {
       const bg = portfolioData.template_fonts[templateType]?.colors?.background;
-      if (bg && bg.trim() !== '') return bg;
+      if (bg && bg.trim() !== '' && !isStaleWhite(bg)) return bg;
     }
     const bg = portfolioData?.fonts?.colors?.background;
-    if (bg && bg.trim() !== '') return bg;
+    if (bg && bg.trim() !== '' && !isStaleWhite(bg)) return bg;
     return null;
   }, [portfolioData]);
 
