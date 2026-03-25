@@ -388,7 +388,7 @@ const TEMPLATE_DEFAULTS: Record<string, Partial<PortfolioCustomizations>> = {
   // Dark-background templates → white heading + body text
   VIDEOGRAPHER: {
     primaryColor: '#ffffff', // White headings on dark bg
-    accentColor: '#ff7f00',  // yellowGold (matches static template-2)
+    accentColor: '#ea580c',  // Orange
     textColor: '#ffffff',    // White body text on dark bg
   },
   PHOTOGRAPHER: {
@@ -398,18 +398,18 @@ const TEMPLATE_DEFAULTS: Record<string, Partial<PortfolioCustomizations>> = {
   },
   DEVELOPER: {
     primaryColor: '#ffffff', // White headings on dark bg
-    accentColor: '#22d3ee',  // cyan-400 (matches static template-3)
+    accentColor: '#0d9488',  // Teal
     textColor: '#ffffff',    // White body text on dark bg
   },
   DESIGNER: {
     primaryColor: '#ffffff', // White headings on dark bg
-    accentColor: '#a855f7',  // purple-500 (matches static template-1)
+    accentColor: '#dc2626',  // Red
     textColor: '#ffffff',    // White body text on dark bg
   },
   // Light-background templates → dark text (global default #000000 applies)
   SOCIAL_MEDIA_MANAGER: {
-    primaryColor: '#0A1754', // Navy blue (matches static template-5 headings)
-    accentColor: '#7fd3f7',  // Light blue (matches static template-5 borders)
+    primaryColor: '#16a34a', // Green
+    accentColor: '#ea580c',  // Orange
     // textColor intentionally omitted → falls back to global default #000000
   },
   WRITER: {
@@ -460,17 +460,6 @@ export const getPortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
     };
   }
 
-  // For dark-bg templates, these were old stale defaults that should not
-  // override the template's native white text / black background.
-  const DARK_TEMPLATES = new Set(['DESIGNER', 'PHOTOGRAPHER', 'DEVELOPER', 'VIDEOGRAPHER']);
-  const isDark = DARK_TEMPLATES.has(templateType);
-  const isStaleTextBlack = (v: string) => isDark && v.trim().toLowerCase() === '#000000';
-  const isStaleBackgroundWhite = (v: string) => isDark && v.trim().toLowerCase() === '#ffffff';
-  // Old UI defaults for primary/accent that were stored in the DB before dark-template
-  // defaults were set to white. Treat these as "not set" so TEMPLATE_DEFAULTS (white) applies.
-  const STALE_PRIMARY_VALUES = new Set(['#0a1754', '#1e3a8a']);
-  const isStalePrimary = (v: string) => isDark && STALE_PRIMARY_VALUES.has(v.trim().toLowerCase());
-
   // Try to get template-specific customizations first
   if (portfolioData?.template_fonts && templateType && portfolioData.template_fonts[templateType]) {
     const raw = portfolioData.template_fonts[templateType];
@@ -479,10 +468,10 @@ export const getPortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
     const overrides: Partial<PortfolioCustomizations> = {};
     if (raw.heading_font?.trim()) overrides.headingFont = raw.heading_font;
     if (raw.body_font?.trim()) overrides.bodyFont = raw.body_font;
-    if (raw.colors?.primary?.trim() && !isStalePrimary(raw.colors.primary)) overrides.primaryColor = raw.colors.primary;
+    if (raw.colors?.primary?.trim()) overrides.primaryColor = raw.colors.primary;
     if (raw.colors?.accent?.trim()) overrides.accentColor = raw.colors.accent;
-    if (raw.colors?.background?.trim() && !isStaleBackgroundWhite(raw.colors.background)) overrides.backgroundColor = raw.colors.background;
-    if (raw.colors?.text?.trim() && !isStaleTextBlack(raw.colors.text)) overrides.textColor = raw.colors.text;
+    if (raw.colors?.background?.trim()) overrides.backgroundColor = raw.colors.background;
+    if (raw.colors?.text?.trim()) overrides.textColor = raw.colors.text;
     return { ...customizations, ...overrides };
   }
 
@@ -493,10 +482,10 @@ export const getPortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
     const overrides: Partial<PortfolioCustomizations> = {};
     if (raw.heading_font?.trim()) overrides.headingFont = raw.heading_font;
     if (raw.body_font?.trim()) overrides.bodyFont = raw.body_font;
-    if (raw.colors?.primary?.trim() && !isStalePrimary(raw.colors.primary)) overrides.primaryColor = raw.colors.primary;
+    if (raw.colors?.primary?.trim()) overrides.primaryColor = raw.colors.primary;
     if (raw.colors?.accent?.trim()) overrides.accentColor = raw.colors.accent;
-    if (raw.colors?.background?.trim() && !isStaleBackgroundWhite(raw.colors.background)) overrides.backgroundColor = raw.colors.background;
-    if (raw.colors?.text?.trim() && !isStaleTextBlack(raw.colors.text)) overrides.textColor = raw.colors.text;
+    if (raw.colors?.background?.trim()) overrides.backgroundColor = raw.colors.background;
+    if (raw.colors?.text?.trim()) overrides.textColor = raw.colors.text;
     return { ...customizations, ...overrides };
   }
 

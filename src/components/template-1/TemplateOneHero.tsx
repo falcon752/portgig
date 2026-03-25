@@ -39,8 +39,8 @@ export const TemplateOneHero = ({ portfolio }: TemplateOneHeroProps) => {
 
         {/* Text */}
         <div className="flex flex-col gap-3">
-          <h1 className="text-3xl font-bold" style={getHeadingStyle()}>{name}</h1>
-          <p className="text-base leading-relaxed" style={getAccentStyle()}>
+          <h1 className="text-white text-3xl font-bold" style={getHeadingStyle()}>{name}</h1>
+          <p className="text-white text-base leading-relaxed" style={getAccentStyle()}>
             {jobTitles}
             {/* <span className="sm:block lg:inline"> {tagline}</span> */}
           </p>
@@ -67,8 +67,8 @@ export const TemplateOneHero = ({ portfolio }: TemplateOneHeroProps) => {
 
           {/* Text */}
           <div className="flex flex-col gap-3 mt-[150px]">
-            <h1 className="text-4xl font-bold" style={getHeadingStyle()}>{name}</h1>
-            <p className="text-lg max-w-md leading-relaxed" style={getAccentStyle()}>
+            <h1 className="text-white text-4xl font-bold" style={getHeadingStyle()}>{name}</h1>
+            <p className="text-white text-lg max-w-md leading-relaxed" style={getAccentStyle()}>
               {jobTitles}
               <br />
               {/* {tagline} */}

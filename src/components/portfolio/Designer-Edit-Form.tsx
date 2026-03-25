@@ -60,6 +60,7 @@ const DesignerForm: React.FC = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
   const [authToken, setAuthToken] = useState<string | null>(null);
+  const [existingFonts, setExistingFonts] = useState<any>(null);
 
   const headShotInputRef = useRef<HTMLInputElement>(null);
   const skillImageInputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -102,6 +103,9 @@ const DesignerForm: React.FC = () => {
           fullProfileData.data?.portfolio;
 
         if (portfolioData && portfolioData.template_type === "DESIGNER") {
+          // Preserve existing fonts/template_fonts so save doesn't overwrite customizations
+          if (portfolioData.fonts) setExistingFonts(portfolioData.fonts);
+
           // Type-safe access to template_specific for designer
           const designerSpecific =
             portfolioData.template_specific &&
@@ -405,16 +409,8 @@ const DesignerForm: React.FC = () => {
           mission: formData.missionAndDesignPhilosophy,
           head_shot: finalHeadShotUrl || "",
           files: finalPortfolioFiles,
-          fonts: {
-            heading_font: "Inter",
-            body_font: "Roboto",
-            colors: {
-              primary: "#0A1754",
-              accent: "#1e3a8a",
-              background: "#FFFFFF",
-              text: "#000000",
-            },
-          },
+          // Preserve any existing font/color customizations — do not overwrite them
+          ...(existingFonts ? { fonts: existingFonts } : {}),
           other_services: stringToArray(formData.otherServices),
           what_you_get_working_with_me: formData.whyWorkWithMe,
 

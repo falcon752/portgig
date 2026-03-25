@@ -10,7 +10,7 @@ interface TemplatesixHeroSectionProps {
 
 export default function TemplatesixHeroSection({ portfolioData }: TemplatesixHeroSectionProps) {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { getHeadingStyle, customBackgroundColor, getAccentStyle } = usePortfolioCustomizations(portfolio);
+  const { getHeadingStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
 
   const displayName = portfolio.display_name || "Photographer Name";
   const formattedJobTitles = portfolio.job_titles?.length > 0 ? portfolio.job_titles.join(" / ") : "Photography / Cinematographer";
@@ -30,7 +30,7 @@ export default function TemplatesixHeroSection({ portfolioData }: TemplatesixHer
             >
               {displayName.toUpperCase()}
             </h1>
-            <p className="mt-4 font-bold text-xl 2xl:text-xl xl:text-lg lg:text-base uppercase tracking-wider whitespace-nowrap" style={{ color: getAccentStyle().color }}>
+            <p className="mt-4 font-bold text-xl 2xl:text-xl xl:text-lg lg:text-base uppercase tracking-wider text-[#FCC92F] whitespace-nowrap">
               {formattedJobTitles} · {location}
             </p>
           </div>
@@ -71,7 +71,7 @@ export default function TemplatesixHeroSection({ portfolioData }: TemplatesixHer
         >
           {displayName.toUpperCase()}
         </h1>
-        <p className="text-[12px] sm:text-[10px] font-bold uppercase tracking-wider whitespace-nowrap" style={{ color: getAccentStyle().color }}>
+        <p className="text-[#FCC92F] text-[12px] sm:text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
           {formattedJobTitles} · {location}
         </p>
       </div>

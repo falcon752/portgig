@@ -16,7 +16,7 @@ const TemplateThreePortfolio = ({
   portfolioData,
 }: TemplateThreePortfolioProps) => {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { getHeadingStyle, customBackgroundColor, getAccentStyle } = usePortfolioCustomizations(portfolio);
+  const { getHeadingStyle, customBackgroundColor, customPrimaryColor } = usePortfolioCustomizations(portfolio);
 
   const portfolioItems = portfolio.files || [];
 
@@ -28,7 +28,7 @@ const TemplateThreePortfolio = ({
         className="text-xl lg:text-2xl font-bold mb-10 text-white"
         style={getHeadingStyle()}
       >
-        My <span style={getAccentStyle()}>Portfolio</span>
+        My <span className="text-cyan-400" style={customPrimaryColor ? { color: customPrimaryColor } : undefined}>Portfolio</span>
       </h2>
 
       {/* PORTFOLIO LIST */}

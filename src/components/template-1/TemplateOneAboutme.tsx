@@ -13,7 +13,7 @@ import { Key } from "react";
 export const TemplateOneAboutme = ({ portfolio }: TemplateOneAboutmeProps) => {
   const portfolioData: ApiPortfolioData = portfolio || EMPTY_PORTFOLIO;
 
-  const { customStyles, getHeadingStyle, getBodyStyle, customBackgroundColor, getAccentStyle } =
+  const { customStyles, getHeadingStyle, getBodyStyle, customBackgroundColor } =
     usePortfolioCustomizations(portfolioData);
 
   const aboutMeText =
@@ -42,8 +42,6 @@ export const TemplateOneAboutme = ({ portfolio }: TemplateOneAboutmeProps) => {
       ? "No tools specified."
       : "Adobe Creative Suite (Photoshop, Illustrator, InDesign, After Effects), Figma, Adobe XD, Sketch, Canva (for quick design work)";
 
-  const borderColor = "#FFFFFF";
-
   const cardStyle =
     "w-full px-8 sm:px-6 md:px-10 lg:px-12 py-15 sm:py-6 md:py-10 lg:py-10 text-white rounded-lg border-2 border-[#4E3E60] bg-[#17151E] shadow-lg shadow-purple-500/10 flex flex-col items-center justify-center";
 
@@ -60,6 +58,9 @@ export const TemplateOneAboutme = ({ portfolio }: TemplateOneAboutmeProps) => {
   const skillNameTextStyle =
     "text-center font-normal text-xs sm:text-sm md:text-base text-gold mt-2";
 
+  const accentColor = "#D3A63B";
+  const borderColor = "#FFFFFF";
+
   return (
     <section className="h-fit bg-black" style={customBackgroundColor ? { backgroundColor: customBackgroundColor } : undefined}>
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 pt-10 pb-5 flex flex-col gap-6">
@@ -74,7 +75,7 @@ export const TemplateOneAboutme = ({ portfolio }: TemplateOneAboutmeProps) => {
         </div>
 
         {/* Mission */}
-        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-left" style={getHeadingStyle()}>
+        <h2 className="text-white font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-left" style={getHeadingStyle()}>
           Mission and Design Philosophy
         </h2>
         <div className={cardStyle}>
@@ -87,7 +88,7 @@ export const TemplateOneAboutme = ({ portfolio }: TemplateOneAboutmeProps) => {
         </div>
 
         {/* Skills */}
-        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-left" style={getHeadingStyle()}>
+        <h2 className="text-white font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-left" style={getHeadingStyle()}>
           Skills
         </h2>
         <div className={skillsGridContainerStyle}>
@@ -109,7 +110,7 @@ export const TemplateOneAboutme = ({ portfolio }: TemplateOneAboutmeProps) => {
                       height={288}
                     />
                   </div>
-                  <h2 className={skillNameTextStyle} style={getAccentStyle()}>
+                  <h2 className={skillNameTextStyle} style={{ color: accentColor }}>
                     {skill.name || "Skill Name"}
                   </h2>
                 </div>
@@ -125,8 +126,8 @@ export const TemplateOneAboutme = ({ portfolio }: TemplateOneAboutmeProps) => {
 
       {/* Tools / Software */}
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 pt-10 pb-5 flex flex-col gap-6">
-        <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-left" style={getHeadingStyle()}>
-          <span style={getAccentStyle()}>Tool /</span> Software
+        <h2 className="text-white font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-left" style={getHeadingStyle()}>
+          <span>Tool /</span> Software
         </h2>
         <div className={`${cardStyle} items-start`}>
           {toolsSoftwareText.split(", ").map((tool, index) => (

@@ -161,10 +161,10 @@ export default async function Template6Page({
           heading_font: "Inter",
           body_font: "Roboto",
           colors: {
-            primary: "",
-            accent: "",
+            primary: "#0A1754",
+            accent: "#1e3a8a",
             background: "",
-            text: "",
+            text: "#000000",
           },
         },
         template_fonts: rawPortfolio.template_fonts ?? {},

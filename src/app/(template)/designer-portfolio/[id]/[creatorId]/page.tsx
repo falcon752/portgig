@@ -41,16 +41,7 @@ export default async function DesignerPortfolioByCreatorIdPage({ params }: PageP
         mission: rawPortfolio.mission ?? "",
         head_shot: rawPortfolio.head_shot ?? "",
         files: rawPortfolio.files ?? [],
-        fonts: rawPortfolio.fonts ?? {
-          heading_font: "Inter",
-          body_font: "Roboto",
-          colors: {
-            primary: "",
-            accent: "",
-            background: "",
-            text: "",
-          },
-        },
+        fonts: rawPortfolio.fonts,
         template_fonts: rawPortfolio.template_fonts ?? {},
         other_services: rawPortfolio.other_services ?? [],
         what_you_get_working_with_me: rawPortfolio.what_you_get_working_with_me ?? "",

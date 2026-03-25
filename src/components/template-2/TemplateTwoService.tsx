@@ -17,7 +17,7 @@ const TemplateTwoService = ({
   videoEditingSkills,
   portfolioData,
 }: TemplateTwoServiceProps) => {
-  const { getHeadingStyle, getBodyStyle, customBackgroundColor, getAccentStyle } =
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor } =
     usePortfolioCustomizations(portfolioData);
 
   return (
@@ -28,7 +28,7 @@ const TemplateTwoService = ({
         className="font-bold text-xl md:text-3xl mb-8"
         style={getHeadingStyle()}
       >
-        MY <span style={getAccentStyle()}>SERVICES</span>
+        MY <span>SERVICES</span>
       </h2>
 
       {/* Services */}
