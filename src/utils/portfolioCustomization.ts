@@ -587,19 +587,12 @@ export const usePortfolioCustomizations = (portfolioData: ApiPortfolioData = EMP
   const customBackgroundColor: string | null = useMemo(() => {
     const templateType = portfolioData?.template_type?.toUpperCase() || '';
 
-    // Dark-themed templates use bg-black by default. Treat stored "#ffffff" as
-    // "no customization" so that resetting (or an old stale white default in the DB)
-    // never overrides the template's native dark background.
-    const DARK_TEMPLATES = new Set(['DESIGNER', 'PHOTOGRAPHER', 'DEVELOPER', 'VIDEOGRAPHER']);
-    const isStaleWhite = (color: string) =>
-      DARK_TEMPLATES.has(templateType) && color.trim().toLowerCase() === '#ffffff';
-
     if (portfolioData?.template_fonts && templateType && portfolioData.template_fonts[templateType]) {
       const bg = portfolioData.template_fonts[templateType]?.colors?.background;
-      if (bg && bg.trim() !== '' && !isStaleWhite(bg)) return bg;
+      if (bg && bg.trim() !== '') return bg;
     }
     const bg = portfolioData?.fonts?.colors?.background;
-    if (bg && bg.trim() !== '' && !isStaleWhite(bg)) return bg;
+    if (bg && bg.trim() !== '') return bg;
     return null;
   }, [portfolioData]);
 
