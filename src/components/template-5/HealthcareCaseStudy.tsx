@@ -68,7 +68,7 @@ export default function TemplateFiveHealthcareCaseStudy({
           </div>
         </div>
 
-        {/* After */}}
+        {/* After */}
         <div className="space-y-3 text-center">
           <h3
             className="text-sm font-bold text-[#1E2A5A]"
