@@ -15,7 +15,7 @@ export default function TemplatesixJobs({
   portfolioData,
 }: TemplatesixJobsProps) {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { getHeadingStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
+  const { getHeadingStyle, getAccentStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
 
   const jobsOpenTo = isPhotographerTemplateSpecific(
     portfolio.template_specific
@@ -40,7 +40,7 @@ export default function TemplatesixJobs({
       {/* OPEN TO ALL KINDS OF GIGS */}
       <h2
         className="text-center text-3xl md:text-4xl font-bold mb-16"
-        style={getHeadingStyle()}
+        style={getAccentStyle()}
       >
         OPEN TO ALL KINDS OF GIGS
       </h2>
@@ -66,7 +66,7 @@ export default function TemplatesixJobs({
       {/* WHY YOU SHOULD WORK WITH ME */}
       <h2
         className="text-center text-3xl md:text-4xl font-bold mb-10"
-        style={getHeadingStyle()}
+        style={getAccentStyle()}
       >
         WHY YOU SHOULD WORK WITH ME
       </h2>

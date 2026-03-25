@@ -388,7 +388,7 @@ const TEMPLATE_DEFAULTS: Record<string, Partial<PortfolioCustomizations>> = {
   // Dark-background templates → white heading + body text
   VIDEOGRAPHER: {
     primaryColor: '#ffffff', // White headings on dark bg
-    accentColor: '#ea580c',  // Orange
+    accentColor: '#ff7f00',  // yellowGold (matches static template-2)
     textColor: '#ffffff',    // White body text on dark bg
   },
   PHOTOGRAPHER: {
@@ -398,18 +398,18 @@ const TEMPLATE_DEFAULTS: Record<string, Partial<PortfolioCustomizations>> = {
   },
   DEVELOPER: {
     primaryColor: '#ffffff', // White headings on dark bg
-    accentColor: '#0d9488',  // Teal
+    accentColor: '#22d3ee',  // cyan-400 (matches static template-3)
     textColor: '#ffffff',    // White body text on dark bg
   },
   DESIGNER: {
     primaryColor: '#ffffff', // White headings on dark bg
-    accentColor: '#dc2626',  // Red
+    accentColor: '#a855f7',  // purple-500 (matches static template-1)
     textColor: '#ffffff',    // White body text on dark bg
   },
   // Light-background templates → dark text (global default #000000 applies)
   SOCIAL_MEDIA_MANAGER: {
-    primaryColor: '#16a34a', // Green
-    accentColor: '#ea580c',  // Orange
+    primaryColor: '#0A1754', // Navy blue (matches static template-5 headings)
+    accentColor: '#7fd3f7',  // Light blue (matches static template-5 borders)
     // textColor intentionally omitted → falls back to global default #000000
   },
   WRITER: {

@@ -13,7 +13,7 @@ const TemplateTwoAboutMe = ({
   aboutMe,
   portfolioData,
 }: TemplateTwoAboutMeProps) => {
-  const { getHeadingStyle, getBodyStyle, customBackgroundColor } =
+  const { getHeadingStyle, getBodyStyle, customBackgroundColor, getAccentStyle } =
     usePortfolioCustomizations(portfolioData);
 
   // Take first 3 images without title/link
@@ -57,7 +57,7 @@ const TemplateTwoAboutMe = ({
             className="font-next font-bold text-xl md:text-3xl"
             style={getHeadingStyle()}
           >
-            ABOUT <span style={{ color: getHeadingStyle().color }}>ME</span>
+            ABOUT <span style={getAccentStyle()}>ME</span>
           </h2>
 
         <p

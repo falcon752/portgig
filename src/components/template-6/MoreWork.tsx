@@ -16,7 +16,7 @@ export default function TemplatesixMoreWork({
   portfolioData,
 }: TemplatesixMoreWorkProps) {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { customStyles, getHeadingStyle, customBackgroundColor } =
+  const { customStyles, getHeadingStyle, getAccentStyle, customBackgroundColor } =
     usePortfolioCustomizations(portfolio);
 
   const moreWork = isPhotographerTemplateSpecific(
@@ -36,8 +36,8 @@ export default function TemplatesixMoreWork({
     >
       {/* Title */}
       <h2
-        className="text-center text-3xl md:text-4xl font-bold text-[#FCC92F] mb-20"
-        style={getHeadingStyle()}
+        className="text-center text-3xl md:text-4xl font-bold mb-20"
+        style={getAccentStyle()}
       >
         MORE OF MY WORK/EVENTS
       </h2>

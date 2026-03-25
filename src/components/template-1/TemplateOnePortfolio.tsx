@@ -12,7 +12,7 @@ import { getImageUrl } from "@/src/utils/image-url";
 
 const TemplateOnePortfolio = ({ portfolio }: TemplateOnePortfolioProps) => {
   const portfolioData = portfolio || EMPTY_PORTFOLIO;
-  const { customStyles, getHeadingStyle, getBodyStyle, customBackgroundColor } = usePortfolioCustomizations(portfolioData);
+  const { customStyles, getHeadingStyle, getBodyStyle, customBackgroundColor, getAccentStyle } = usePortfolioCustomizations(portfolioData);
 
   const designerSpecific =
     portfolioData.template_type === "DESIGNER" &&
@@ -62,7 +62,7 @@ const TemplateOnePortfolio = ({ portfolio }: TemplateOnePortfolioProps) => {
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-10 flex flex-col gap-10">
           {/* Header */}
           <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl" style={getHeadingStyle()}>
-            My <span>Portfolio</span>
+            My <span style={getAccentStyle()}>Portfolio</span>
           </h2>
 
           {/* Portfolio Grid */}
@@ -109,7 +109,7 @@ const TemplateOnePortfolio = ({ portfolio }: TemplateOnePortfolioProps) => {
           {/* Other Services */}
           <div className="flex flex-col gap-4 mt-16">
             <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl" style={getHeadingStyle()}>
-              Other <span>Services /</span> Skills
+              Other <span style={getAccentStyle()}>Services /</span> Skills
             </h2>
 
             <div className="w-full px-8 sm:px-6 md:px-10 lg:px-12 py-10 text-white rounded-lg border-2 border-[#4E3E60] bg-[#17151E] shadow-lg shadow-purple-500/10 flex flex-col items-start gap-4">
@@ -137,7 +137,7 @@ const TemplateOnePortfolio = ({ portfolio }: TemplateOnePortfolioProps) => {
           <div className="flex flex-col gap-4 mt-16">
             <h2 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl" style={getHeadingStyle()}>
               What you get working{" "}
-              <span>with me</span>
+              <span style={getAccentStyle()}>with me</span>
             </h2>
 
             <div className={sectionCardStyle}>

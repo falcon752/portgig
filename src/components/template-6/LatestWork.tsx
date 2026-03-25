@@ -10,7 +10,7 @@ interface TemplatesixLatestWorkProps {
 
 export default function TemplatesixLatestWork({ portfolioData }: TemplatesixLatestWorkProps) {
   const portfolio = portfolioData || EMPTY_PORTFOLIO;
-  const { colorUtils, customStyles, getHeadingStyle, getBodyStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
+  const { colorUtils, customStyles, getHeadingStyle, getBodyStyle, getAccentStyle, customBackgroundColor } = usePortfolioCustomizations(portfolio);
 
   // Get latest work from photographer-specific template data
   const latestWork = isPhotographerTemplateSpecific(portfolio.template_specific)
@@ -29,7 +29,7 @@ export default function TemplatesixLatestWork({ portfolioData }: TemplatesixLate
           <p className="text-white mb-2 text-base sm:text-lg md:text-xl font-inter" style={getBodyStyle()}>
             My Portfolio
           </p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold" style={getHeadingStyle()}>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold" style={getAccentStyle()}>
             LATEST WORK
           </h2>
         </div>
