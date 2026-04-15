@@ -52,7 +52,7 @@ const TemplateTwoPortfolio = ({
                         alt={item.title}
                         width={800}
                         height={600}
-                        className="w-full h-full object-contain sm:object-cover"
+                        className="w-full h-full object-cover"
                       />
                     ) : (
                       <p className="text-black uppercase font-black text-xs sm:text-sm md:text-base lg:text-lg text-center px-4 sm:px-6 md:px-10">

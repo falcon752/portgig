@@ -52,7 +52,7 @@ export function TemplateFourPortfolio({
                     src={getImageUrl(item.image) || item.image}
                     alt={item.title || "portfolio"}
                     fill
-                    className="object-contain sm:object-cover"
+                    className="object-cover"
                     priority={index === 0}
                   />
                 </div>

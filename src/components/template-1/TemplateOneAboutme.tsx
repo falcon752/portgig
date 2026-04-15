@@ -105,7 +105,7 @@ export const TemplateOneAboutme = ({ portfolio }: TemplateOneAboutmeProps) => {
                         getImageUrl(skill.image) || skill.image || "/placeholder.svg?height=288&width=288&query=skill icon"
                       }
                       alt={skill.name || "Skill icon"}
-                      className="w-full h-full object-contain sm:object-cover"
+                      className="w-full h-full object-cover"
                       width={288}
                       height={288}
                     />

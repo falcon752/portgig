@@ -48,7 +48,7 @@ const TemplateThreeHero = ({ portfolioData }: TemplateThreeHeroProps) => {
               alt={displayName}
               width={300}
               height={380}
-              className="object-contain"
+              className="object-cover"
             />
           </div>
         </div>

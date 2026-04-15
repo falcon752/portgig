@@ -54,7 +54,7 @@ export default function TemplatesixLatestWork({ portfolioData }: TemplatesixLate
                     alt={item.title || `Portfolio image ${i + 1}`}
                     width={900}
                     height={600}
-                    className="w-full h-[300px] sm:h-[300px] md:h-[260px] lg:h-[300px] object-contain sm:object-cover"
+                    className="w-full h-[300px] sm:h-[300px] md:h-[260px] lg:h-[300px] object-cover"
                   />
                 ) : (
                   <div className="w-full h-[300px] bg-gray-700 flex items-center justify-center text-gray-400 text-sm">

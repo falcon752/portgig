@@ -44,7 +44,7 @@ const TemplateTwoAboutMe = ({
                 alt={`Additional image ${index + 1}`}
                 width={384}
                 height={384}
-                className="w-full h-full object-contain sm:object-cover"
+                className="w-full h-full object-cover"
               />
             )}
           </div>
