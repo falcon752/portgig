@@ -382,16 +382,16 @@ export default function PhotographerForm() {
       const filesToUpload: File[] = [];
       const fileMap = new Map<File, string>();
 
-      if (formData.headShot.file) {
+      if (formData.headShot.file instanceof File) {
         filesToUpload.push(formData.headShot.file);
       }
       formData.myServices.forEach((item) => {
-        if (item.image.file) {
+        if (item.image.file instanceof File) {
           filesToUpload.push(item.image.file);
         }
       });
       formData.latestWork.forEach((item) => {
-        if (item.image.file) {
+        if (item.image.file instanceof File) {
           filesToUpload.push(item.image.file);
         }
       });
@@ -417,16 +417,16 @@ export default function PhotographerForm() {
           {};
       } catch {}
 
-      const finalHeadShotUrl = formData.headShot.file
-        ? fileMap.get(formData.headShot.file) || ""
-        : formData.headShot.previewUrl || "";
+      const safeUrl = (file: unknown, previewUrl: string | null | undefined) =>
+        (file instanceof File ? fileMap.get(file) : null) ||
+        (previewUrl?.startsWith("data:") ? "" : previewUrl) || "";
+
+      const finalHeadShotUrl = safeUrl(formData.headShot.file, formData.headShot.previewUrl);
 
       const finalMyServices = formData.myServices
         .filter((item) => item.image.previewUrl || item.name || item.link)
         .map((item) => ({
-          image: item.image.file
-            ? fileMap.get(item.image.file) || ""
-            : item.image.previewUrl || "",
+          image: safeUrl(item.image.file, item.image.previewUrl),
           name: item.name,
           link: item.link,
         }));
@@ -434,9 +434,7 @@ export default function PhotographerForm() {
       const finalLatestWork = formData.latestWork
         .filter((item) => item.image.previewUrl || item.title || item.link)
         .map((item) => ({
-          image: item.image.file
-            ? fileMap.get(item.image.file) || ""
-            : item.image.previewUrl || "",
+          image: safeUrl(item.image.file, item.image.previewUrl),
           title: item.title,
           link: item.link,
         }));

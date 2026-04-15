@@ -375,14 +375,14 @@ export default function SocialMediaForm() {
 
             const filesToUpload: File[] = []
             const fileMap = new Map<File, string>()
-            if (formData.headShot.file) filesToUpload.push(formData.headShot.file)
-            if (formData.caseStudy[0].before.file) filesToUpload.push(formData.caseStudy[0].before.file)
-            if (formData.caseStudy[0].after.file) filesToUpload.push(formData.caseStudy[0].after.file)
+            if (formData.headShot.file instanceof File) filesToUpload.push(formData.headShot.file)
+            if (formData.caseStudy[0].before.file instanceof File) filesToUpload.push(formData.caseStudy[0].before.file)
+            if (formData.caseStudy[0].after.file instanceof File) filesToUpload.push(formData.caseStudy[0].after.file)
             formData.graphicDesign.forEach((item) => {
-                if (item.image.file) filesToUpload.push(item.image.file)
+                if (item.image.file instanceof File) filesToUpload.push(item.image.file)
             })
             formData.genericPortfolioFiles.forEach((item) => {
-                if (item.image.file) filesToUpload.push(item.image.file)
+                if (item.image.file instanceof File) filesToUpload.push(item.image.file)
             })
 
             let uploadedUrls: string[] = []
@@ -400,16 +400,16 @@ export default function SocialMediaForm() {
                         .map((s) => s.trim())
                         .filter(Boolean),
                     location: formData.location,
-                    head_shot: formData.headShot.file
+                    head_shot: formData.headShot.file instanceof File
                         ? fileMap.get(formData.headShot.file) || ""
-                        : formData.headShot.previewUrl || "",
+                        : (formData.headShot.previewUrl?.startsWith("data:") ? "" : formData.headShot.previewUrl) || "",
                     about_me: formData.aboutMe,
                     mission: formData.mission,
                     other_services: (formData.otherServices ?? []).filter(Boolean),
                     files: formData.genericPortfolioFiles
                         .filter((item) => item.image.previewUrl || item.name)
                         .map((item) => ({
-                            image: item.image.file ? fileMap.get(item.image.file) || "" : item.image.previewUrl || "",
+                            image: item.image.file instanceof File ? fileMap.get(item.image.file) || "" : (item.image.previewUrl?.startsWith("data:") ? "" : item.image.previewUrl) || "",
                             title: item.name,
                         })),
                     what_you_get_working_with_me: formData.whyWorkWithMe,
@@ -429,12 +429,12 @@ export default function SocialMediaForm() {
                             .map((study) => ({
                                 brand_name: study.brandName,
                                 contribution: study.contribution,
-                                before: study.before.file ? fileMap.get(study.before.file) || "" : study.before.previewUrl || "",
-                                after: study.after.file ? fileMap.get(study.after.file) || "" : study.after.previewUrl || "",
+                                before: study.before.file instanceof File ? fileMap.get(study.before.file) || "" : (study.before.previewUrl?.startsWith("data:") ? "" : study.before.previewUrl) || "",
+                                after: study.after.file instanceof File ? fileMap.get(study.after.file) || "" : (study.after.previewUrl?.startsWith("data:") ? "" : study.after.previewUrl) || "",
                             })),
                         graphic_design: formData.graphicDesign
                             .filter((item) => item.image.previewUrl)
-                            .map((item) => (item.image.file ? fileMap.get(item.image.file) || "" : item.image.previewUrl || "")),
+                            .map((item) => (item.image.file instanceof File ? fileMap.get(item.image.file) || "" : (item.image.previewUrl?.startsWith("data:") ? "" : item.image.previewUrl) || "")),
                         video_editing: formData.videoEditing.filter(Boolean),
                         tools: Array.isArray(formData.tools)
                             ? formData.tools.filter(Boolean)

@@ -367,16 +367,16 @@ export default function VideographerForm() {
             const filesToUpload: File[] = [];
             const fileMap = new Map<File, string>();
 
-            if (formData.headShot.file) {
+            if (formData.headShot.file instanceof File) {
                 filesToUpload.push(formData.headShot.file);
             }
             formData.additionalImages.forEach((item) => {
-                if (item.file) {
+                if (item.file instanceof File) {
                     filesToUpload.push(item.file);
                 }
             });
             formData.genericPortfolioFiles.forEach((item) => {
-                if (item.image.file) {
+                if (item.image.file instanceof File) {
                     filesToUpload.push(item.image.file);
                 }
             });
@@ -413,27 +413,27 @@ export default function VideographerForm() {
                         .map((s) => s.trim())
                         .filter(Boolean),
                     location: formData.location,
-                    head_shot: formData.headShot.file
+                    head_shot: formData.headShot.file instanceof File
                         ? fileMap.get(formData.headShot.file) || ""
-                        : formData.headShot.previewUrl || "",
+                        : (formData.headShot.previewUrl?.startsWith("data:") ? "" : formData.headShot.previewUrl) || "",
                     about_me: formData.aboutMe,
                     other_services: (formData.otherServices ?? []).filter(Boolean),
                     files: [
                         ...formData.additionalImages
                             .filter((item) => item.previewUrl)
                             .map((item) => ({
-                                image: item.file
+                                image: item.file instanceof File
                                     ? fileMap.get(item.file) || ""
-                                    : item.previewUrl || "",
+                                    : (item.previewUrl?.startsWith("data:") ? "" : item.previewUrl) || "",
                                 title: "",
                                 link: "",
                             })),
                         ...formData.genericPortfolioFiles
                             .filter((item) => item.image.previewUrl || item.name || item.link)
                             .map((item) => ({
-                                image: item.image.file
+                                image: item.image.file instanceof File
                                     ? fileMap.get(item.image.file) || ""
-                                    : item.image.previewUrl || "",
+                                    : (item.image.previewUrl?.startsWith("data:") ? "" : item.image.previewUrl) || "",
                                 title: item.name,
                                 link: item.link,
                             })),

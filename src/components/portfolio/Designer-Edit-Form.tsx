@@ -336,16 +336,16 @@ const DesignerForm: React.FC = () => {
     toast.loading("Saving portfolio...", { id: "saveToast" });
     try {
       const filesToUpload: File[] = [];
-      if (formData.headShot.file) {
+      if (formData.headShot.file instanceof File) {
         filesToUpload.push(formData.headShot.file);
       }
       formData.skills.forEach((s) => {
-        if (s.image.file) {
+        if (s.image.file instanceof File) {
           filesToUpload.push(s.image.file);
         }
       });
       formData.genericPortfolioFiles.forEach((p) => {
-        if (p.image.file) {
+        if (p.image.file instanceof File) {
           filesToUpload.push(p.image.file);
         }
       });
@@ -364,7 +364,7 @@ const DesignerForm: React.FC = () => {
         file: File | null,
         currentPreviewUrl: string | null
       ) => {
-        if (file) {
+        if (file instanceof File) {
           const fileIndex = filesToUpload.indexOf(file);
           if (fileIndex !== -1 && uploadedUrls[fileIndex]) {
             const uploaded = uploadedUrls[fileIndex];
@@ -376,6 +376,8 @@ const DesignerForm: React.FC = () => {
                 );
           }
         }
+        // Never send a base64 data URL to the backend — only return real server/CDN URLs
+        if (currentPreviewUrl && currentPreviewUrl.startsWith("data:")) return "";
         return currentPreviewUrl || "";
       };
 
