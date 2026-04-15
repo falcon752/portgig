@@ -232,7 +232,7 @@ export default function SocialMediaForm() {
             event.target.value = ""
             return
         }
-        if (file && file.type === "image/png") {
+        if (file && file.type.startsWith("image/")) {
             const reader = new FileReader()
             reader.onloadend = () => {
                 const previewUrl = reader.result as string
@@ -273,7 +273,7 @@ export default function SocialMediaForm() {
             }
             reader.readAsDataURL(file)
         } else if (file) {
-            toast.error("Please upload a PNG image.")
+            toast.error("Please upload an image file.")
         }
     }
 
@@ -657,7 +657,7 @@ export default function SocialMediaForm() {
                                     <input
                                         id="headshot-upload"
                                         type="file"
-                                        accept="image/png"
+                                        accept="image/*"
                                         ref={headShotInputRef}
                                         onChange={(e) => handleImageFileChange(e, "headShot")}
                                         className="hidden"
@@ -807,7 +807,7 @@ export default function SocialMediaForm() {
                                             <input
                                                 id="case-study-before-upload"
                                                 type="file"
-                                                accept="image/png"
+                                                accept="image/*"
                                                 ref={caseStudyBeforeInputRef}
                                                 onChange={(e) => handleImageFileChange(e, "caseStudyBefore")}
                                                 className="hidden"
@@ -855,7 +855,7 @@ export default function SocialMediaForm() {
                                             <input
                                                 id="case-study-after-upload"
                                                 type="file"
-                                                accept="image/png"
+                                                accept="image/*"
                                                 ref={caseStudyAfterInputRef}
                                                 onChange={(e) => handleImageFileChange(e, "caseStudyAfter")}
                                                 className="hidden"
@@ -912,7 +912,7 @@ export default function SocialMediaForm() {
                                         <input
                                             id={`graphic-design-upload-${index}`}
                                             type="file"
-                                            accept="image/png"
+                                            accept="image/*"
                                             ref={(el) => {
                                                 graphicDesignInputRefs.current[index] = el
                                             }}
@@ -968,7 +968,7 @@ export default function SocialMediaForm() {
                                             <input
                                                 id={`generic-portfolio-upload-${index}`}
                                                 type="file"
-                                                accept="image/png"
+                                                accept="image/*"
                                                 ref={(el) => {
                                                     genericPortfolioInputRefs.current[index] = el
                                                 }}

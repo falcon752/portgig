@@ -268,7 +268,7 @@ export default function PhotographerForm() {
       event.target.value = "";
       return;
     }
-    if (file && file.type === "image/png") {
+    if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onloadend = () => {
         const previewUrl = reader.result as string;
@@ -295,7 +295,7 @@ export default function PhotographerForm() {
       };
       reader.readAsDataURL(file);
     } else if (file) {
-      toast.error("Please upload a PNG image.");
+      toast.error("Please upload an image file.");
     }
   };
 
@@ -696,7 +696,7 @@ export default function PhotographerForm() {
                   <input
                     id="headshot-upload"
                     type="file"
-                    accept="image/png"
+                    accept="image/*"
                     ref={(el) => {
                       headShotInputRef.current = el;
                     }}
@@ -798,7 +798,7 @@ export default function PhotographerForm() {
                       <input
                         id={`my-services-upload-${index}`}
                         type="file"
-                        accept="image/png"
+                        accept="image/*"
                         ref={(el) => {
                           myServicesInputRefs.current[index] = el;
                         }}
@@ -888,7 +888,7 @@ export default function PhotographerForm() {
                       <input
                         id={`latest-work-upload-${index}`}
                         type="file"
-                        accept="image/png"
+                        accept="image/*"
                         ref={(el) => {
                           latestWorkInputRefs.current[index] = el;
                         }}

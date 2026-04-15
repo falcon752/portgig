@@ -186,7 +186,7 @@ export default function DeveloperForm() {
       event.target.value = ""
       return
     }
-    if (file && file.type === "image/png") {
+      if (file && file.type.startsWith("image/")) {
       const reader = new FileReader()
       reader.onloadend = () => {
         const previewUrl = reader.result as string
@@ -206,7 +206,7 @@ export default function DeveloperForm() {
       }
       reader.readAsDataURL(file)
     } else if (file) {
-      toast.error("Please upload a PNG image.")
+      toast.error("Please upload an image file.")
     }
   }
 
@@ -529,7 +529,7 @@ export default function DeveloperForm() {
                   <input
                     id="headshot-upload"
                     type="file"
-                    accept="image/png"
+                    accept="image/*"
                     ref={(el) => {
                       headShotInputRef.current = el
                     }}
@@ -640,7 +640,7 @@ export default function DeveloperForm() {
                       <input
                         id={`portfolio-upload-${index}`}
                         type="file"
-                        accept="image/png"
+                        accept="image/*"
                         ref={(el) => {
                           portfolioInputRefs.current[index] = el
                         }}

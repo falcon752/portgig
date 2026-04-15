@@ -679,7 +679,7 @@ const DesignerForm: React.FC = () => {
                       skillImageInputRefs.current[index] = el;
                     }}
                     className="hidden"
-                    accept="image/png"
+                    accept="image/*"
                     onChange={(e) => handleImageFileChange(e, "skill", index)}
                     disabled={isAnyLoading}
                   />
