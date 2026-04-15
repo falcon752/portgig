@@ -23,7 +23,7 @@ const securityHeaders = [
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://accounts.google.com https://www.gstatic.com https://cdn.firebase.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' data: https://fonts.gstatic.com",
-      "img-src 'self' data: blob: https://res.cloudinary.com https://api.portgig.com https://via.placeholder.com https://placehold.co https://picsum.photos https://images.unsplash.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com",
+      "img-src 'self' data: blob: https://res.cloudinary.com https://api.portgig.com https://via.placeholder.com https://placehold.co https://picsum.photos https://images.unsplash.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://portgig.sfo3.digitaloceanspaces.com",
       "connect-src 'self' https://api.portgig.com wss://api.portgig.com https://firestore.googleapis.com https://firebase.googleapis.com wss://*.firebaseio.com https://securetoken.googleapis.com https://identitytoolkit.googleapis.com https://www.googleapis.com",
       "frame-src https://accounts.google.com",
       "frame-ancestors 'self'",
@@ -99,6 +99,13 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
+        port: '',
+        pathname: '/**',
+      },
+      // DigitalOcean Spaces CDN
+      {
+        protocol: 'https',
+        hostname: 'portgig.sfo3.digitaloceanspaces.com',
         port: '',
         pathname: '/**',
       },
