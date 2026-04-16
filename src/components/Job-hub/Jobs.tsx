@@ -206,13 +206,13 @@ const Jobs: React.FC<JobsProps> = ({ filters, onTotalJobsChange }) => {
               href={`/job-hub/${job._id}`}
             >
               <div className="flex items-center gap-4">
-                <Image
+                {/* <Image
                   src="/assets/job-logo.svg"
                   alt="Company Logo"
                   width={60}
                   height={60}
                   className="rounded-md object-cover"
-                />
+                /> */
                 <div className="flex flex-col flex-1">
                   <h2 className="font-bold text-base sm:text-lg md:text-2xl line-clamp-1 text-[#0A1754] font-raleway">
                     {job.title}

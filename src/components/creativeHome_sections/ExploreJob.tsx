@@ -63,13 +63,13 @@ const AvailableJobsComp = () => {
             >
               <div className="flex items-start gap-3">
                 {" "}
-                <Image
+                {/* <Image
                   src="/assets/job-logo.svg"
                   alt="Company Logo"
                   width={60}
                   height={60}
                   className="rounded-md object-cover"
-                />
+                /> */
                 <div className="flex flex-col max-w-full">
                   <h2 className="font-bold text-base sm:text-lg md:text-2xl line-clamp-1 text-[#0A1754] font-raleway">
                     {item.title}

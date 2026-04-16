@@ -312,13 +312,6 @@ export default function FontColorCustomization() {
     }
 
     const handleSave = async () => {
-        // Basic validation: Check contrast (simple heuristic, e.g., text != background)
-        if (settings.textColor && settings.backgroundColor && settings.textColor === settings.backgroundColor) {
-            toast.error('Text and background colors cannot be the same for readability.')
-            return
-        }
-        // More advanced contrast could be added with a library like 'tinycolor2'
-
         const success = await updatePortfolioFonts(settings)
         if (success) {
             router.back()

@@ -71,7 +71,7 @@ const JobProfile = () => {
   return (
     <section className="h-fit pt-20 bodyMargin my-10 flex flex-col gap-5 shadow p-5 md:p-10 lg:items-center">
       <div className="flex items-center gap-0">
-        <div className="flex w-fit justify-center border border-[#D9D9D90A] rounded-full">
+        {/* <div className="flex w-fit justify-center border border-[#D9D9D90A] rounded-full">
           <Image
             src={"/assets/companyImage.svg"}
             alt={jobDetails.recruiter?.company_name || "Company Logo"}
@@ -79,7 +79,7 @@ const JobProfile = () => {
             height={200}
             className="object-contain max-md:w-[100px] max-md:h-[100px]"
           />
-        </div>
+        </div> */
         <div>
           <h2 className="text-xl font-bold lg:text-5xl font-raleway">
             {jobDetails.title}
